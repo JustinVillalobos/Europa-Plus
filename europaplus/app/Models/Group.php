@@ -9,31 +9,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class User
+ * Class Group
  * 
  * @property int $id
- * @property int $group_id
  * @property string $name
- * @property string|null $password
  *
  * @package App\Models
  */
-class User extends Model
+class Group extends Model
 {
-	protected $table = 'users';
+	protected $table = 'groups';
 	public $timestamps = false;
 
-	protected $casts = [
-		'group_id' => 'int'
-	];
-
-	protected $hidden = [
-		'password'
-	];
-
 	protected $fillable = [
-		'group_id',
-		'name',
-		'password'
+		'name'
 	];
 }

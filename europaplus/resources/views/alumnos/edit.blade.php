@@ -1,0 +1,185 @@
+@extends('../layouts.admin')
+@section('content')  
+<div class="row" style="margin-top:25px;">
+    <div class="col-sm-12">
+        <div class="" style="padding-left:5px;">
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item"><a href='{{route("alumno.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Alumnos</h5></a></li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Alumno</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:15px;">
+    
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="section">DATOS PERSONALES</div>
+    </div>
+
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Nombre:</label>
+                        <input type="text" class="form-control" style="width:66%;"/>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Fecha Nacimiento:</label>
+                        <input type="date" class="form-control" style="width:45%;"/>
+                        <label class="text-danger font-weight-bold" style="width:10%;justify-content: end; margin-right: 5px;">Edad:</label>
+                        <input type="text" class="form-control" style="width:10%;" disabled/>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class=" font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Profesión:</label>
+                        <input type="text" class="form-control" style="width:66%;"/>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class=" font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">E-Mail:</label>
+                        <input type="text" class="form-control" style="width:66%;"/>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Apellidos:</label>
+                        <input type="text" class="form-control" style="width:66%;"/>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Sexo:</label>
+                        <Select type="text" class="form-control " style="width:66%;">
+                            <option>Hombre</option>
+                            <option>Mujer</option>
+                        </Select>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+               
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="font-weight-bold" style="width:25%;justify-content: end; margin-right: 5px;">Pasaporte/DNI:</label>
+                        <input type="text" class="form-control" style="width:30%;"/>
+                        <label class="font-weight-bold" style="width:13%;justify-content: end; margin-right: 5px;">Cáduca:</label>
+                        <input type="date" class="form-control" style="width:27%;" />
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="section">DIRECCIÓN [PRINCIPAL]</div>
+    </div>
+    
+    <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+        <div class="row">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Calle/Plaza:</label>
+                 <input type="text" class="form-control" style="width:67%;"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">País:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Provincia:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Localidad:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">C. Postal:</label>
+                 <input type="text" class="form-control" style="width:67%;">
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+    </div>
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="section">Otros Datos</div>
+    </div>
+    <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Idioma:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Nivel Idioma:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Medio Contacto:</label>
+                 <Select type="text" class="form-control" style="width:67%;"></Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Alergías:</label>
+                 <input type="text" class="form-control" style="width:67%;">
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+    </div>
+    <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Nombre Padre:</label>
+                 <input type="text" class="form-control" style="width:67%;">
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Tel. Padre:</label>
+                 <input type="text" class="form-control" style="width:67%;">
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-end" style="padding:10px 25px 0px 20px;">
+        <button class="btn btn-success">Aceptar</button>
+        <button class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
+        <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
+    </div>
+</div>
+
+<script src="{{ URL::asset('js/alumnos.js'); }}"></script>     
+@stop
