@@ -21,7 +21,7 @@
         <form action='{{route("alumno.busqueda")}}' method="GET" class="d-flex"  style="margin: 0px;">
             @method("GET")
             @csrf
-            <select name="limit" class="form-control" style="width:60px;">
+            <select name="limit" class="form-select" style="width:80px;">
                 <option <?php if($limit == 10){ echo "selected";}?>>10</option>
                 <option <?php if($limit == 15){ echo "selected";}?>>15</option>
                 <option <?php if($limit == 25){ echo "selected";}?>>25</option>
@@ -29,7 +29,7 @@
                 <option <?php if($limit == 100){ echo "selected";}?>>100</option>
             </select>
             <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." style="margin-left:5px;width:67%"/>
-            <select name="type" class="form-control" style="width:120px;margin-left:5px">
+            <select name="type" class="form-select" style="width:120px;margin-left:5px">
                 <option <?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
                 <option <?php if($type == 'Apellidos'){ echo "selected";}?>>Apellidos</option>
                 <option <?php if($type == 'Idioma'){ echo "selected";}?>>Idioma</option>
@@ -79,7 +79,7 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </form>
-                            <form action='{{route("alumno.destroy", [$nivel])}}' method="post" >
+                            <form action='{{route("alumno.destroy", [$nivel])}}' method="post" onsubmit="return validate(event,this,{{$nivel->alu_id}})">
                                 @method("delete")
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="margin-left:5px;">
@@ -98,5 +98,5 @@
     </div>
 </div>
 
-           
+<script src="{{ URL::asset('js/alumnos/list.js'); }}"></script>       
 @stop

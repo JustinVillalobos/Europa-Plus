@@ -93,5 +93,7 @@
         </footer>
         <script src="{{ URL::asset('plugins/sweetalert2/dist/sweetalert2.all.min.js'); }}"></script>
         <script src="{{ URL::asset('plugins/DataTables/datatables.min.js'); }}"></script>
+        <script src="{{ URL::asset('js/Validaciones.js'); }}"></script>
+        <script src="{{ URL::asset('js/alerts.js'); }}"></script>
     </body>
 </html>

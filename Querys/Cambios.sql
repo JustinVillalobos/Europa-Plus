@@ -1,0 +1,1 @@
+ALTER TABLE `alumnos` CHANGE `alu_dni` `alu_dni` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NULL DEFAULT '';

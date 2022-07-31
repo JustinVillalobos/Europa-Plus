@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alumno;
+use App\Models\Provincia;
+use App\Models\Paise;
+use App\Models\Localidade;
+use App\Models\Opcione;
 session_start();
 class AlumnoController extends Controller
 {
@@ -15,6 +19,9 @@ class AlumnoController extends Controller
     public function index()
     {
         //
+        $_SESSION['search'] = "";
+        $_SESSION['limit']="";
+        $_SESSION['type'] = "";
         $alumnos =Alumno::select('alumnos.*','opciones.*','paises.pais_descr')
                             ->join('opciones','alumnos.idi_id','=','opciones.opc_id')
                             ->join('provincias','alumnos.prv_id','=','provincias.prv_id')
@@ -89,7 +96,24 @@ class AlumnoController extends Controller
     public function create()
     {
         //
-        return view('alumnos.create');
+
+        $paises = Paise::all();
+        
+        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();;
+        $localidades = Localidade::select('localidades.*')
+                                    ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
+        $idiomas = Opcione::all()
+                            ->whereIn('opc_tipo_id',[3,4]);
+        $medios = Opcione::all()
+                            ->whereIn('opc_tipo_id',[2]);
+        $data = [
+            'paises'=>$paises,
+            'provincias'=>$provincias,
+            'localidades'=>$localidades,
+            'idiomas'=>$idiomas,
+            'medios'=>$medios
+        ];
+        return view('alumnos.create',$data);
     }
 
     /**
@@ -101,6 +125,32 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['alumno'];
+        $alumno = new Alumno([
+            'idi_id'=> $datos['idiomas'],
+            'alu_nombre'=>$datos['nombre'],
+            'alu_apellidos'=>$datos['apellidos'],
+            'alu_email'=>$datos['correo'],
+            'alu_dni'=>$datos['pasaporte'],
+            'alu_direccion'=>$datos['plaza'],
+            'alu_cp'=>$datos['codigoPostal'],
+            'alu_fecha_nacim'=>$datos['fecha_nacim'],
+            'alu_edad'=>$datos['edad'],
+            'alu_sexo'=>$datos['sexo'],
+            'alu_profesion'=>$datos['profesion'],
+            'alu_nivel_idioma'=>$datos['nivel_idioma'],
+            'alu_alergias'=>$datos['alergias'],
+            'alu_nombre_padre'=>$datos['nombrePadre'],
+            'alu_tel_padre'=>$datos['telPadre'],
+            'alu_medio_contacto'=>$datos['medioContacto'],
+            'loc_id'=>$datos['localidades'],
+            'prv_id'=>$datos['provincias'],
+            'pais_id'=>$datos['paises'],
+            'alu_dni_fexp'=>$datos['caduca']
+        ]);
+        $alumno->save();
+        echo json_encode(true);
     }
 
     /**
@@ -112,7 +162,25 @@ class AlumnoController extends Controller
     public function show($id)
     {
         //
-        return view('alumnos.create');
+        $alumno=Alumno::where('alu_id','=',$id)->first();
+        $paises = Paise::all();
+        
+        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();;
+        $localidades = Localidade::select('localidades.*')
+                                    ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
+        $idiomas = Opcione::all()
+                            ->whereIn('opc_tipo_id',[3,4]);
+        $medios = Opcione::all()
+                            ->whereIn('opc_tipo_id',[2]);
+        $data = [
+            'paises'=>$paises,
+            'provincias'=>$provincias,
+            'localidades'=>$localidades,
+            'idiomas'=>$idiomas,
+            'medios'=>$medios,
+            'alumno'=>$alumno
+        ];
+        return view('alumnos.view',$data);
     }
 
     /**
@@ -124,7 +192,25 @@ class AlumnoController extends Controller
     public function edit($id)
     {
         //
-        return view('alumnos.edit');
+        $alumno=Alumno::where('alu_id','=',$id)->first();
+        $paises = Paise::all();
+        
+        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();;
+        $localidades = Localidade::select('localidades.*')
+                                    ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
+        $idiomas = Opcione::all()
+                            ->whereIn('opc_tipo_id',[3,4]);
+        $medios = Opcione::all()
+                            ->whereIn('opc_tipo_id',[2]);
+        $data = [
+            'paises'=>$paises,
+            'provincias'=>$provincias,
+            'localidades'=>$localidades,
+            'idiomas'=>$idiomas,
+            'medios'=>$medios,
+            'alumno'=>$alumno
+        ];
+        return view('alumnos.edit',$data);
     }
 
     /**
@@ -134,9 +220,34 @@ class AlumnoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input =   $request->all(); 
+        $datos =$input['alumno'];
+        
+        $alumno=Alumno::where('alu_id','=',$datos['id'])->first();
+        $alumno->idi_id=$datos['idiomas'];
+        $alumno->alu_nombre=$datos['nombre'];
+        $alumno->alu_apellidos=$datos['apellidos'];
+        $alumno->alu_email=$datos['correo'];
+        $alumno->alu_dni=$datos['pasaporte'];
+        $alumno->alu_direccion=$datos['plaza'];
+        $alumno->alu_cp=$datos['codigoPostal'];
+        $alumno->alu_fecha_nacim=$datos['fecha_nacim'];
+        $alumno->alu_edad=$datos['edad'];
+        $alumno->alu_sexo=$datos['sexo'];
+        $alumno->alu_profesion=$datos['profesion'];
+        $alumno->alu_nivel_idioma=$datos['nivel_idioma'];
+        $alumno->alu_alergias=$datos['alergias'];
+        $alumno->alu_nombre_padre=$datos['nombrePadre'];
+        $alumno->alu_tel_padre=$datos['telPadre'];
+        $alumno->alu_medio_contacto=$datos['medioContacto'];
+        $alumno->loc_id=$datos['localidades'];
+        $alumno->prv_id=$datos['provincias'];
+        $alumno->pais_id=$datos['paises'];
+        $alumno->alu_dni_fexp=$datos['caduca'];
+        $alumno->save();
+        echo json_encode(true);
     }
 
     /**
@@ -145,8 +256,19 @@ class AlumnoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $id =$input['id'];
+        $alumno=Alumno::where('alu_id','=',$id)->first();
+        try{
+            $alumno->delete();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
+        
+        
     }
 }
