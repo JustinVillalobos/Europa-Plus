@@ -261,7 +261,7 @@ function save(){
                         limpiarFormulario();
                       });
                 }else{
-                    alertError("Error inesperado al guardar el alumno, por favor compruebe los datos");
+                    alertError("Error inesperado al actualizar el alumno, por favor compruebe los datos");
                 }
         
             },

@@ -22,7 +22,28 @@ if(strlen($alumno->alu_dni_fexp)>0){
     </div>
 </div>
 <div class="row" style="margin-top:15px;">
-    
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="section">CAMBIAR ESTADO ALUMNO</div>
+    </div>
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12 form-inline text-end">
+                        <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">ESTADO:</label>
+                        <select class="form-select" value="{{$alumno->active}}" id="state" style="width:69%;">
+                            <option value="1" <?php if($alumno->active==1){echo "selected";}?>>Activo</option>
+                            <option value="2" <?php if($alumno->active==2){echo "selected";}?>>Inactivo</option>
+                        </select>
+                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                    </div>
+                    <div class="col-sm-12 form-inline d-flex justify-content-end" style="margin-top:10px;">
+                        <button class="btn btn-success">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
         <div class="section">DATOS PERSONALES</div>
     </div>
@@ -218,5 +239,5 @@ if(strlen($alumno->alu_dni_fexp)>0){
        
     </div>
 </div>
- 
+<script src="{{ URL::asset('js/alumnos/view.js'); }}"></script>  
 @stop

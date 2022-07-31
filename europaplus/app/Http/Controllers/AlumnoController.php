@@ -249,7 +249,29 @@ class AlumnoController extends Controller
         $alumno->save();
         echo json_encode(true);
     }
-
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEstado(Request $request)
+    {
+        $input =   $request->all(); 
+        
+        
+        try{
+            $alumno=Alumno::where('alu_id','=',$input['id'])->first();
+            $alumno->active=$input['estado'];
+            $alumno->save();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
+        
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

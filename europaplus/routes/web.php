@@ -24,6 +24,7 @@ Route::get('busqueda',[AlumnoController::class, 'busqueda'])->name('alumno.busqu
 Route::post('alumno/store',[AlumnoController::class, 'store'])->name('alumno.store');
 Route::post('alumno/update',[AlumnoController::class, 'update'])->name('alumno.update');
 Route::post('alumno/destroy',[AlumnoController::class, 'destroy'])->name('alumno.destroy');
+Route::post('alumno/updateEstado',[AlumnoController::class, 'updateEstado'])->name('alumno.updateEstado');
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');
 
