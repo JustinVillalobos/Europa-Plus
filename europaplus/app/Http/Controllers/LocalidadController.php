@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Provincia;
+use App\Models\Paise;
+use App\Models\Localidade;
+session_start();
 class LocalidadController extends Controller
 {
     /**
@@ -14,6 +17,23 @@ class LocalidadController extends Controller
     public function index()
     {
         //
+        $_SESSION['search'] = "";
+        $_SESSION['limit']="";
+        $_SESSION['type'] = "";
+        $localidades = Localidade::select('localidades.*','provincias.*','paises.*')
+                            ->join('provincias','provincias.prv_id','=','localidades.prv_id')
+                            ->join('paises','provincias.pais_id','=','paises.pais_id')
+                            ->paginate(10);
+        $data = [
+            'localidades'=>$localidades,
+            'search'=>"",
+            'limit'=>10,
+            'type'=>'Nombre',
+            'search'=>"",
+            'limit'=>10,
+            'type'=>'Nombre'
+        ];
+        return view('localidades.index',$data);
     }
 
     /**
@@ -24,6 +44,60 @@ class LocalidadController extends Controller
     public function create()
     {
         //
+        
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function busqueda(Request $request)
+    {
+        //
+        
+        $input =   $request->all(); 
+        if(empty($input['search']) && empty($input['limit'])){
+            $input['search'] ="" ;
+                $input['limit'] = $_SESSION['limit'];
+                $input['type'] = $_SESSION['type'];
+            
+        }
+        if(is_null($input['search'])){
+            $input['search'] =$_SESSION['search'];
+            $input['type'] = $_SESSION['type'];
+        }else{
+            if($input['search']==""){
+                $input['search'] =$_SESSION['search'];
+            }else{
+                $_SESSION['search'] =  $input['search'];
+           
+                $_SESSION['type'] = $input['type'];
+            }
+           
+        }
+        if(is_null($input['limit'])){
+            $input['limit'] = $_SESSION['limit'];
+           
+        }else{
+            $_SESSION['limit'] = $input['limit'];
+        }
+        $limit = $input['limit'];
+        $localidades = Localidade::select('localidades.*','provincias.*','paises.*')
+                                    ->join('provincias','provincias.prv_id','=','localidades.prv_id')
+                                    ->join('paises','provincias.pais_id','=','paises.pais_id');
+                  
+        if($input['type']=="Nombre"){
+            $localidades =$localidades->where("provincias.prv_descr","LIKE","%{$input['search']}%");
+        } 
+        if($input['type']=="Pais"){
+            $localidades =$localidades->where("paises.pais_descr","LIKE","%{$input['search']}%");
+        } 
+        if($input['type']=="Provincias"){
+            $localidades =$localidades->where("provincias.prv_descr","LIKE","%{$input['search']}%");
+        } 
+        
+        $localidades =$localidades->paginate($limit);
+        return view('localidades.index', ["localidades"=>$localidades,'search'=>$input['search'],'limit'=>$limit,'type'=>$input['type']]);
     }
 
     /**

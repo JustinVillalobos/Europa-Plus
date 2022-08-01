@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <title>Laravel</title>
+        <title>EUROPAPLUS</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,9 +69,14 @@
                             <div class="card-header"><i class="fa fa-bookmark" aria-hidden="true"></i>Datos Aplicación</div>
                             <div class="card-body" style="padding-top: 5px;">
                                 <ul style="padding-left: 0px;">
-                                    <li><a href='{{route("alumno.index")}}'>Alumnos</a></li>
-                                    <li><a href="./escuela">Escuelas</a></li>
-                                    <li><a href="./curso">Cursos</a></li>
+                                    <li><a href='{{route("alumno.index")}}'><i class="i i-database"></i> Alumnos</a></li>
+                                    <li><a href="./escuela"><i class="i i-database"></i> Escuelas</a></li>
+                                    <li><a href="./curso"><i class="i i-database"></i> Cursos</a></li>
+                                    <li><a href="./alojamiento"><i class="i i-database"></i> Alojamientos</a></li>
+                                    <li><a href="./empresa"><i class="i i-database"></i> Empresas</a></li>
+                                    <li><a href="./pais"><i class="i i-database"></i> Países</a></li>
+                                    <li><a href="./provincia"><i class="i i-database"></i> Provincias</a></li>
+                                    <li><a href="./localidad"><i class="i i-database"></i> Localidades</a></li>
                                 </ul>
                             </div>
                         </div>

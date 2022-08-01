@@ -38,6 +38,23 @@ class AlumnoController extends Controller
     public function formulario()
     {
         //
+        $paises = Paise::all();
+        
+        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();;
+        $localidades = Localidade::select('localidades.*')
+                                    ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
+        $idiomas = Opcione::all()
+                            ->whereIn('opc_tipo_id',[3,4]);
+        $medios = Opcione::all()
+                            ->whereIn('opc_tipo_id',[2]);
+        $data = [
+            'paises'=>$paises,
+            'provincias'=>$provincias,
+            'localidades'=>$localidades,
+            'idiomas'=>$idiomas,
+            'medios'=>$medios
+        ];
+        return view('alumnos.formulario',$data);
     }
      /**
      * Display a listing of the resource.
