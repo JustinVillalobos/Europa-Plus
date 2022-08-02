@@ -44,6 +44,13 @@ class LocalidadController extends Controller
     public function create()
     {
         //
+        $paises = Paise::all();
+        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();
+        $data = [
+            'paises'=>$paises,
+            'provincias'=>$provincias
+        ];
+        return view('localidades.add',$data);
         
     }
     /**
@@ -87,7 +94,7 @@ class LocalidadController extends Controller
                                     ->join('paises','provincias.pais_id','=','paises.pais_id');
                   
         if($input['type']=="Nombre"){
-            $localidades =$localidades->where("provincias.prv_descr","LIKE","%{$input['search']}%");
+            $localidades =$localidades->where("localidades.loc_descr","LIKE","%{$input['search']}%");
         } 
         if($input['type']=="Pais"){
             $localidades =$localidades->where("paises.pais_descr","LIKE","%{$input['search']}%");
@@ -109,6 +116,20 @@ class LocalidadController extends Controller
     public function store(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['localidad'];
+        $localidad = new Localidade([
+            'loc_descr'=>$datos['descr'],
+            'pais_id'=>$datos['pais'],
+            'prv_id'=>$datos['provincia']
+        ]);
+        
+        try{
+            $localidad->save();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 
     /**
@@ -131,6 +152,16 @@ class LocalidadController extends Controller
     public function edit($id)
     {
         //
+        $localidad=Localidade::select('localidades.*')
+        ->where('localidades.loc_id','=',$id)->first();
+        $paises = Paise::all();
+        $provincias = Provincia::where('provincias.pais_id','=',$localidad->pais_id)->get();
+        $data = [
+        'provincias'=>$provincias,
+        'paises'=>$paises,
+        'localidad'=>$localidad
+        ];
+        return view('localidades.edit',$data);
     }
 
     /**
@@ -140,9 +171,22 @@ class LocalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['localidad'];
+        $localidad=Localidade::select('localidades.*')
+                                ->where('localidades.loc_id','=',$datos['id'])->first();
+        $localidad->pais_id =$datos['pais'];
+        $localidad->prv_id =$datos['provincia'];
+        $localidad->loc_descr = $datos['descr'];
+        try{
+            $localidad->save();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 
     /**
@@ -151,8 +195,17 @@ class LocalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $localidad=Localidade::select('localidades.*')
+                                ->where('localidades.loc_id','=',$input['id'])->first();
+        try{
+            $localidad->delete();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 }

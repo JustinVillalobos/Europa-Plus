@@ -65,7 +65,7 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </form>
-                            <form action='{{route("provincia.destroy", [$nivel])}}' method="post" onsubmit="return validate(event,this,{{$nivel->alu_id}})">
+                            <form action='{{route("provincia.destroy", [$nivel])}}' method="post" onsubmit="return validate(event,this,{{$nivel->prv_id}})">
                                 @method("delete")
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="margin-left:5px;">

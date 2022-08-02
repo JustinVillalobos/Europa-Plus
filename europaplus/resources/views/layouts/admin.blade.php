@@ -74,9 +74,9 @@
                                     <li><a href="./curso"><i class="i i-database"></i> Cursos</a></li>
                                     <li><a href="./alojamiento"><i class="i i-database"></i> Alojamientos</a></li>
                                     <li><a href="./empresa"><i class="i i-database"></i> Empresas</a></li>
-                                    <li><a href="./pais"><i class="i i-database"></i> Países</a></li>
-                                    <li><a href="./provincia"><i class="i i-database"></i> Provincias</a></li>
-                                    <li><a href="./localidad"><i class="i i-database"></i> Localidades</a></li>
+                                    <li><a href="{{route('pais.index')}}"><i class="i i-database"></i> Países</a></li>
+                                    <li><a href="{{route('provincia.index')}}"><i class="i i-database"></i> Provincias</a></li>
+                                    <li><a href="{{route('localidad.index')}}"><i class="i i-database"></i> Localidades</a></li>
                                 </ul>
                             </div>
                         </div>

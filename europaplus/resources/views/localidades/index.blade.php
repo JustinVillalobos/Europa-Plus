@@ -30,7 +30,7 @@
             </select>
             <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." style="margin-left:5px;width:67%"/>
             <select name="type" class="form-select" style="width:120px;margin-left:5px">
-                <option <?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
+                <option value="Nombre"<?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
                 <option value="Pais"<?php if($type == 'Pais'){ echo "selected";}?>>Países</option>
                 <option value="Provincias"<?php if($type == 'Provincias'){ echo "selected";}?>>Provincias</option>
             </select>
@@ -68,7 +68,7 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </form>
-                            <form action='{{route("localidad.destroy", [$nivel])}}' method="post" onsubmit="return validate(event,this,{{$nivel->alu_id}})">
+                            <form action='{{route("localidad.destroy", [$nivel])}}' method="post" onsubmit="return validate(event,this,{{$nivel->loc_id}})">
                                 @method("delete")
                                 @csrf
                                 <button type="submit" class="btn btn-danger" style="margin-left:5px;">
@@ -87,5 +87,5 @@
     </div>
 </div>
 
-<script src="{{ URL::asset('js/provincia/list.js'); }}"></script>       
+<script src="{{ URL::asset('js/localidad/list.js'); }}"></script>       
 @stop

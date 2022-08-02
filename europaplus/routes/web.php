@@ -33,12 +33,21 @@ Route::post('alumno/updateEstado',[AlumnoController::class, 'updateEstado'])->na
 
 Route::resource('pais',PaisController::class);
 Route::get('busquedaPais',[PaisController::class, 'busqueda'])->name('pais.busqueda');
+Route::post('pais/store',[PaisController::class, 'store'])->name('pais.store');
+Route::post('pais/update',[PaisController::class, 'update'])->name('pais.update');
+Route::post('pais/destroy',[PaisController::class, 'destroy'])->name('pais.destroy');
 
 Route::resource('provincia',ProvinciaController::class);
 Route::get('busquedaProvincia',[ProvinciaController::class, 'busqueda'])->name('provincia.busqueda');
+Route::post('provincia/store',[ProvinciaController::class, 'store'])->name('provincia.store');
+Route::post('provincia/update',[ProvinciaController::class, 'update'])->name('provincia.update');
+Route::post('provincia/destroy',[ProvinciaController::class, 'destroy'])->name('provincia.destroy');
 
 Route::resource('localidad',LocalidadController::class);
 Route::get('busquedaLocalidad',[LocalidadController::class, 'busqueda'])->name('localidad.busqueda');
+Route::post('localidad/store',[LocalidadController::class, 'store'])->name('localidad.store');
+Route::post('localidad/update',[LocalidadController::class, 'update'])->name('localidad.update');
+Route::post('localidad/destroy',[LocalidadController::class, 'destroy'])->name('localidad.destroy');
 
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');

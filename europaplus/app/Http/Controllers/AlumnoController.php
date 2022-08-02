@@ -40,7 +40,7 @@ class AlumnoController extends Controller
         //
         $paises = Paise::all();
         
-        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();;
+        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();
         $localidades = Localidade::select('localidades.*')
                                     ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
         $idiomas = Opcione::all()
@@ -116,7 +116,7 @@ class AlumnoController extends Controller
 
         $paises = Paise::all();
         
-        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();;
+        $provincias = Provincia::where('provincias.pais_id','=',$paises[1]->pais_id)->get();
         $localidades = Localidade::select('localidades.*')
                                     ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
         $idiomas = Opcione::all()
@@ -182,7 +182,7 @@ class AlumnoController extends Controller
         $alumno=Alumno::where('alu_id','=',$id)->first();
         $paises = Paise::all();
         
-        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();;
+        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();
         $localidades = Localidade::select('localidades.*')
                                     ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
         $idiomas = Opcione::all()
@@ -212,7 +212,7 @@ class AlumnoController extends Controller
         $alumno=Alumno::where('alu_id','=',$id)->first();
         $paises = Paise::all();
         
-        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();;
+        $provincias = Provincia::where('provincias.pais_id','=',$alumno->pais_id)->get();
         $localidades = Localidade::select('localidades.*')
                                     ->where('localidades.prv_id','=',$provincias[0]->prv_id)->get();
         $idiomas = Opcione::all()

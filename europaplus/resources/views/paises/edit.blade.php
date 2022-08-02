@@ -37,5 +37,5 @@
     </div>
 </div>
  
-<script src="{{ URL::asset('js/alumnos/add.js'); }}"></script>     
+<script src="{{ URL::asset('js/pais/edit.js'); }}"></script>     
 @stop

@@ -89,6 +89,11 @@ class ProvinciaController extends Controller
     public function create()
     {
         //
+        $paises = Paise::all();
+        $data = [
+            'paises'=>$paises
+        ];
+        return view('provincias.add',$data);
     }
 
     /**
@@ -100,6 +105,19 @@ class ProvinciaController extends Controller
     public function store(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['provincia'];
+        $provincia = new Provincia([
+            'prv_descr'=>$datos['descr'],
+            'pais_id'=>$datos['pais']
+        ]);
+        
+        try{
+            $provincia->save();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 
     /**
@@ -122,6 +140,14 @@ class ProvinciaController extends Controller
     public function edit($id)
     {
         //
+        $provincia=Provincia::select('provincias.*')
+                        ->where('provincias.prv_id','=',$id)->first();
+        $paises = Paise::all();
+        $data = [
+            'provincia'=>$provincia,
+            'paises'=>$paises
+        ];
+        return view('provincias.edit',$data);
     }
 
     /**
@@ -131,9 +157,23 @@ class ProvinciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['provincia'];
+        $provincia=Provincia::select('provincias.*')
+                        ->where('provincias.prv_id','=',$datos['id'])->first();
+        
+       
+        $provincia->pais_id =$datos['pais'];
+        $provincia->prv_descr = $datos['descr'];
+        try{
+            $provincia->save();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 
     /**
@@ -142,8 +182,17 @@ class ProvinciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $provincia=Provincia::select('provincias.*')
+                        ->where('provincias.prv_id','=',$input['id'])->first();
+        try{
+            $provincia->delete();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode(false);
+        }
     }
 }

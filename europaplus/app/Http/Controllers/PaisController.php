@@ -95,6 +95,13 @@ class PaisController extends Controller
     public function store(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['pais'];
+        $pais = new Paise([
+            'pais_descr'=>$datos['descr']
+        ]);
+        $pais->save();
+        echo json_encode(true);
     }
 
     /**
@@ -131,9 +138,15 @@ class PaisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $datos =$input['pais'];
+        $pais = Paise::where('pais_id','=',$datos['id'])->first();
+        $pais->pais_descr = $datos['descr'];
+        $pais->save();
+        echo json_encode(true);
     }
 
     /**
@@ -142,8 +155,18 @@ class PaisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $input =   $request->all(); 
+        $id =$input['id'];
+        $pais = Paise::where('pais_id','=',$id)->first();
+       
+        try{
+            $pais->delete();
+            echo json_encode(true);
+        }catch(\Illuminate\Database\QueryException $e){
+            echo json_encode($e);
+        }
     }
 }

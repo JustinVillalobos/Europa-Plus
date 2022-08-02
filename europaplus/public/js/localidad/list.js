@@ -11,16 +11,16 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./provincia/destroy',
+            url:'./localidad/destroy',
             data:{id:id},
             success:function(data){
                 console.log(data,id);
               if(data=='true'){
-                let rsp=alertTimeCorrect("Provincia eliminado exitosamente",function(response){
-                    window.location="../provincia";
+                let rsp=alertTimeCorrect("Localidad eliminado exitosamente",function(response){
+                    window.location="../localidad";
                   });
               }else{
-                alertError("Error al eliminar Provincia: No se puede eliminar porque la Provincia ha sido utilizado en alguna localidad");
+                alertError("Error al eliminar localidad: No se puede eliminar porque la localidad ha sido utilizado en algun alumno");
               }
         
             },
