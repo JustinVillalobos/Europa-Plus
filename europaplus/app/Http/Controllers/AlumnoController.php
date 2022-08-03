@@ -155,7 +155,7 @@ class AlumnoController extends Controller
             'alu_fecha_nacim'=>$datos['fecha_nacim'],
             'alu_edad'=>$datos['edad'],
             'alu_sexo'=>$datos['sexo'],
-            'alu_profesion'=>$datos['profesion'],
+            'alu_telefono'=>$datos['tel'],
             'alu_nivel_idioma'=>$datos['nivel_idioma'],
             'alu_alergias'=>$datos['alergias'],
             'alu_nombre_padre'=>$datos['nombrePadre'],
@@ -164,7 +164,8 @@ class AlumnoController extends Controller
             'loc_id'=>$datos['localidades'],
             'prv_id'=>$datos['provincias'],
             'pais_id'=>$datos['paises'],
-            'alu_dni_fexp'=>$datos['caduca']
+            'alu_dni_fexp'=>$datos['caduca'],
+            'alu_comentarios'=>$datos['comentarios']
         ]);
         $alumno->save();
         echo json_encode(true);
@@ -253,7 +254,7 @@ class AlumnoController extends Controller
         $alumno->alu_fecha_nacim=$datos['fecha_nacim'];
         $alumno->alu_edad=$datos['edad'];
         $alumno->alu_sexo=$datos['sexo'];
-        $alumno->alu_profesion=$datos['profesion'];
+        $alumno->alu_telefono=$datos['tel'];
         $alumno->alu_nivel_idioma=$datos['nivel_idioma'];
         $alumno->alu_alergias=$datos['alergias'];
         $alumno->alu_nombre_padre=$datos['nombrePadre'];
@@ -263,6 +264,7 @@ class AlumnoController extends Controller
         $alumno->prv_id=$datos['provincias'];
         $alumno->pais_id=$datos['paises'];
         $alumno->alu_dni_fexp=$datos['caduca'];
+        $alumno->alu_comentarios = $datos['comentarios'];
         $alumno->save();
         echo json_encode(true);
     }

@@ -36,13 +36,7 @@
                         <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                     </div>
                 </div>
-                <div class="row" style="margin-top:5px;">
-                    <div class="col-sm-12 form-inline text-end">
-                        <label class=" font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Profesión:</label>
-                        <input type="text" class="form-control" style="width:66%;" id="profesion"/>
-                        <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
-                    </div>
-                </div>
+                
                 <div class="row" style="margin-top:5px;">
                     <div class="col-sm-12 form-inline text-end">
                         <label class=" font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">E-Mail:</label>
@@ -138,6 +132,13 @@
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Teléfono:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="tel"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
     </div>
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
         <div class="section">Otros Datos</div>
@@ -190,15 +191,24 @@
     <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
-                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Nombre Padre:</label>
+                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Nombre Padre/Madre:</label>
                  <input type="text" class="form-control" style="width:67%;" id="nombrePadre">
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
-                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Tel. Padre:</label>
+                <label class="font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Tel. Padre/Madre:</label>
                  <input type="text" class="form-control" style="width:67%;" id="telPadre">
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+    </div>
+    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-start">
+                <label class="font-weight-bold" style="width:100%;justify-content: start; margin-left: 5%;">Observaciones:</label>
+                 <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;" id="comentarios"></textarea>
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>

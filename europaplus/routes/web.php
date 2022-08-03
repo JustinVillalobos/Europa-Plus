@@ -16,7 +16,10 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\PaisController;
 use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\LocalidadController;
+use App\Http\Controllers\CursosController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AlojamientosController;
+use App\Http\Controllers\EscuelasController;
 use App\Http\Controllers\AjaxController;
 Route::get('/', function () {
     return view('welcome');
@@ -48,6 +51,26 @@ Route::get('busquedaLocalidad',[LocalidadController::class, 'busqueda'])->name('
 Route::post('localidad/store',[LocalidadController::class, 'store'])->name('localidad.store');
 Route::post('localidad/update',[LocalidadController::class, 'update'])->name('localidad.update');
 Route::post('localidad/destroy',[LocalidadController::class, 'destroy'])->name('localidad.destroy');
+
+Route::resource('curso',CursosController::class);
+Route::get('busquedaCurso',[CursosController::class, 'busqueda'])->name('curso.busqueda');
+Route::post('curso/store',[CursosController::class, 'store'])->name('curso.store');
+Route::post('curso/update',[CursosController::class, 'update'])->name('curso.update');
+Route::post('curso/destroy',[CursosController::class, 'destroy'])->name('curso.destroy');
+
+//AlojamientosController
+Route::resource('alojamientos',AlojamientosController::class);
+Route::get('busquedaAlojamientos',[AlojamientosController::class, 'busqueda'])->name('alojamientos.busqueda');
+Route::post('alojamientos/store',[AlojamientosController::class, 'store'])->name('alojamientos.store');
+Route::post('alojamientos/update',[AlojamientosController::class, 'update'])->name('alojamientos.update');
+Route::post('alojamientos/destroy',[AlojamientosController::class, 'destroy'])->name('alojamientos.destroy');
+
+//EscuelasController
+Route::resource('escuelas',EscuelasController::class);
+Route::get('busquedaEscuelas',[EscuelasController::class, 'busqueda'])->name('escuelas.busqueda');
+Route::post('escuelas/store',[EscuelasController::class, 'store'])->name('escuelas.store');
+Route::post('escuelas/update',[EscuelasController::class, 'update'])->name('escuelas.update');
+Route::post('escuelas/destroy',[EscuelasController::class, 'destroy'])->name('escuelas.destroy');
 
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');

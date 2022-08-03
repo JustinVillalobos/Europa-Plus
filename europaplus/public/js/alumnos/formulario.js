@@ -54,18 +54,7 @@ function save(){
     }
     valid=false;
 
-    let profesion = $('#profesion').val();
-    if(!stringLength(profesion,50)){
-        $('#profesion + span').text("**Demasiados caracteres");
-        cantidadErrores++;
-        valid=true;
-    }
-   
 
-    if(!valid){    
-        $('#profesion + span').text("");
-    }
-    valid=false;
 
 
     let correo =$('#correo').val();
@@ -119,6 +108,7 @@ function save(){
         $('#caduca + span').text("");
     }
     valid=false;
+    
 
     let caduca = $('#caduca').val();
     if(!stringLength(caduca,20)){
@@ -168,6 +158,22 @@ function save(){
     }
     valid=false;
 
+    let tel = $('#tel').val();
+    if(!stringLength(tel,20)){
+        $('#tel + span').text("**Demasiados caracteres");
+        cantidadErrores++;
+        valid=true;
+    }
+    if(tel.length<=0){
+        $('#tel + span').text("**Campo Requerido");
+        cantidadErrores++;
+        valid=true;
+    }
+
+    if(!valid){    
+        $('#tel + span').text("");
+    }
+    valid=false;
      /**********************************  Otros ******************************************/
      let alergias = $('#alergias').val();
      if(!stringLength(alergias,100)){
@@ -204,6 +210,18 @@ function save(){
          $('#telPadre + span').text("");
      }
      valid=false;
+
+     let comentarios = $('#comentarios').val();
+     if(!stringLength(comentarios,300)){
+         $('#comentarios + span').text("**Demasiados caracteres");
+         cantidadErrores++;
+         valid=true;
+     }
+ 
+     if(!valid){    
+         $('#comentarios + span').text("");
+     }
+     valid=false;
     console.log("Cantidad de errores:"+cantidadErrores);
     
     if(cantidadErrores==0){
@@ -213,8 +231,9 @@ function save(){
         form.apellidos=apellidos;
         form.fecha_nacim=temporal[2]+"/"+temporal[1]+"/"+temporal[0];
         form.edad=$('#edad').val();
-        form.profesion=profesion;
+        form.tel=tel;
         form.correo=correo;
+        form.comentarios=comentarios;
         form.sexo=$("#sexo").val();
         form.pasaporte=pasaporte;
         if(caduca.length>0){
@@ -270,7 +289,7 @@ function limpiarFormulario(){
     $('#apellidos').val("");
     $('#fecha_nacim').val("");
     $('#edad').val("");
-    $('#profesion').val("");
+    $('#tel').val("");
     $('#pasaporte').val("");
     $('#caduca').val("");
     $("#sexo").val($("#sexo option:first").val());
@@ -286,6 +305,7 @@ function limpiarFormulario(){
     $('#alergias').val("");
     $('#nombrePadre').val("");
     $('#telPadre').val("");
+    $('#comentarios').val("");
 }
 function setProvincias(provincias){
     console.log(provincias);

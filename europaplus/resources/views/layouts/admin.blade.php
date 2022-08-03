@@ -22,8 +22,8 @@
         <link href="{{ URL::asset('css/app.css'); }}" rel="stylesheet">
         <link href="{{ URL::asset('plugins/iconos/style.css'); }}" rel="stylesheet">
         <!-- Styles -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         
-
        
     </head>
     <body class="antialiased">
@@ -70,10 +70,9 @@
                             <div class="card-body" style="padding-top: 5px;">
                                 <ul style="padding-left: 0px;">
                                     <li><a href='{{route("alumno.index")}}'><i class="i i-database"></i> Alumnos</a></li>
-                                    <li><a href="./escuela"><i class="i i-database"></i> Escuelas</a></li>
-                                    <li><a href="./curso"><i class="i i-database"></i> Cursos</a></li>
-                                    <li><a href="./alojamiento"><i class="i i-database"></i> Alojamientos</a></li>
-                                    <li><a href="./empresa"><i class="i i-database"></i> Empresas</a></li>
+                                    <li><a href="{{route('escuelas.index')}}"><i class="i i-database"></i> Escuelas</a></li>
+                                    <li><a href="{{route('curso.index')}}"><i class="i i-database"></i> Cursos</a></li>
+                                    <li><a href="{{route('alojamientos.index')}}"><i class="i i-database"></i> Alojamientos</a></li>
                                     <li><a href="{{route('pais.index')}}"><i class="i i-database"></i> Países</a></li>
                                     <li><a href="{{route('provincia.index')}}"><i class="i i-database"></i> Provincias</a></li>
                                     <li><a href="{{route('localidad.index')}}"><i class="i i-database"></i> Localidades</a></li>
@@ -96,9 +95,11 @@
                 <div class="col-sm-3"></div>
             </div>
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
         <script src="{{ URL::asset('plugins/sweetalert2/dist/sweetalert2.all.min.js'); }}"></script>
         <script src="{{ URL::asset('plugins/DataTables/datatables.min.js'); }}"></script>
         <script src="{{ URL::asset('js/Validaciones.js'); }}"></script>
         <script src="{{ URL::asset('js/alerts.js'); }}"></script>
+
     </body>
 </html>

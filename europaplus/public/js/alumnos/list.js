@@ -13,7 +13,7 @@ function validate(e,form,id){
             url:'./alumno/destroy',
             data:{id:id},
             success:function(data){
-              if(data==true){
+              if(data=='true'){
                 let rsp=alertTimeCorrect("Alumno eliminado exitosamente",function(response){
                     window.location="../alumno";
                   });
