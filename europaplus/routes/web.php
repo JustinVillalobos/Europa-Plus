@@ -19,6 +19,7 @@ use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlojamientosController;
+use App\Http\Controllers\SuplementosController;
 use App\Http\Controllers\EscuelasController;
 use App\Http\Controllers\AjaxController;
 Route::get('/', function () {
@@ -71,6 +72,11 @@ Route::get('busquedaEscuelas',[EscuelasController::class, 'busqueda'])->name('es
 Route::post('escuelas/store',[EscuelasController::class, 'store'])->name('escuelas.store');
 Route::post('escuelas/update',[EscuelasController::class, 'update'])->name('escuelas.update');
 Route::post('escuelas/destroy',[EscuelasController::class, 'destroy'])->name('escuelas.destroy');
+
+
+//Suplementos
+Route::resource('suplementos',SuplementosController::class);
+
 
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');

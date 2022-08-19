@@ -430,6 +430,8 @@ function save(){
         form.supcur = $("#sup-cur").val();
         form.alj = $("#alj").val();
         form.supalj = $("#sup-alj").val();
+        form.esc_id = $("#esc_id").val();
+        console.log(form);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -437,13 +439,13 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:$("#route").val()+'/store',
+            url:$("#route").val()+'/update',
             data:{escuela:form},
             success:function(data){
               let json = JSON.parse(data);
               if(data=='true'){
-                let rsp=alertTimeCorrect("Escuela Registrada exitosamente",function(response){
-                    window.location=$("route").val()+"/create";
+                let rsp=alertTimeCorrect("Escuela Actualizada exitosamente",function(response){
+                    window.location=$("#route").val()+"/"+$("#esc_id").val()+"/edit";
                   });
               }else{
                 console.log(json);
@@ -532,7 +534,7 @@ $('.btn-primary').click(function(){
     
 });
 function limpiarFormulario(){
-    window.location =$("#route").val()+"/create";
+    window.location=$("#route").val()+"/"+$("#esc_id").val()+"/edit";
 
 }
 $('.btn-warning').click(function(){

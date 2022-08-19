@@ -13,7 +13,7 @@
 </div>
 <div class="row" style="margin-top:15px;">
     <div class="col-sm-6" style="padding-left:15px;">
-        <a href="/escuelas/create" class="btn btn-primary" style="margin-left:5px;height:35px;">
+        <a href='{{route("escuelas.create")}}' class="btn btn-primary" style="margin-left:5px;height:35px;">
                 <i class="fa fa-plus"></i> Agregar Escuela
         </a>
     </div>
@@ -31,13 +31,15 @@
             <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." style="margin-left:5px;width:67%"/>
             <select name="type" class="form-select" style="width:120px;margin-left:5px">
                 <option value="Nombre"<?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
+                <option value="Pais"<?php if($type == 'Pais'){ echo "selected";}?>>País</option>
+                <option value="Idioma"<?php if($type == 'Idioma'){ echo "selected";}?>>Idioma</option>
             </select>
             <button type="submit" class="btn btn-success" style="margin-left:5px">
                 <i class="fa fa-search"></i>
             </button>
                                         
         </form>
-        <a href="/escuelas" class="btn btn-primary" style="margin-left:5px">
+        <a href='{{route("escuelas.index")}}' class="btn btn-primary" style="margin-left:5px">
             <i class="fa fa-refresh"></i>
         </a>
     </div>
@@ -86,6 +88,7 @@
         {{ $escuelas->links('vendor.pagination.bootstrap-4') }}
     </div>
 </div>
-
-<script src="{{ URL::asset('js/alojamientos/list.js'); }}"></script>       
+<?php $route2 = route("escuelas.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
+<script src="{{ URL::asset('js/escuelas/list.js'); }}"></script>       
 @stop

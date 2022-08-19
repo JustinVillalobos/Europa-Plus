@@ -79,3 +79,17 @@ select,.select2,.select2 .selection, .select2-selection{
     color: #212529;
     height: calc(1.5em + .75rem + 2px)!important;
 }
+.select-select2-custom{
+    padding-left: 30%;
+    height: 300px;
+    justify-content: start;
+    align-items: start;
+}
+.select-select2-custom .select2-selection{
+    height: 300px!important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.select2 textarea{
+    height: 35px!important;
+}

@@ -73,6 +73,7 @@
                                     <li><a href="{{route('escuelas.index')}}"><i class="i i-database"></i> Escuelas</a></li>
                                     <li><a href="{{route('curso.index')}}"><i class="i i-database"></i> Cursos</a></li>
                                     <li><a href="{{route('alojamientos.index')}}"><i class="i i-database"></i> Alojamientos</a></li>
+                                    <li><a href="{{route('suplementos.index')}}"><i class="i i-database"></i> Suplementos</a></li>
                                     <li><a href="{{route('pais.index')}}"><i class="i i-database"></i> Países</a></li>
                                     <li><a href="{{route('provincia.index')}}"><i class="i i-database"></i> Provincias</a></li>
                                     <li><a href="{{route('localidad.index')}}"><i class="i i-database"></i> Localidades</a></li>
