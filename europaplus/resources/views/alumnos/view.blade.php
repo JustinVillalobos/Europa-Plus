@@ -249,5 +249,7 @@ if(strlen($alumno->alu_dni_fexp)>0){
        
     </div>
 </div>
+<?php $route2 = route("alumno.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/alumnos/view.js'); }}"></script>  
 @stop

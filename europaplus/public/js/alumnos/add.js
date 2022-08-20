@@ -262,7 +262,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../alumno/store',
+            url:$("#route").val()+'store',
             data:{alumno:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -335,7 +335,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../alumno";
+          window.location =$("#route").val();
         }
       });
 });
@@ -347,7 +347,7 @@ function ajaxProvincias(pais){
     });
       $.ajax({
         type:'GET',
-        url:'../getProvincias',
+        url:$("#route").val()+'/../getProvincias',
         data:{pais_id:pais},
         success:function(data){
           let json = JSON.parse(data);
@@ -370,7 +370,7 @@ function ajaxLocalidades(provincia){
     });
       $.ajax({
         type:'GET',
-        url:'../getLocalidades',
+        url:$("#route").val()+'/../getLocalidades',
         data:{prv_id:provincia},
         success:function(data){
           let json = JSON.parse(data);

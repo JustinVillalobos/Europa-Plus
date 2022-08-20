@@ -10,13 +10,13 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./curso/destroy',
+            url:$("#route").val()+'/destroy',
             data:{id:id},
             success:function(data){
                 console.log(data,id);
               if(data=='true'){
                 let rsp=alertTimeCorrect("Curso eliminado exitosamente",function(response){
-                    window.location="../curso";
+                    window.location=$("#route").val();
                   });
               }else{
                 alertError("Error al eliminar Curso: No se puede eliminar porque el Curso ha sido utilizado en alguna operación");

@@ -54,7 +54,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../curso/store',
+            url:$("#route").val()+'/store',
             data:{curso:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -91,7 +91,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../curso";
+          window.location =$("#route").val();
         }
       });
 });

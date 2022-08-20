@@ -36,13 +36,13 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../../pais/update',
+            url:$("#route").val()+'/update',
             data:{pais:form},
             success:function(data){
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("País Actualizado exitosamente",function(response){
-                        window.location ="../../pais/"+$('#id').val()+"/edit";
+                        window.location =$("#route").val()+"/"+$('#id').val()+"/edit";
                       });
                 }else{
                     alertError("Error inesperado al guardar el País, por favor compruebe los datos");
@@ -65,7 +65,7 @@ function limpiarFormulario(){
 $('.btn-primary').click(function(){
     confirmacionEliminar("¿Desea reiniciar el formulario?", function(response) {
         if(response) {
-            window.location ="../../pais/"+$('#id').val()+"/edit";
+            window.location =$("#route").val()+"/"+$('#id').val()+"/edit";
         }
       });
     
@@ -73,7 +73,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../pais";
+          window.location =$("#route").val();
         }
       });
 });

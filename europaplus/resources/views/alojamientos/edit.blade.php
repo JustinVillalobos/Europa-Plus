@@ -4,7 +4,7 @@
     <div class="col-sm-12">
         <div class="" style="padding-left:5px;">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href='{{route("curso.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Alojamientos</h5></a></li>
+                <li class="breadcrumb-item"><a href='{{route("alojamientos.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Alojamientos</h5></a></li>
                 <li class="breadcrumb-item active" aria-current="page">Editar Alojamiento</li>
             </ol>
         </div>
@@ -42,6 +42,7 @@
         <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
     </div>
 </div>
- 
+<?php $route2 = route("alojamientos.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/alojamientos/edit.js'); }}"></script>     
 @stop

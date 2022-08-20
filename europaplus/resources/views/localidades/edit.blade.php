@@ -61,6 +61,7 @@
         <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
     </div>
 </div>
- 
+<?php $route2 = route("localidad.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/localidad/edit.js'); }}"></script>     
 @stop

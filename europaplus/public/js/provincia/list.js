@@ -11,13 +11,13 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./provincia/destroy',
+            url:$("#route").val()+'/destroy',
             data:{id:id},
             success:function(data){
                 console.log(data,id);
               if(data=='true'){
                 let rsp=alertTimeCorrect("Provincia eliminado exitosamente",function(response){
-                    window.location="../provincia";
+                    window.location=$("#route").val()+"";
                   });
               }else{
                 alertError("Error al eliminar Provincia: No se puede eliminar porque la Provincia ha sido utilizado en alguna localidad");

@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    $('#paises').select2();
+   // var $eventSelect = $('#paises');
+   // $eventSelect.on("select2:select", function (e) {  ajaxProvincias($('#paises').val());});
+});
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -37,7 +42,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../../provincia/update',
+            url:$("#route").val()+'/update',
             data:{provincia:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -59,14 +64,14 @@ function save(){
     }
 }
 function limpiarFormulario(){
-    window.location ="../../provincia/"+$('#id').val()+'/edit';
+    window.location =$("#route").val()+"/"+$('#id').val()+'/edit';
    
 }
 
 $('.btn-primary').click(function(){
     confirmacionEliminar("¿Desea reiniciar el formulario?", function(response) {
         if(response) {
-            window.location ="../../provincia/"+$('#id').val()+'/edit';
+            window.location =$("#route").val()+"/"+$('#id').val()+'/edit';
         }
       });
     
@@ -74,7 +79,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../../provincia";
+          window.location =$("#route").val();
         }
       });
 });

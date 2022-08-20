@@ -35,7 +35,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../pais/store',
+            url:$("#route").val()+'/store',
             data:{pais:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -72,7 +72,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../pais";
+          window.location =$("#route").val();
         }
       });
 });

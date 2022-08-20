@@ -262,7 +262,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../store',
+            url:$("#route").val()+'/../store',
             data:{alumno:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -341,7 +341,7 @@ function ajaxProvincias(pais){
     });
       $.ajax({
         type:'GET',
-        url:'../getProvincias',
+        url:$("#route").val()+'/../getProvincias',
         data:{pais_id:pais},
         success:function(data){
           let json = JSON.parse(data);
@@ -364,7 +364,7 @@ function ajaxLocalidades(provincia){
     });
       $.ajax({
         type:'GET',
-        url:'../getLocalidades',
+        url:$("#route").val()+'/../getLocalidades',
         data:{prv_id:provincia},
         success:function(data){
           let json = JSON.parse(data);

@@ -54,7 +54,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../alojamientos/store',
+            url:$("#route").val()+'/store',
             data:{alojamiento:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -91,7 +91,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../alojamientos";
+          window.location =$("#route").val();
         }
       });
 });

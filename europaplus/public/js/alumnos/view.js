@@ -10,7 +10,7 @@ function update(){
             });
               $.ajax({
                 type:'POST',
-                url:'../../alumno/updateEstado',
+                url:$("#route").val()+'/updateEstado',
                 data:{estado:state,id:id},
                 success:function(data){
                     let json = JSON.parse(data);

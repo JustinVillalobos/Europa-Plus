@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    $('#paises').select2();
+   // var $eventSelect = $('#paises');
+   // $eventSelect.on("select2:select", function (e) {  ajaxProvincias($('#paises').val());});
+});
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -36,7 +41,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../provincia/store',
+            url:$("#route").val()+'/store',
             data:{provincia:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -74,7 +79,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../provincia";
+          window.location =$("#route").val();
         }
       });
 });

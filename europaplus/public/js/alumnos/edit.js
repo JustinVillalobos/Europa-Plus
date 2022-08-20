@@ -271,7 +271,7 @@ function save(){
         console.log(form);
           $.ajax({
             type:'POST',
-            url:'../../alumno/update',
+            url:$("#route").val()+'/update',
             data:{alumno:form},
             success:function(data){
                 let json = JSON.parse(data);
@@ -292,7 +292,7 @@ function save(){
     }
 }
 function limpiarFormulario(){
-    window.location = "../../alumno/"+$('#id').val()+'/edit';
+    window.location = $("#route").val()+"/"+$('#id').val()+'/edit';
 }
 function setProvincias(provincias){
     console.log(provincias);
@@ -322,7 +322,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../../alumno";
+          window.location =$("#route").val();
         }
       });
 });
@@ -334,7 +334,7 @@ function ajaxProvincias(pais){
     });
       $.ajax({
         type:'GET',
-        url:'../../getProvincias',
+        url:$("#route").val()+'/../getProvincias',
         data:{pais_id:pais},
         success:function(data){
           let json = JSON.parse(data);
@@ -357,7 +357,7 @@ function ajaxLocalidades(provincia){
     });
       $.ajax({
         type:'GET',
-        url:'../../getLocalidades',
+        url:$("#route").val()+'/../getLocalidades',
         data:{prv_id:provincia},
         success:function(data){
           let json = JSON.parse(data);

@@ -219,6 +219,7 @@
         <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
     </div>
 </div>
- 
+<?php $route2 = route("alumno.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/alumnos/add.js'); }}"></script>     
 @stop

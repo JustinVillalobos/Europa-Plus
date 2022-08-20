@@ -56,7 +56,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:'../../alojamientos/update',
+            url:$("#route").val()+'/update',
             data:{alojamiento:form},
             success:function(data){
                 console.log(data);
@@ -79,7 +79,7 @@ function save(){
     }
 }
 function limpiarFormulario(){
-    window.location="../../alojamientos/"+$('#id').val()+"/edit";
+    window.location=$("#route").val()+"/"+$('#id').val()+"/edit";
 }
 
 $('.btn-primary').click(function(){
@@ -93,7 +93,7 @@ $('.btn-primary').click(function(){
 $('.btn-warning').click(function(){
     confirmacionEliminar("¿Desea Salir?", function(response) {
         if(response) {
-          window.location ="../../alojamientos";
+          window.location =$("#route").val();
         }
       });
 });

@@ -10,13 +10,13 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./pais/destroy',
+            url:$("#route").val()+'/destroy',
             data:{id:id},
             success:function(data){
                 console.log(data,id);
               if(data=='true'){
                 let rsp=alertTimeCorrect("País eliminado exitosamente",function(response){
-                    window.location="../pais";
+                    window.location=$("#route").val();
                   });
               }else{
                 alertError("Error al eliminar País: No se puede eliminar porque el País ha sido utilizado en alguna provincia");

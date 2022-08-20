@@ -13,7 +13,7 @@
 </div>
 <div class="row" style="margin-top:15px;">
     <div class="col-sm-6" style="padding-left:15px;">
-        <a href="/localidad/create" class="btn btn-primary" style="margin-left:5px;height:35px;">
+        <a href='{{route("localidad.create")}}' class="btn btn-primary" style="margin-left:5px;height:35px;">
                 <i class="fa fa-plus"></i> Agregar localidad
         </a>
     </div>
@@ -39,7 +39,7 @@
             </button>
                                         
         </form>
-        <a href="/localidad" class="btn btn-primary" style="margin-left:5px">
+        <a href='{{route("localidad.index")}}' class="btn btn-primary" style="margin-left:5px">
             <i class="fa fa-refresh"></i>
         </a>
     </div>
@@ -86,6 +86,7 @@
         {{ $localidades->links('vendor.pagination.bootstrap-4') }}
     </div>
 </div>
-
+<?php $route2 = route("localidad.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/localidad/list.js'); }}"></script>       
 @stop

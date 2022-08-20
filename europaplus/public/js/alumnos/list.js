@@ -10,12 +10,12 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./alumno/destroy',
+            url:$("#route").val()+'/alumno/destroy',
             data:{id:id},
             success:function(data){
               if(data=='true'){
                 let rsp=alertTimeCorrect("Alumno eliminado exitosamente",function(response){
-                    window.location="../alumno";
+                    window.location=$("#route").val();
                   });
               }else{
                 alertError("Error al eliminar alumno: No se puede eliminar porque el alumno ha sido o es parte de una operación");

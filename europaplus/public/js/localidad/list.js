@@ -11,13 +11,13 @@ function validate(e,form,id){
         });
           $.ajax({
             type:'POST',
-            url:'./localidad/destroy',
+            url:$("#route").val()+'/destroy',
             data:{id:id},
             success:function(data){
                 console.log(data,id);
               if(data=='true'){
                 let rsp=alertTimeCorrect("Localidad eliminado exitosamente",function(response){
-                    window.location="../localidad";
+                    window.location=$("#route").val();
                   });
               }else{
                 alertError("Error al eliminar localidad: No se puede eliminar porque la localidad ha sido utilizado en algun alumno");

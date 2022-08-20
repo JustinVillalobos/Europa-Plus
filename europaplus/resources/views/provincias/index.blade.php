@@ -13,7 +13,7 @@
 </div>
 <div class="row" style="margin-top:15px;">
     <div class="col-sm-6" style="padding-left:15px;">
-        <a href="/provincia/create" class="btn btn-primary" style="margin-left:5px;height:35px;">
+        <a href='{{route("provincia.create")}}' class="btn btn-primary" style="margin-left:5px;height:35px;">
                 <i class="fa fa-plus"></i> Agregar Provincia
         </a>
     </div>
@@ -38,7 +38,7 @@
             </button>
                                         
         </form>
-        <a href="/provincia" class="btn btn-primary" style="margin-left:5px">
+        <a href='{{route("provincia.index")}}' class="btn btn-primary" style="margin-left:5px">
             <i class="fa fa-refresh"></i>
         </a>
     </div>
@@ -83,6 +83,7 @@
         {{ $provincias->links('vendor.pagination.bootstrap-4') }}
     </div>
 </div>
-
+<?php $route2 = route("provincia.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/provincia/list.js'); }}"></script>       
 @stop

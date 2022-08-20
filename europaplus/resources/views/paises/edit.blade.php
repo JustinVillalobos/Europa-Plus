@@ -16,7 +16,7 @@
     
 
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">NUEVO PAÍS</div>
+        <div class="section">EDITAR PAÍS</div>
     </div>
     
     <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
@@ -36,6 +36,7 @@
         <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
     </div>
 </div>
- 
+<?php $route2 = route("pais.index");?>
+<input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/pais/edit.js'); }}"></script>     
 @stop
