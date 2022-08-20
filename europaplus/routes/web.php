@@ -76,7 +76,10 @@ Route::post('escuelas/destroy',[EscuelasController::class, 'destroy'])->name('es
 
 //Suplementos
 Route::resource('suplementos',SuplementosController::class);
-
+Route::get('busquedaSuplemento',[SuplementosController::class, 'busqueda'])->name('suplementos.busqueda');
+Route::post('suplementos/store',[SuplementosController::class, 'store'])->name('suplementos.store');
+Route::post('suplementos/update',[SuplementosController::class, 'update'])->name('suplementos.update');
+Route::post('suplementos/destroy',[SuplementosController::class, 'destroy'])->name('suplementos.destroy');
 
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');

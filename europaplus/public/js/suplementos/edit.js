@@ -10,7 +10,7 @@ function save(){
     let nombre = $('#nombre').val();
     let valid=false;
     /**********************************  Datos Personales ******************************************/
-    if(!stringLength(nombre,50)){
+    if(!stringLength(nombre,100)){
         $('#nombre + span').text("**Demasiados caracteres");
         cantidadErrores++;
         valid=true;
@@ -28,7 +28,7 @@ function save(){
 
     let descr = $('#descr').val();
 
-    if(!stringLength(descr,50)){
+    if(!stringLength(descr,100)){
         $('#descr + span').text("**Demasiados caracteres");
         cantidadErrores++;
         valid=true;
@@ -48,7 +48,8 @@ function save(){
         form.nombre=nombre;
         form.descr = descr;
         form.id=$('#id').val();
-
+        form.tipo =$("#tipo").val();
+   
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -57,15 +58,15 @@ function save(){
           $.ajax({
             type:'POST',
             url:$("#route").val()+'/update',
-            data:{curso:form},
+            data:{suplemento:form},
             success:function(data){
                 let json = JSON.parse(data);
                 if(json){
-                    let rsp=alertTimeCorrect("Curso actualizado exitosamente",function(response){
+                    let rsp=alertTimeCorrect("Suplemento actualizado exitosamente",function(response){
                         limpiarFormulario();
                       });
                 }else{
-                    alertError("Error inesperado al guardar el Curso, por favor compruebe los datos");
+                    alertError("Error inesperado al guardar el Suplemento, por favor compruebe los datos");
                 }
         
             },
