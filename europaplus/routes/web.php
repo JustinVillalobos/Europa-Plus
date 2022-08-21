@@ -21,6 +21,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlojamientosController;
 use App\Http\Controllers\SuplementosController;
 use App\Http\Controllers\EscuelasController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +81,9 @@ Route::get('busquedaSuplemento',[SuplementosController::class, 'busqueda'])->nam
 Route::post('suplementos/store',[SuplementosController::class, 'store'])->name('suplementos.store');
 Route::post('suplementos/update',[SuplementosController::class, 'update'])->name('suplementos.update');
 Route::post('suplementos/destroy',[SuplementosController::class, 'destroy'])->name('suplementos.destroy');
+
+Route::get('reportes',[ReporteController::class, 'index'])->name('reporte.index');
+Route::get('busqueda',[ReporteController::class, 'busqueda'])->name('reporte.busqueda');
 
 /* AjaxController */
 Route::get('getProvincias',[AjaxController::class, 'getProvincias'])->name('ajax.getProvincias');
