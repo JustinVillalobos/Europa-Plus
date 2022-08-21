@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -45,10 +48,10 @@ function save(){
     valid=false;
     if(cantidadErrores==0){
         let form = {};
+        $("#spinDiv").css('display','flex');
         form.nombre=nombre;
         form.descr = descr;
         form.id=$('#id').val();
-        console.log(form);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -60,6 +63,7 @@ function save(){
             data:{alojamiento:form},
             success:function(data){
                 console.log(data);
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("Alojamiento actualizado exitosamente",function(response){

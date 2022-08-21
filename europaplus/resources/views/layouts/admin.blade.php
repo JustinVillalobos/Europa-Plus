@@ -27,6 +27,7 @@
        
     </head>
     <body class="antialiased">
+        <div style="position:absolute;width:100%;">
         <header >
              <div class="row">
                 <div class="col-sm-2">
@@ -45,16 +46,13 @@
                     <a href="./admin" class="text-white font-weight-bold"><i class="fa fa-cog" aria-hidden="true"></i> PANEL DE CONTROL</a>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
-                    <a href="./nuevo_interesado" class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nuevo Interesado</a>
-                </div>
-                <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
                     <a href='{{route("alumno.create")}}' class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nuevo Alumno</a>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
                     <a href="./nueva_operacion" class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nueva Operación</a>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
-                    <a href="./admin" class="text-white font-weight-bold"><i class="fa fa-book" aria-hidden="true"></i> Datos Aplicación</a>
+                    <a href='{{route("alumno.index")}}' class="text-white font-weight-bold"><i class="fa fa-book" aria-hidden="true"></i> Datos Aplicación</a>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
                     <a href="./admin" class="text-white font-weight-bold"><i class="i i-cogs" aria-hidden="true"></i> Herramientas</a>
@@ -96,6 +94,21 @@
                 <div class="col-sm-3"></div>
             </div>
         </footer>
+        </div>
+        <div style="position:fixed;width:100%;height:100vh;" id="spinDiv">
+            <div class="loader">
+                <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="load one" cx="60" cy="60" r="40" />
+                    <circle class="load two" cx="60" cy="60" r="40" />
+                    <circle class="load three" cx="60" cy="60" r="40" />
+                    <g>
+                    <circle class="point one" cx="45" cy="70" r="5" />
+                    <circle class="point two" cx="60" cy="70" r="5" />
+                    <circle class="point three" cx="75" cy="70" r="5" />
+                    </g>
+                </svg>
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
         <script src="{{ URL::asset('plugins/sweetalert2/dist/sweetalert2.all.min.js'); }}"></script>
         <script src="{{ URL::asset('plugins/DataTables/datatables.min.js'); }}"></script>

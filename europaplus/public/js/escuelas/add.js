@@ -12,6 +12,9 @@ sceditor.create(textarea, {
     emoticonsEnabled:false
 });
 $( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
+$( document ).ready(function() {
     $('#cursos').select2(
         {
             placeholder: 'Selecciona los cursos',
@@ -403,6 +406,7 @@ function save(){
 
      /******************************************  AJAX ****************************************/
      if(cantidadErrores==0){
+        $("#spinDiv").css('display','flex');
         let form={};
         form.nombre = nombre;
         form.nombre_completo =nombre_completo;
@@ -440,6 +444,7 @@ function save(){
             url:$("#route").val()+'/store',
             data:{escuela:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
               let json = JSON.parse(data);
               if(data=='true'){
                 let rsp=alertTimeCorrect("Escuela Registrada exitosamente",function(response){

@@ -1,8 +1,12 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function update(){
     let state = $('#state').val();
     let id=$('#id').val();
     confirmacionEliminar("¿Desea Actualizar el estado del alumno?", function(response) {
         if(response) {
+            $("#spinDiv").css('display','flex');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -13,6 +17,7 @@ function update(){
                 url:$("#route").val()+'/updateEstado',
                 data:{estado:state,id:id},
                 success:function(data){
+                    $("#spinDiv").css('display','none');
                     let json = JSON.parse(data);
                     if(json){
                         let rsp=alertTimeCorrect("Alumno Actualizado exitosamente",function(response){

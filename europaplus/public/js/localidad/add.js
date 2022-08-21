@@ -8,6 +8,9 @@ $( document ).ready(function() {
 });
 
 
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -36,6 +39,7 @@ function save(){
     }
     valid=false;
     if(cantidadErrores==0){
+        $("#spinDiv").css('display','flex');
         let form = {};
         form.descr=nombre;
         form.pais = $('#paises').val();
@@ -50,8 +54,10 @@ function save(){
             url:$("#route").val()+'/store',
             data:{localidad:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
+                    
                     let rsp=alertTimeCorrect("Localidad Registrada exitosamente",function(response){
                         limpiarFormulario();
                       });

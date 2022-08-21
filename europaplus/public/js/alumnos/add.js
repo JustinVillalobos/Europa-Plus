@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -225,6 +228,7 @@ function save(){
     console.log("Cantidad de errores:"+cantidadErrores);
     
     if(cantidadErrores==0){
+        $("#spinDiv").css('display','flex');
         let temporal = fecha_nacim.split('-');
         let form = {};
         form.nombre=nombre;
@@ -265,6 +269,7 @@ function save(){
             url:$("#route").val()+'store',
             data:{alumno:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("Alumno Registrado exitosamente",function(response){

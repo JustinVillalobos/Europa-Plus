@@ -1,9 +1,13 @@
+$( document ).ready(function() {
+  $("#spinDiv").css('display','none');
+});
 function validate(e,form,id){
     console.log(id);
     confirmacionEliminar("¿Desea eliminar el registro?", function(response) {
         if(response) {
            // form.submit();
            // return true;
+           $("#spinDiv").css('display','flex');
            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -14,7 +18,7 @@ function validate(e,form,id){
             url:$("#route").val()+'/destroy',
             data:{id:id},
             success:function(data){
-                console.log(data,id);
+              $("#spinDiv").css('display','none');
               if(data=='true'){
                 let rsp=alertTimeCorrect("Provincia eliminado exitosamente",function(response){
                     window.location=$("#route").val()+"";

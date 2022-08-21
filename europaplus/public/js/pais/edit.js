@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -29,6 +32,7 @@ function save(){
         let form = {};
         form.descr=nombre;
         form.id = $('#id').val();
+        $("#spinDiv").css('display','flex');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -39,6 +43,7 @@ function save(){
             url:$("#route").val()+'/update',
             data:{pais:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("País Actualizado exitosamente",function(response){

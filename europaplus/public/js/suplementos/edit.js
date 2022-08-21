@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -44,6 +47,7 @@ function save(){
     }
     valid=false;
     if(cantidadErrores==0){
+        $("#spinDiv").css('display','flex');
         let form = {};
         form.nombre=nombre;
         form.descr = descr;
@@ -60,6 +64,7 @@ function save(){
             url:$("#route").val()+'/update',
             data:{suplemento:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("Suplemento actualizado exitosamente",function(response){

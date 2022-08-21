@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -28,6 +31,7 @@ function save(){
     if(cantidadErrores==0){
         let form = {};
         form.descr=nombre;
+        $("#spinDiv").css('display','flex');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -38,6 +42,7 @@ function save(){
             url:$("#route").val()+'/store',
             data:{pais:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("País Registrado exitosamente",function(response){

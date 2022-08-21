@@ -1,3 +1,6 @@
+$( document ).ready(function() {
+    $("#spinDiv").css('display','none');
+  });
 function  stringLength(value,max){
     if(value.length<=max){
         return true;
@@ -47,6 +50,7 @@ function save(){
         let form = {};
         form.nombre=nombre;
         form.descr = descr;
+        $("#spinDiv").css('display','flex');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -57,6 +61,7 @@ function save(){
             url:$("#route").val()+'/store',
             data:{alojamiento:form},
             success:function(data){
+                $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
                     let rsp=alertTimeCorrect("Alojamiento Registrado exitosamente",function(response){
