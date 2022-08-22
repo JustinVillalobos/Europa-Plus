@@ -23,13 +23,11 @@ use App\Http\Controllers\SuplementosController;
 use App\Http\Controllers\EscuelasController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\LoginController;
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');
-Route::get('busqueda',[AlumnoController::class, 'busqueda'])->name('alumno.busqueda');
+Route::get('busquedaAlumno',[AlumnoController::class, 'busqueda'])->name('alumno.busqueda');
 Route::post('alumno/store',[AlumnoController::class, 'store'])->name('alumno.store');
 Route::post('alumno/update',[AlumnoController::class, 'update'])->name('alumno.update');
 Route::post('alumno/destroy',[AlumnoController::class, 'destroy'])->name('alumno.destroy');
@@ -93,3 +91,10 @@ Route::post('store',[AjaxController::class, 'store'])->name('ajax.store');
 
 /*Cliente */
 Route::get('success',[HomeController::class, 'mensaje'])->name('home.mensaje');
+
+
+/* Login */
+Route::get('/',[LoginController::class, 'index'])->name('login.index');
+Route::get('logout',[LoginController::class, 'logout'])->name('login.logout');
+
+Route::post('loginValidator',[LoginController::class, 'loginValidator'])->name('login.loginValidator');

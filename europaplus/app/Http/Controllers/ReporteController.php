@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\DB;
 session_start();
 class ReporteController extends Controller
 {
+    public function __construct(){
+        $uri = request()->route()->uri;
+        if(empty($_SESSION['id']) ){
+            return redirect('/')->send();
+        }else{
+            
+            if(!empty($_SESSION['id'])){
+                
+                if($_SESSION['id']=="" ){
+                   
+                    return redirect('/')->send();
+                }
+            }
+        }
+    }
     //
     public function index(){
 

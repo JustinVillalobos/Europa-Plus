@@ -57,6 +57,10 @@
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
                     <a href='{{route("reporte.index")}}' class="text-white font-weight-bold"><i class="i i-cogs" aria-hidden="true"></i> Herramientas</a>
                 </div>
+
+                <div class="col-sm-2 d-flex align-items-center justify-content-end text-center border-right">
+                    <a href='{{route("login.logout")}}' class="text-white font-weight-bold"><i class="fa fa fa-sign-out" aria-hidden="true"></i> </a>
+                </div>
              </div>
         </nav>
         <div class="flex-container body" style="overflow-x: hidden;padding-bottom:25px;">

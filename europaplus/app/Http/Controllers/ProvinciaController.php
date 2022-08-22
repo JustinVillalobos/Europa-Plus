@@ -8,6 +8,21 @@ use App\Models\Paise;
 session_start();
 class ProvinciaController extends Controller
 {
+    public function __construct(){
+        $uri = request()->route()->uri;
+        if(empty($_SESSION['id']) ){
+            return redirect('/')->send();
+        }else{
+            
+            if(!empty($_SESSION['id'])){
+                
+                if($_SESSION['id']=="" ){
+                   
+                    return redirect('/')->send();
+                }
+            }
+        }
+    }
     /**
      * Display a listing of the resource.
      *
