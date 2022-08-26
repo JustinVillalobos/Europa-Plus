@@ -24,6 +24,12 @@ use App\Http\Controllers\EscuelasController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OperacionController;
+
+Route::resource('operacion',OperacionController::class);
+Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
+
+
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');
