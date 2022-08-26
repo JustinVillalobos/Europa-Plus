@@ -81,6 +81,7 @@ Route::post('suplementos/update',[SuplementosController::class, 'update'])->name
 Route::post('suplementos/destroy',[SuplementosController::class, 'destroy'])->name('suplementos.destroy');
 
 Route::get('reportes',[ReporteController::class, 'index'])->name('reporte.index');
+Route::post('reportes/generateFactura',[ReporteController::class, 'generateFactura'])->name('reporte.generateFactura');
 Route::get('busqueda',[ReporteController::class, 'busqueda'])->name('reporte.busqueda');
 
 /* AjaxController */

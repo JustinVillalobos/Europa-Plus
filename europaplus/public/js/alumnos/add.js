@@ -266,7 +266,7 @@ function save(){
         });
           $.ajax({
             type:'POST',
-            url:$("#route").val()+'store',
+            url:$("#route").val()+'/store',
             data:{alumno:form},
             success:function(data){
                 $("#spinDiv").css('display','none');

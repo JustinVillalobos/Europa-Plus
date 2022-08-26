@@ -131,17 +131,22 @@ class ReporteController extends Controller
         return view('reporte.index',$data);
     }
     public function generateFactura(Request $request){
-        $proforma = $request['proforma'];
-        $fac_id = $request['fac_id'];
-        $opr_id = $request['opr_id'];
-      /*  if ($proforma==1) {
+       // $proforma = $request['proforma'];
+       // $fac_id = $request['fac_id'];
+       // $opr_id = $request['opr_id'];
+       $input = $request->all();
+
+       $datos=$input['factura'];
+
+       $proforma = $datos['proforma'];
+       if ($proforma==1) {
             $query = "SELECT f.*, o.*, esc.*, a.*, idiom.opc_descr idioma
                FROM facturas f
                JOIN operaciones o ON o.opr_id=f.opr_id
                LEFT JOIN escuelas esc ON esc.esc_id=o.esc_id
                LEFT JOIN alumnos a ON a.alu_id=o.alu_id   
                LEFT JOIN opciones idiom ON idiom.opc_id=esc.idi_id
-               WHERE f.fac_proforma=1 and f.fac_id=".$fac_id;    
+               WHERE f.fac_proforma=1 and f.fac_id=".$datos['fac_id'];    
         }else {
             $query = "SELECT f.*, o.*, esc.*, a.*, p.pag_tipo, idiom.opc_descr idioma
                FROM facturas f
@@ -150,7 +155,10 @@ class ReporteController extends Controller
                LEFT JOIN escuelas esc ON esc.esc_id=o.esc_id
                LEFT JOIN alumnos a ON a.alu_id=o.alu_id   
                LEFT JOIN opciones idiom ON idiom.opc_id=esc.idi_id
-               WHERE f.fac_id=".$fac_id;
-        } */
+               WHERE f.fac_id=".$datos['fac_id'];
+        } 
+        $factura = DB::select($query);
+        echo json_encode($factura);
+       // return view('reporte.factura');
     }
 }
