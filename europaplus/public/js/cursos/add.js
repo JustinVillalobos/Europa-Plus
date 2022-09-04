@@ -46,10 +46,32 @@ function save(){
         $('#descr + span').text("");
     }
     valid=false;
+    let descr_es = $('#descr_es').val();
+
+    if(!stringLength(descr_es,50)){
+        $('#descr_es + span').text("**Demasiados caracteres");
+        cantidadErrores++;
+        valid=true;
+    }
+    if(descr_es.length<=0){
+        $('#descr_es + span').text("**Campo Requerido");
+        cantidadErrores++;
+        valid=true;
+    }
+
+    if(!valid){    
+        $('#descr_es + span').text("");
+    }
+    valid=false;
+    let tipos = $('#tipos').val();
+
+   
     if(cantidadErrores==0){
         let form = {};
         form.nombre=nombre;
         form.descr = descr;
+        form.tipos=tipos;
+        form.descr_es=descr_es;
         $("#spinDiv").css('display','flex');
         $.ajaxSetup({
             headers: {
@@ -83,6 +105,7 @@ function save(){
 function limpiarFormulario(){
     $('#descr').val("");
     $('#nombre').val("");
+    $('#descr_es').val("");
 }
 
 $('.btn-primary').click(function(){

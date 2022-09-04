@@ -25,6 +25,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OperacionController;
+use App\Http\Controllers\TipoController;
 
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
@@ -85,6 +86,13 @@ Route::get('busquedaSuplemento',[SuplementosController::class, 'busqueda'])->nam
 Route::post('suplementos/store',[SuplementosController::class, 'store'])->name('suplementos.store');
 Route::post('suplementos/update',[SuplementosController::class, 'update'])->name('suplementos.update');
 Route::post('suplementos/destroy',[SuplementosController::class, 'destroy'])->name('suplementos.destroy');
+
+//Tipos
+Route::resource('tipos',TipoController::class);
+Route::get('busquedaTipos',[TipoController::class, 'busqueda'])->name('tipos.busqueda');
+Route::post('tipos/store',[TipoController::class, 'store'])->name('tipos.store');
+Route::post('tipos/update',[TipoController::class, 'update'])->name('tipos.update');
+Route::post('tipos/destroy',[TipoController::class, 'destroy'])->name('tipos.destroy');
 
 Route::get('reportes',[ReporteController::class, 'index'])->name('reporte.index');
 Route::post('reportes/generateFactura',[ReporteController::class, 'generateFactura'])->name('reporte.generateFactura');

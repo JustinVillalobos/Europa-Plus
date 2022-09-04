@@ -28,8 +28,26 @@
         </div>
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
-                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción:</label>
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción Inglés:</label>
                  <input type="text" class="form-control" style="width:67%;" id="descr" value="{{$curso->cur_descr_en}}"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción Español:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="descr_es" value="{{$curso->cur_descr}}"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Tipo:</label>
+                 <Select type="text" class="form-select" style="width:67%;" id="tipos" value="{{$curso->tipo_id}}">
+                    @foreach($tipos as $t)
+                     <option value="{{$t->tipo_id}}" <?php if($t->tipo_id ==$curso->tipo_id){echo "selected";}?>>{{$t->tipo_descripcion}}</option>
+                    @endforeach
+                </Select>
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>

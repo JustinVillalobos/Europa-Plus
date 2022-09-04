@@ -29,10 +29,6 @@ class AlojamientosEscuela extends Model
 		'alj_id' => 'int',
 		'esc_id' => 'int'
 	];
-	protected $fillable = [
-		'alj_id',
-		'esc_id'
-	];
 
 	public function escuela()
 	{

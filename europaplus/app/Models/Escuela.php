@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $esc_direccion
  * @property string $esc_email
  * @property string $esc_telefono
- * @property string $esc_fax
+ * @property string|null $esc_fax
  * @property string $esc_cp
  * @property int $idi_id
  * @property int $loc_id

@@ -49,26 +49,30 @@
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Serie/Número</th>
-                    <th>Nombre</th>
-                    <th>Concepto</th>
-                    <th>Importe</th>
                     <th style="width:75px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($operaciones as $o)
+                @foreach($operaciones as $key=>$o)
                     <tr>
                         <?php
                             $date = date_create($o->opr_fecha);
 
-                            $formated_DATETIME = date_format($date, 'Y-m-d');
+                            $formated_DATETIME = date_format($date, 'd/m/Y');
                         ?>
-                        <td>{$formated_DATETIME}}{{$o->alu_nombre}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="" >
+                            <div class="row">
+                                <div class="col-sm-12 mouse-event" data-toggle="collapse" data-target="#collapseExample<?php echo $key;?>" aria-expanded="false" aria-controls="collapseExample">
+                                    {{$formated_DATETIME}} <strong>{{$o->alu_nombre." ".$o->alu_apellidos}}</strong>
+                                </div> 
+                            </div>
+                            <div class="collapse" id="collapseExample<?php echo $key;?>">
+                                <div class="card card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                </div>
+                            </div>
+                        </td>
+
                         <td  class="container" style="width: 75px;vertical-align: middle;text-align: center;">
                              <div class="row">
                                 <div class="col-sm-12">
@@ -78,6 +82,7 @@
                         </td>
                     
                     </tr>
+
                 @endforeach
             </tbody>
         </table>

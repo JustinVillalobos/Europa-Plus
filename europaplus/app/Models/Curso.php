@@ -19,7 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $cur_descr_de
  * @property int $active
  * @property string|null $cur_descr_en
+ * @property int $tipo_id
  * 
+ * @property Tipo $tipo
  * @property Collection|Escuela[] $escuelas
  * @property Collection|Operacione[] $operaciones
  *
@@ -33,7 +35,8 @@ class Curso extends Model
 
 	protected $casts = [
 		'cur_tipo_curso' => 'int',
-		'active' => 'int'
+		'active' => 'int',
+		'tipo_id' => 'int'
 	];
 
 	protected $fillable = [
@@ -42,8 +45,14 @@ class Curso extends Model
 		'cur_descr',
 		'cur_descr_de',
 		'active',
-		'cur_descr_en'
+		'cur_descr_en',
+		'tipo_id'
 	];
+
+	public function tipo()
+	{
+		return $this->belongsTo(Tipo::class);
+	}
 
 	public function escuelas()
 	{

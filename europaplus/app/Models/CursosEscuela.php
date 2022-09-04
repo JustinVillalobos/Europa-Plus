@@ -29,10 +29,6 @@ class CursosEscuela extends Model
 		'cur_id' => 'int',
 		'esc_id' => 'int'
 	];
-	protected $fillable = [
-		'cur_id',
-		'esc_id'
-	];
 
 	public function curso()
 	{

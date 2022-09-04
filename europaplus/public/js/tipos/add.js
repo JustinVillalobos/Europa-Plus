@@ -1,4 +1,9 @@
 $( document ).ready(function() {
+    $('#paises').select2();
+   // var $eventSelect = $('#paises');
+   // $eventSelect.on("select2:select", function (e) {  ajaxProvincias($('#paises').val());});
+});
+$( document ).ready(function() {
     $("#spinDiv").css('display','none');
   });
 function  stringLength(value,max){
@@ -10,33 +15,15 @@ function  stringLength(value,max){
 }
 function save(){
     let cantidadErrores=0;
-    let nombre = $('#nombre').val();
+    let nombre = $('#descr').val();
     let valid=false;
     /**********************************  Datos Personales ******************************************/
-    if(!stringLength(nombre,100)){
-        $('#nombre + span').text("**Demasiados caracteres");
-        cantidadErrores++;
-        valid=true;
-    }
-    if(nombre.length<=0){
-        $('#nombre + span').text("**Campo Requerido");
-        cantidadErrores++;
-        valid=true;
-    }
-
-    if(!valid){    
-        $('#nombre + span').text("");
-    }
-    valid=false;
-
-    let descr = $('#descr').val();
-
-    if(!stringLength(descr,100)){
+    if(!stringLength(nombre,50)){
         $('#descr + span').text("**Demasiados caracteres");
         cantidadErrores++;
         valid=true;
     }
-    if(descr.length<=0){
+    if(nombre.length<=0){
         $('#descr + span').text("**Campo Requerido");
         cantidadErrores++;
         valid=true;
@@ -46,36 +33,34 @@ function save(){
         $('#descr + span').text("");
     }
     valid=false;
-
-    let descr_es = $('#descr_es').val();
-
-    if(!stringLength(descr_es,50)){
-        $('#descr_es + span').text("**Demasiados caracteres");
+    let prc=$("#prc").val();
+    if(!stringLength(prc,50)){
+        $('#prc + span').text("**Demasiados caracteres");
         cantidadErrores++;
         valid=true;
     }
-    if(descr_es.length<=0){
-        $('#descr_es + span').text("**Campo Requerido");
+    if(prc.length<=0){
+        $('#prc + span').text("**Campo Requerido");
         cantidadErrores++;
         valid=true;
     }
 
-    if(!valid){    
-        $('#descr_es + span').text("");
+    if(!valid){  
+        if(parseInt(prc)<100){
+            $('#prc + span').text("");
+        }else{
+            cantidadErrores++;
+            $('#prc + span').text("Porcentaje debe ser menor a 100");
+        }
+        
     }
     valid=false;
-    let tipos = $('#tipo').val();
-
-   
     if(cantidadErrores==0){
-        let form = {};
-        form.nombre=nombre;
-        form.descr = descr;
-        form.tipo=tipos;
-        form.descr_es=descr_es;
-        form.tipo =$("#tipo").val();
-
         $("#spinDiv").css('display','flex');
+        let form = {};
+        form.descr=nombre;
+        form.subtipo = $('#subtipo').val();
+        form.prc=prc;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -84,17 +69,16 @@ function save(){
           $.ajax({
             type:'POST',
             url:$("#route").val()+'/store',
-            data:{suplemento:form},
+            data:{tipo:form},
             success:function(data){
-                console.log(data);
                 $("#spinDiv").css('display','none');
                 let json = JSON.parse(data);
                 if(json){
-                    let rsp=alertTimeCorrect("Suplemento Registrado exitosamente",function(response){
+                    let rsp=alertTimeCorrect("Tipo Registrado exitosamente",function(response){
                         limpiarFormulario();
                       });
                 }else{
-                    alertError("Error inesperado al guardar el Suplemento, por favor compruebe los datos");
+                    alertError("Error inesperado al guardar el Tipo, por favor compruebe los datos");
                 }
         
             },
@@ -108,8 +92,9 @@ function save(){
 }
 function limpiarFormulario(){
     $('#descr').val("");
-    $('#nombre').val("");
-    $("#tipo").val($("#tipo option:first").val());
+    $('#prc').val("");
+    $("#subtipo").val($("#subtipo option:first").val());
+   
 }
 
 $('.btn-primary').click(function(){

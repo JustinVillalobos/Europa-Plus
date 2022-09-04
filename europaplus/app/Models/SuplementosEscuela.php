@@ -29,10 +29,6 @@ class SuplementosEscuela extends Model
 		'sup_id' => 'int',
 		'esc_id' => 'int'
 	];
-	protected $fillable = [
-		'sup_id',
-		'esc_id'
-	];
 
 	public function escuela()
 	{

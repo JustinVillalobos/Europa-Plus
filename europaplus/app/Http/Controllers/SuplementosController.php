@@ -114,13 +114,15 @@ class SuplementosController extends Controller
         $datos =$input['suplemento'];
         $Suplemento = new Suplemento([
             'sup_nombre'=>$datos['nombre'],
-            'sup_descr'=>$datos['descr'],
+            'sup_descr_en'=>$datos['descr'],
+            'sup_descr'=>$datos['descr_es'],
             'sup_tipo'=>$datos['tipo']
         ]);
         $Suplemento->save();
         echo json_encode(true);
     }
 
+    
     /**
      * Display the specified resource.
      *
@@ -161,10 +163,11 @@ class SuplementosController extends Controller
         $input =   $request->all(); 
         $datos =$input['suplemento'];
         $Suplemento = Suplemento::where('sup_id','=',$datos['id'])->first();
-        $Suplemento->sup_descr = $datos['descr'];
+        
         $Suplemento->sup_nombre = $datos['nombre'];
         $Suplemento->sup_tipo =$datos['tipo'];
-        
+        $Suplemento->sup_descr_en = $datos['descr'];
+        $Suplemento->sup_descr = $datos['descr_es'];
         try{
             $Suplemento->save();
             echo json_encode(true);

@@ -28,8 +28,15 @@
         </div>
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
-                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción:</label>
-                 <input type="text" class="form-control" style="width:67%;" id="descr" value="{{$suplemento->sup_descr}}"/>
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción Inglés:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="descr" value="{{$suplemento->sup_descr_en}}"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+        <div class="row" style="margin-top:5px;">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Descripción Español:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="descr_es" value="{{$suplemento->sup_descr}}"/>
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>

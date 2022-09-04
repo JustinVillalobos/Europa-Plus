@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alojamiento;
+use App\Models\Tipo;
 session_start();
 class AlojamientosController extends Controller
 {
@@ -33,7 +34,7 @@ class AlojamientosController extends Controller
         $_SESSION['search'] = "";
         $_SESSION['limit']="";
         $_SESSION['type'] = "";
-        $alojamientos = Alojamiento::select('alojamientos.*')->paginate(10);
+        $alojamientos = Alojamiento::select('alojamientos.*','tipos.tipo_descripcion')->join('tipos','alojamientos.tipo_id','tipos.tipo_id')->paginate(10);
         $data = [
             'alojamientos'=>$alojamientos,
             'search'=>"",
@@ -81,10 +82,20 @@ class AlojamientosController extends Controller
             $_SESSION['limit'] = $input['limit'];
         }
         $limit = $input['limit'];
-        $alojamientos =Alojamiento::select('alojamientos.*');
+        $alojamientos =Alojamiento::select('alojamientos.*','tipos.tipo_descripcion')->join('tipos','alojamientos.tipo_id','tipos.tipo_id');
                   
         if($input['type']=="Nombre"){
             $alojamientos =$alojamientos->where("alojamientos.alj_nombre","LIKE","%{$input['search']}%");
+        } 
+        if($input['type']=="tipo"){
+            $tipo=[];
+            $tipos =Tipo::where("tipos.tipo_descripcion","LIKE","%{$input['search']}%")->get();
+            foreach ($tipos as $key => $value) {
+                # code...
+                $tipo[]=$value->tipo_id;
+            }
+
+            $alojamientos =$alojamientos->whereIn("alojamientos.tipo_id",$tipo);
         } 
          
         $alojamientos =$alojamientos->paginate($limit);
@@ -98,7 +109,12 @@ class AlojamientosController extends Controller
     public function create()
     {
         //
-        return view('alojamientos.add');
+        $tipos=Tipo::whereIn('tipo_tipo',[0,2])->get();
+        $data = [
+
+            'tipos'=>$tipos
+        ];
+        return view('alojamientos.add',$data);
     }
 
     /**
@@ -114,8 +130,11 @@ class AlojamientosController extends Controller
         $datos =$input['alojamiento'];
         $alojamientos = new Alojamiento([
             'alj_nombre'=>$datos['nombre'],
-            'alj_descr_en'=>$datos['descr']
+            'alj_descr_en'=>$datos['descr'],
+            'alj_descr'=>$datos['descr_es'],
+            'tipo_id'=>$datos['tipos']
         ]);
+      
         try{
             $alojamientos->save();
             echo json_encode(true);
@@ -145,8 +164,10 @@ class AlojamientosController extends Controller
     {
         // 
         $alojamientos=Alojamiento::where('alj_id','=',$id)->first();
+        $tipos=Tipo::whereIn('tipo_tipo',[0,2])->get();
         $data = [
-            'alojamiento'=>$alojamientos
+            'alojamiento'=>$alojamientos,
+            'tipos'=>$tipos
         ];
         return view('alojamientos.edit',$data);
     }
@@ -166,7 +187,8 @@ class AlojamientosController extends Controller
         $alojamientos = Alojamiento::where('alj_id','=',$datos['id'])->first();
         $alojamientos->alj_descr_en = $datos['descr'];
         $alojamientos->alj_nombre = $datos['nombre'];
-        
+        $alojamientos->alj_descr = $datos['descr_es'];
+        $alojamientos->tipo_id = $datos['tipos'];
         try{
             $alojamientos->save();
             echo json_encode(true);

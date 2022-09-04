@@ -31,6 +31,7 @@
             <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." style="margin-left:5px;width:67%"/>
             <select name="type" class="form-select" style="width:120px;margin-left:5px">
                 <option value="Nombre"<?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
+                <option value="tipo"<?php if($type == 'tipo'){ echo "selected";}?>>Tipo</option>
             </select>
             <button type="submit" class="btn btn-success" style="margin-left:5px">
                 <i class="fa fa-search"></i>
@@ -46,7 +47,8 @@
             <thead>
                 <tr>
                     <th>Curso</th>
-                    <th>Descripción</th>
+                    <th>Descripción Inglés</th>
+                    <th>Tipo</th>
                     <th style="width:75px;">Acciones</th>
                 </tr>
             </thead>
@@ -55,6 +57,7 @@
                     <tr>
                     <td>{{$nivel->cur_nombre}}</td>
                         <td>{{$nivel->cur_descr_en}}</td>
+                        <td>{{$nivel->tipo_descripcion}}</td>
                         <td style="width:125px;" class="d-flex justify-content-center">
                             
                             <form action='{{route("curso.edit", [$nivel])}}' method="post" >

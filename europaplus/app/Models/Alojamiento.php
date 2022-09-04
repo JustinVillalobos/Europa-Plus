@@ -18,7 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $alj_descr_de
  * @property int $active
  * @property string|null $alj_descr_en
+ * @property int $tipo_id
  * 
+ * @property Tipo $tipo
  * @property Collection|Escuela[] $escuelas
  *
  * @package App\Models
@@ -30,7 +32,8 @@ class Alojamiento extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'active' => 'int'
+		'active' => 'int',
+		'tipo_id' => 'int'
 	];
 
 	protected $fillable = [
@@ -38,8 +41,14 @@ class Alojamiento extends Model
 		'alj_descr',
 		'alj_descr_de',
 		'active',
-		'alj_descr_en'
+		'alj_descr_en',
+		'tipo_id'
 	];
+
+	public function tipo()
+	{
+		return $this->belongsTo(Tipo::class);
+	}
 
 	public function escuelas()
 	{

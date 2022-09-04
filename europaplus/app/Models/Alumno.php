@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $alu_nombre
  * @property string $alu_apellidos
  * @property string|null $alu_email
- * @property string $alu_dni
+ * @property string|null $alu_dni
  * @property string $alu_direccion
  * @property string $alu_direccion_1
  * @property string $alu_cp

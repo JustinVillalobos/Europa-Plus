@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Curso;
+use App\Models\Tipo;
 session_start();
 class CursosController extends Controller
 {
@@ -33,7 +34,7 @@ class CursosController extends Controller
         $_SESSION['search'] = "";
         $_SESSION['limit']="";
         $_SESSION['type'] = "";
-        $cursos = Curso::select('cursos.*')->paginate(10);
+        $cursos = Curso::select('cursos.*','tipos.tipo_descripcion')->join('tipos','cursos.tipo_id','tipos.tipo_id')->paginate(10);
         $data = [
             'cursos'=>$cursos,
             'search'=>"",
@@ -81,10 +82,20 @@ class CursosController extends Controller
             $_SESSION['limit'] = $input['limit'];
         }
         $limit = $input['limit'];
-        $cursos =Curso::select('cursos.*');
+        $cursos =Curso::select('cursos.*','tipos.tipo_descripcion')->join('tipos','cursos.tipo_id','tipos.tipo_id');
                   
         if($input['type']=="Nombre"){
             $cursos =$cursos->where("cursos.cur_nombre","LIKE","%{$input['search']}%");
+        } 
+        if($input['type']=="tipo"){
+            $tipo=[];
+            $tipos =Tipo::where("tipos.tipo_descripcion","LIKE","%{$input['search']}%")->get();
+            foreach ($tipos as $key => $value) {
+                # code...
+                $tipo[]=$value->tipo_id;
+            }
+
+            $cursos =$cursos->whereIn("cursos.tipo_id",$tipo);
         } 
          
         $cursos =$cursos->paginate($limit);
@@ -98,7 +109,12 @@ class CursosController extends Controller
     public function create()
     {
         //
-        return view('cursos.add');
+        $tipos=Tipo::whereIn('tipo_tipo',[0,1])->get();
+        $data = [
+
+            'tipos'=>$tipos
+        ];
+        return view('cursos.add',$data);
     }
 
     /**
@@ -114,8 +130,11 @@ class CursosController extends Controller
         $datos =$input['curso'];
         $curso = new Curso([
             'cur_nombre'=>$datos['nombre'],
-            'cur_descr_en'=>$datos['descr']
+            'cur_descr_en'=>$datos['descr'],
+            'tipo_id'=>$datos['tipos'],
+            'cur_descr'=>$datos['descr_es']
         ]);
+
         $curso->save();
         echo json_encode(true);
     }
@@ -141,8 +160,10 @@ class CursosController extends Controller
     {
         // 
         $curso=Curso::where('cur_id','=',$id)->first();
+        $tipos=Tipo::whereIn('tipo_tipo',[0,1])->get();
         $data = [
-            'curso'=>$curso
+            'curso'=>$curso,
+            'tipos'=>$tipos
         ];
         return view('cursos.edit',$data);
     }
@@ -162,7 +183,8 @@ class CursosController extends Controller
         $curso = Curso::where('cur_id','=',$datos['id'])->first();
         $curso->cur_descr_en = $datos['descr'];
         $curso->cur_nombre = $datos['nombre'];
-        
+        $curso->tipo_id = $datos['tipos'];
+        $curso->cur_descr=$datos['descr_es'];
         try{
             $curso->save();
             echo json_encode(true);

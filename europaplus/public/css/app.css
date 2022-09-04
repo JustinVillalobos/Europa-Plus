@@ -104,7 +104,9 @@ select,.select2,.select2 .selection, .select2-selection{
     width: 150px;
     height: 150px;
   }
-  
+  .mouse-event{
+    cursor: pointer;
+  }
   svg {
     width: 90%;
     fill: none;

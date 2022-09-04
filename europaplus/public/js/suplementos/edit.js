@@ -46,14 +46,35 @@ function save(){
         $('#descr + span').text("");
     }
     valid=false;
+    let descr_es = $('#descr_es').val();
+
+    if(!stringLength(descr_es,50)){
+        $('#descr_es + span').text("**Demasiados caracteres");
+        cantidadErrores++;
+        valid=true;
+    }
+    if(descr_es.length<=0){
+        $('#descr_es + span').text("**Campo Requerido");
+        cantidadErrores++;
+        valid=true;
+    }
+
+    if(!valid){    
+        $('#descr_es + span').text("");
+    }
+    valid=false;
+    let tipos = $('#tipo').val();
+
+    valid=false;
     if(cantidadErrores==0){
-        $("#spinDiv").css('display','flex');
         let form = {};
         form.nombre=nombre;
         form.descr = descr;
+        form.tipo = tipos;
+        form.descr_es=descr_es;
         form.id=$('#id').val();
-        form.tipo =$("#tipo").val();
    
+        $("#spinDiv").css('display','flex');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
