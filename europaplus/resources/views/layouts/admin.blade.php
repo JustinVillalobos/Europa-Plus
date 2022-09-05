@@ -49,7 +49,11 @@
                     <a href='{{route("alumno.create")}}' class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nuevo Alumno</a>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
-                    <a href="./nueva_operacion" class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nueva Operación</a>
+                    <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;">
+                        @method("POST")
+                        @csrf
+                        <a href="#" onclick="this.parentNode.submit();"  class="text-white font-weight-bold"><i class="i i-user-plus" aria-hidden="true"></i> Nueva Operación</a>
+                    </form>
                 </div>
                 <div class="col-sm-2 d-flex align-items-center justify-content-center text-center border-right">
                     <a href='{{route("alumno.index")}}' class="text-white font-weight-bold"><i class="fa fa-book" aria-hidden="true"></i> Datos Aplicación</a>

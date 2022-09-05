@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Operacione;
 use App\Models\Alumno;
+use App\Models\Escuela;
 use App\Models\Alojamiento;
 session_start();
 class OperacionController extends Controller
@@ -35,9 +36,13 @@ class OperacionController extends Controller
         $_SESSION['search'] = "";
         $_SESSION['limit']="";
         $_SESSION['type'] = "";
-        $operaciones =Operacione::select('operaciones.*','alumnos.*','alojamientos.*')
-                                ->join('alojamientos','operaciones.alj_id','alojamientos.alj_id')
+        $operaciones =Operacione::select('operaciones.*','alumnos.*','cursos.*','escuelas.esc_nombre')
+                                ->join('cursos','operaciones.cur_id','cursos.cur_id')
+                                ->join('cursos_escuelas','cursos.cur_id','cursos_escuelas.cur_id')
+                                ->join('escuelas','escuelas.esc_id','cursos_escuelas.esc_id')
                                 ->join('alumnos','alumnos.alu_id','operaciones.alu_id')
+                                
+                                ->orderBy('operaciones.opr_id','DESC')
                                 ->paginate(10);
         $data =[
             'operaciones'=>$operaciones,
@@ -97,9 +102,39 @@ class OperacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        var_dump($request->all());
+        $dataInput =$request->all();
+        if(empty($dataInput['step'])){
+            $alumnos =Alumno::select('alumnos.*')->get();
+            $escuelas=Escuela::select('escuelas.*')->get();
+            $data=[
+                'alumnos'=>$alumnos,
+                'escuelas'=>$escuelas
+            ];
+            return view('operaciones.create',$data);
+        }else{
+            switch($dataInput['step']){
+                case '1':
+                    $step1= [
+                        'fecha'=>$dataInput['fecha'],
+                        'alumno'=>$dataInput['alumnos'],
+                        'escuela'=>$dataInput['escuelas']
+                    ];
+                   
+                    $_SESSION['step1']=$step1;
+                    var_dump($_SESSION['step1']);
+                    $data=[
+                    ];
+                    return view('operaciones.step2',$data);
+                    break;
+                case '2':
+
+                    break;
+            }
+        }
     }
 
     /**

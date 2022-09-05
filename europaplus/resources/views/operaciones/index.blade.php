@@ -14,42 +14,92 @@
                 <i class="fa fa-plus"></i> Nueva Operaci&oacuten
         </a>
     </div>
-        <div class="col-sm-6 d-flex justify-content-end" style="margin-bottom:20px;height:35px;padding:0px 20px 0px 20px;">
-            <form action='{{route("operacion.busquedaOperacion")}}' method="GET" class="d-flex"  style="margin: 0px;">
+        <div class="col-sm-12" style="padding:0px 20px 0px 20px;">
+            <form action='{{route("operacion.busquedaOperacion")}}' method="GET"   style="margin: 0px;">
                 @method("GET")
                 @csrf
-                <select name="limit" class="form-select" style="width:80px;">
-                    <option <?php if($limit == 10){ echo "selected";}?>>10</option>
-                    <option <?php if($limit == 15){ echo "selected";}?>>15</option>
-                    <option <?php if($limit == 25){ echo "selected";}?>>25</option>
-                    <option <?php if($limit == 50){ echo "selected";}?>>50</option>
-                    <option <?php if($limit == 100){ echo "selected";}?>>100</option>
-                </select>
-                <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." style="margin-left:5px;width:67%"/>
-                <select name="type" class="form-select" style="width:120px;margin-left:5px">
-                    <option <?php if($type == 'Nombre'){ echo "selected";}?>>Nombre</option>
-                </select>
-                <button type="submit" class="btn btn-success" style="margin-left:5px">
-                    <i class="fa fa-search"></i>
-                </button>
-                                            
+                <div class="row">
+                    <div class="col-sm-12 filter" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <span><i class="fa fa-filter" aria-hidden="true"></i></span> Filtros
+                    </div>
+                </div>
+                <div class="row collapse" id="collapseExample">
+                    <div class="col-sm-2" style="margin-top: 15px;">
+                        <select name="limit" class="form-select " >
+                                <option <?php if($limit == 10){ echo "selected";}?>>10</option>
+                                <option <?php if($limit == 15){ echo "selected";}?>>15</option>
+                                <option <?php if($limit == 25){ echo "selected";}?>>25</option>
+                                <option <?php if($limit == 50){ echo "selected";}?>>50</option>
+                                <option <?php if($limit == 100){ echo "selected";}?>>100</option>
+                            </select>
+                    </div>
+                    <div class="col-sm-10"  style="margin-top: 15px;">
+                        <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." />
+                    </div>
+                    <div class="col-sm-12"  style="margin-top: 15px;">
+                        <label>Operaciones</label>
+                        <select class="form-select">
+                            <option value="0">Activas</option>
+                            <option value="1">Pendientes Señal</option>
+                            <option value="2">Pendientes Resto</option>
+                            <option value="3">Terminadas</option>
+                            <option value="4">Pendientes Confirmar Escuela</option>
+                            <option value="5">Pendientes Confirmar Alumno</option>
+                            <option value="6">Canceladas</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12"  style="margin-top: 15px;">
+                        <label>Ejercicio</label>
+                        <select class="form-select">
+                            <option value="<?php echo date('Y',strtotime('+1 year'));?>"><?php echo date('Y',strtotime('+1 year'));?></option>
+                            <option value="<?php echo date('Y');?>" selected><?php echo date('Y');?></option>
+                            <option value="<?php echo date('Y',strtotime('-1 year'));?>"><?php echo date('Y',strtotime('-1 year'));?></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12"  style="margin-top: 15px;">
+                        <label>Originadas</label>
+                        <select class="form-select">
+                            <option value="0">Todas</option>
+                            <option value="1">España</option>
+                            <option value="2">Alemania</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12"  style="margin-top: 15px;">
+                        <label>Ordenadas</label>
+                        <select class="form-select">
+                            <option value="0">Fehas Cursos</option>
+                            <option value="1">Fecha Inscripción</option>
+                            <option value="2">Apellidos Alumno</option>
+                            <option value="3">Escuela</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 d-flex justify-content-end" style="margin-top: 15px;">
+                        <button type="submit" class="btn btn-success" style="margin-left:5px">
+                            <i class="fa fa-search"></i>
+                        </button>  
+                        <a href='{{route("operacion.index")}}' class="btn btn-primary" style="margin-left:5px">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                </div>
+                           
+                    
+                   
+                                        
                 </form>
-                <a href='{{route("operacion.index")}}' class="btn btn-primary" style="margin-left:5px">
-                    <i class="fa fa-refresh"></i>
-                </a>
+                
+                
             
         </div>
     @if(!empty($operaciones))
-    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">Resultados</div>
-    </div>
+
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
        
         <table class="table table-bordered" style="margin-bottom:3px;">
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th style="width:75px;">Acciones</th>
+                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -61,25 +111,19 @@
                             $formated_DATETIME = date_format($date, 'd/m/Y');
                         ?>
                         <td class="" >
-                            <div class="row">
+                            <div class="row" style="font-size:18px;">
                                 <div class="col-sm-12 mouse-event" data-toggle="collapse" data-target="#collapseExample<?php echo $key;?>" aria-expanded="false" aria-controls="collapseExample">
                                     {{$formated_DATETIME}} <strong>{{$o->alu_nombre." ".$o->alu_apellidos}}</strong>
                                 </div> 
                             </div>
                             <div class="collapse" id="collapseExample<?php echo $key;?>">
                                 <div class="card card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                  @include('../operaciones/operacion')
                                 </div>
                             </div>
                         </td>
 
-                        <td  class="container" style="width: 75px;vertical-align: middle;text-align: center;">
-                             <div class="row">
-                                <div class="col-sm-12">
-                                
-                                </div>
-                             </div>
-                        </td>
+                        
                     
                     </tr>
 

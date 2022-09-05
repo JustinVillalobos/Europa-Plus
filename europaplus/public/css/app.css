@@ -107,9 +107,29 @@ select,.select2,.select2 .selection, .select2-selection{
   .mouse-event{
     cursor: pointer;
   }
+  .mouse-event2{
+    cursor: pointer;
+    
+  }
+  .mouse-event2:hover{
+    border-bottom: 1px solid ;
+  }
+  .info{
+    font-size:14px;
+  }
+  .info label{
+    margin: 0px;
+  }
   svg {
     width: 90%;
     fill: none;
+  }
+  .filter{
+    font-size: 24px;;
+    cursor: pointer;
+  }
+  .filter:hover{
+    border-bottom: 1px solid ;
   }
   
   .load {
