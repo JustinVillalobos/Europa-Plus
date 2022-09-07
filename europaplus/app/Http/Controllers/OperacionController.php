@@ -7,6 +7,8 @@ use App\Models\Operacione;
 use App\Models\Alumno;
 use App\Models\Escuela;
 use App\Models\Alojamiento;
+use App\Models\Curso;
+use App\Models\Suplemento;
 session_start();
 class OperacionController extends Controller
 {
@@ -107,34 +109,112 @@ class OperacionController extends Controller
         //
         var_dump($request->all());
         $dataInput =$request->all();
-        if(empty($dataInput['step'])){
-            $alumnos =Alumno::select('alumnos.*')->get();
-            $escuelas=Escuela::select('escuelas.*')->get();
-            $data=[
-                'alumnos'=>$alumnos,
-                'escuelas'=>$escuelas
-            ];
-            return view('operaciones.create',$data);
+        if(empty($dataInput['step']) && empty($dataInput['page'])){
+           $data = $this->step1($dataInput); 
+           return view('operaciones.create',$data);
         }else{
+            if(!empty($dataInput['action'])){
+                $page = $dataInput['page'];
+                if($page=="1"){
+                    $alumnos =Alumno::select('alumnos.*')->get();
+                    $escuelas=Escuela::select('escuelas.*')->get();
+                    $data=[
+                        'alumnos'=>$alumnos,
+                        'escuelas'=>$escuelas,
+                        'alumno'=>$_SESSION['step1']['alumno'],
+                        'fecha'=>$_SESSION['step1']['fecha'],
+                        'escuela'=>$_SESSION['step1']['escuela'],
+                        'vuelo'=>$_SESSION['step1']['vuelo'],
+                        "isClear"=>false
+                    ];
+                    return view('operaciones.create',$data);
+                }else if($page=="2"){
+                    $dataInput['escuelas'] =$_SESSION['step1'];
+                    $data=$this->step2($dataInput);
+                    return view('operaciones.step2',$data);
+                }
+            }
             switch($dataInput['step']){
                 case '1':
                     $step1= [
                         'fecha'=>$dataInput['fecha'],
                         'alumno'=>$dataInput['alumnos'],
-                        'escuela'=>$dataInput['escuelas']
+                        'escuela'=>$dataInput['escuelas'],
+                        'vuelo'=>$dataInput['vuelo']
                     ];
                    
                     $_SESSION['step1']=$step1;
-                    var_dump($_SESSION['step1']);
-                    $data=[
-                    ];
+                    $data=$this->step2($dataInput);
                     return view('operaciones.step2',$data);
                     break;
                 case '2':
-
+                    $dataInput['escuelas'] =$_SESSION['step1'];
+                    $data=$this->step2($dataInput);
+                    return view('operaciones.step3',$data);
                     break;
             }
         }
+    }
+    public function step1($dataInput){
+        if(empty($dataInput['action'])){
+            $_SESSION['step1']="";
+            $alumnos =Alumno::select('alumnos.*')->get();
+            $escuelas=Escuela::select('escuelas.*')->get();
+            $data=[
+                'alumnos'=>$alumnos,
+                'escuelas'=>$escuelas,
+                'alumno'=>"",
+                'fecha'=>"",
+                'escuela'=>"",
+                'vuelo'=>"",
+                "isClear"=>true
+            ];
+           
+            return $data;
+        }else{
+            $page = $dataInput['page'];
+            if($page=="1"){
+                $alumnos =Alumno::select('alumnos.*')->get();
+                $escuelas=Escuela::select('escuelas.*')->get();
+                $data=[
+                    'alumnos'=>$alumnos,
+                    'escuelas'=>$escuelas,
+                    'alumno'=>$_SESSION['step1']['alumno'],
+                    'fecha'=>$_SESSION['step1']['fecha'],
+                    'escuela'=>$_SESSION['step1']['escuela'],
+                    'vuelo'=>$_SESSION['step1']['vuelo'],
+                    "isClear"=>false
+                ];
+                return $data;
+            }
+        }
+    }
+    public function step2($dataInput){
+        $cursos=Curso::select('cursos.*')
+                            ->join('cursos_escuelas','cursos_escuelas.cur_id','cursos.cur_id')
+                            ->where('cursos_escuelas.esc_id','=',$dataInput['escuelas'])->get();
+        $alojamientos=Alojamiento::select('alojamientos.*')
+                            ->join('alojamientos_escuelas','alojamientos_escuelas.alj_id','alojamientos.alj_id')
+                            ->where('alojamientos_escuelas.esc_id','=',$dataInput['escuelas'])->get();
+        $Suplementos_cursos=Suplemento::select('suplementos.*')
+                                ->join('suplementos_escuelas','suplementos.sup_id','suplementos_escuelas.sup_id')
+                                ->where('suplementos_escuelas.esc_id','=',$dataInput['escuelas'])
+                                ->where('suplementos.sup_tipo','=','0')->get();
+        $Suplementos_alojamientos=Suplemento::select('suplementos.*')
+                                ->join('suplementos_escuelas','suplementos.sup_id','suplementos_escuelas.sup_id')
+                                ->where('suplementos_escuelas.esc_id','=',$dataInput['escuelas'])
+                                ->where('suplementos.sup_tipo','=','1')->get();
+        $data=[
+            'cursos'=>$cursos,
+            'suplementos_cursos'=>$Suplementos_cursos,
+            'suplementos_alojamientos'=>$Suplementos_alojamientos,
+            'alojamientos'=>$alojamientos,
+            "isClear"=>true
+        ];
+       return $data;
+    }
+    public function step3($dataInput){
+
     }
 
     /**

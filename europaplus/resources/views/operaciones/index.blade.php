@@ -10,9 +10,13 @@
 </div>
 <div class="row" style="margin-top:5px;">
     <div class="col-sm-6" style="padding-left:15px;">
-        <a href='{{route("operacion.create")}}' class="btn btn-primary" style="margin-left:5px;height:35px;">
+    <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;">
+                        @method("POST")
+                        @csrf
+        <a href="#" onclick="this.parentNode.submit();"  class="btn btn-primary" style="margin-left:5px;height:35px;">
                 <i class="fa fa-plus"></i> Nueva Operaci&oacuten
         </a>
+        </form>
     </div>
         <div class="col-sm-12" style="padding:0px 20px 0px 20px;">
             <form action='{{route("operacion.busquedaOperacion")}}' method="GET"   style="margin: 0px;">
