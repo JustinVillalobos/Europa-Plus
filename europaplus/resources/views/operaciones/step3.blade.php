@@ -239,8 +239,8 @@
         </form>
         <button onclick="Finally(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
 
-        <button class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
-        <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
+        <button type="button" class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
+        <button type="button" class="btn btn-primary" style="margin-left:5px" onclick="clearStep3()">Limpiar</button>
     </div>
     
 </div>

@@ -17,8 +17,8 @@
                 <i class="fa fa-plus"></i> Nueva Operaci&oacuten
         </a>
         </form>
-    </div>
-        <div class="col-sm-12" style="padding:0px 20px 0px 20px;">
+    </div><div class="col-sm-6" style="padding-left:15px;"></div>
+        <div class="col-sm-6" style="padding:0px 20px 0px 20px;">
             <form action='{{route("operacion.busquedaOperacion")}}' method="GET"   style="margin: 0px;">
                 @method("GET")
                 @csrf
@@ -142,7 +142,7 @@
     @endif
 </div>
 
-<?php $route2 = route("pais.index");?>
+<?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/operaciones/list.js'); }}"></script>     
 @stop

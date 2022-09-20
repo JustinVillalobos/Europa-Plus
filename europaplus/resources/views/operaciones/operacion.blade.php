@@ -16,7 +16,7 @@
                                                     <div class="col-sm-12 " style="padding-left:25px;">
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <label><span class="text-primary"><i class="fa fa-plane" aria-hidden="true"></i></span> Vuelo</label>
+                                                                <label class="mouse-event2" onClick="goToVuelo(<?php echo $o->opr_id?>)"><span class="text-primary"><i class="fa fa-plane" aria-hidden="true"></i></span> Vuelo</label>
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="semaforo">
@@ -30,7 +30,7 @@
                                                     <div class="col-sm-12" style="padding-left:25px;">
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                            <label><span class="text-primary"><i class="fa fa-exchange" aria-hidden="true"></i></span> Transferencia</label>
+                                                            <label class="mouse-event2" onClick="goToTransfer(<?php echo $o->opr_id?>)"><span class="text-primary"><i class="fa fa-exchange" aria-hidden="true"></i></span> Transferencia</label>
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="semaforo">

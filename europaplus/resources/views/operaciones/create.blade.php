@@ -17,7 +17,7 @@
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
         <div class="section">NUEVA OPERACIÓN - PASO 1 - DATOS ESTUDIANTE</div>
     </div>
-    <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;">
+    <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;" onsubmit="return validateStep1()">
                 @method("POST")
                 @csrf
                 <input type='hidden' value="<?php echo $isClear;?>" id="isClear" name="isClear">
@@ -45,7 +45,7 @@
                     </select>
                    
                 </div>
-                <div class="col-sm-12 d-flex justify-content-center text-center">
+                <div class="col-sm-12 d-flex justify-content-end text-end">
                     <span class="text-danger" id="spanalu" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     </select>
                    
                 </div>
-                <div class="col-sm-12 d-flex justify-content-center text-center">
+                <div class="col-sm-12 d-flex justify-content-end text-end">
                     <span class="text-danger" id="spanescu" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -68,11 +68,11 @@
                     <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Vuelo/Transfer:</label>
                     <select id="vuelo" name="vuelo" style="width:67%;">
                         <option value="0" <?php if($vuelo=="0"){echo "selected";}?>>Si</option>
-                        <option value="1" <?php if($vuelo=="0"){echo "selected";}?>>No</option>
+                        <option value="1" <?php if($vuelo=="1"){echo "selected";}?>>No</option>
                     </select>
                    
                 </div>
-                <div class="col-sm-12 d-flex justify-content-center text-center">
+                <div class="col-sm-12 d-flex justify-content-end text-end">
                     <span class="text-danger" id="spanvu" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -82,7 +82,7 @@
     <div class="col-sm-6 d-flex justify-content-end" style="padding:10px 25px 0px 20px;">
         <button type="submit" class="btn btn-success">Siguiente</button>
         <button class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
-        <button class="btn btn-primary" style="margin-left:5px">Limpiar</button>
+        <button type="button"class="btn btn-primary" style="margin-left:5px" onclick="clearStep1()">Limpiar</button>
     </div>
     </form>
 </div>

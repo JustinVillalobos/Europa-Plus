@@ -30,7 +30,8 @@ use App\Http\Controllers\TipoController;
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
 Route::post('create',[OperacionController::class, 'create'])->name('operacion.create');
-
+Route::get('vuelo',[OperacionController::class, 'vuelo'])->name('operacion.vuelo');
+Route::get('transfer',[OperacionController::class, 'transfer'])->name('operacion.transfer');
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');
