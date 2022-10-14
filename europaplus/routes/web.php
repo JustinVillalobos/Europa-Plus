@@ -30,8 +30,17 @@ use App\Http\Controllers\TipoController;
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
 Route::post('create',[OperacionController::class, 'create'])->name('operacion.create');
-Route::get('vuelo',[OperacionController::class, 'vuelo'])->name('operacion.vuelo');
-Route::get('transfer',[OperacionController::class, 'transfer'])->name('operacion.transfer');
+Route::post('operacion/edit',[OperacionController::class, 'edit'])->name('operacion.edit');
+Route::get('operacion/edits/{opr_id}',[OperacionController::class, 'edits'])->name('operacion.edits');
+Route::get('vuelo/{opr_id}',[OperacionController::class, 'vuelo'])->name('operacion.vuelo');
+Route::get('transfer/{opr_id}',[OperacionController::class, 'transfer'])->name('operacion.transfer');
+Route::post('operacion/store',[OperacionController::class, 'store'])->name('operacion.store');
+Route::post('operacion/update',[OperacionController::class, 'update'])->name('operacion.update');
+Route::post('operacion/destroy',[OperacionController::class, 'destroy'])->name('operacion.destroy');
+Route::post('operacion/update',[OperacionController::class, 'update'])->name('operacion.update');
+Route::post('operacion/vueloSave',[OperacionController::class, 'vueloSave'])->name('operacion.vueloSave');
+Route::post('operacion/transferSave',[OperacionController::class, 'transferSave'])->name('operacion.transferSave');
+
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');

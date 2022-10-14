@@ -5,7 +5,7 @@
         <div class="" style="padding-left:5px;">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href='{{route("operacion.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Operaciones</h5></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Agregar Operaci&oacuten</li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Operaci&oacuten</li>
             </ol>
         </div>
     </div>
@@ -15,9 +15,9 @@
     
 
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">NUEVA OPERACIÓN - PASO 1 - DATOS ESTUDIANTE</div>
+        <div class="section">EDITAR OPERACIÓN - PASO 1 - DATOS ESTUDIANTE</div>
     </div>
-    <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;" onsubmit="return validateStep1()">
+    <form action='{{route("operacion.edit")}}' method="POST"   style="margin: 0px;" onsubmit="return validateStep1()">
                 @method("POST")
                 @csrf
                 <input type='hidden' value="<?php echo $isClear;?>" id="isClear" name="isClear">
@@ -30,7 +30,7 @@
                     <input type="date" class="form-control" style="width:67%;" name="fecha" id="fecha" value="<?php echo date('Y-m-d') ?>"/>
                     @endif
                     @if(!empty($fecha))
-                    <input type="date" class="form-control" style="width:67%;" name="fecha" id="fecha" value="<?php echo $fecha; ?>"/>
+                    <input type="date" class="form-control" style="width:67%;" name="fecha" id="fecha" value="<?php echo date_format(date_create($fecha),'Y-m-d'); ?>"/>
                     @endif
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
@@ -67,8 +67,8 @@
                 <div class="col-sm-12 form-inline text-end ">
                     <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Vuelo/Transfer:</label>
                     <select id="vuelo" name="vuelo" style="width:67%;">
-                        <option value="0" <?php if($vuelo=="0"){echo "selected";}?>>Si</option>
-                        <option value="1" <?php if($vuelo=="1"){echo "selected";}?>>No</option>
+                        <option value="1" <?php if($vuelo=="1"){echo "selected";}?>>Si</option>
+                        <option value="2" <?php if($vuelo=="2"){echo "selected";}?>>No</option>
                     </select>
                    
                 </div>

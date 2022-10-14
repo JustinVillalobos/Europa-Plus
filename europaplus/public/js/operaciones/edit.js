@@ -41,10 +41,7 @@ $( document ).ready(function() {
                 width: 'resolve'
             }
         );
-        localStorage.setItem('info_adicional',"");
-        localStorage.setItem('comentarios_internos',"");
-        localStorage.setItem('comentarios_escuelas',"");
-        localStorage.setItem('info_curso',"");
+       
     }else if($("#step").val()=="2"){
         console.log("Ingreso");
         $('#cursos').select2(
@@ -178,6 +175,10 @@ $( document ).ready(function() {
         if($("#isAlojado7").val()!=1){
             $("#scursos3").val('').change();
         }
+        localStorage.setItem('info_adicional', sceditor.instance(tia).val());
+        localStorage.setItem('comentarios_internos',sceditor.instance(tci).val());
+        localStorage.setItem('comentarios_escuelas',sceditor.instance(tce).val());
+        localStorage.setItem('info_curso',sceditor.instance(tic).val());
     }else{
         sceditor.create(tii, options);
         sceditor.create(tiv, options);
@@ -414,7 +415,7 @@ $( document ).ready(function() {
     
   }
   function Finally(value){
-  
+    
     let form = {
         vuelo:$("#vuelo").val(),
         tipo:$("#tipo").val(),
@@ -457,14 +458,14 @@ $( document ).ready(function() {
     });
       $.ajax({
         type:'POST',
-        url:$("#route").val()+'/store',
+        url:$("#route").val()+'/update',
         data:form,
         success:function(data){
             console.log(data);
             $("#spinDiv").css('display','none');
           let json = JSON.parse(data);
           if(data!='false'){
-            let rsp=alertTimeCorrect("Operación Registrada exitosamente",function(response){
+            let rsp=alertTimeCorrect("Operación Actualizada exitosamente",function(response){
                 window.location=$("#route").val()+"/edits/"+json.opr_id;
               });
           }else{

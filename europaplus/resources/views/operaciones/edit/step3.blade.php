@@ -9,7 +9,7 @@
         <div class="" style="padding-left:5px;">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href='{{route("operacion.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Operaciones</h5></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Transferencia Operaci&oacuten</li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Operaci&oacuten</li>
             </ol>
         </div>
     </div>
@@ -19,14 +19,51 @@
     
 
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">DATOS DE TRANSFERENCIA</div>
+        <div class="section">EDITAR OPERACIÓN - PASO 3 - DATOS DE VUELO</div>
     </div>
-    <form action='{{route("operacion.transferSave")}}' method="POST" id="form"  class="row" style="margin: 0px;">
+    <form action='{{route("operacion.edit")}}' method="POST" id="form"  class="row" style="margin: 0px;">
                 @method("POST")
                 @csrf
                 <input type='hidden' value="<?php echo $isClear;?>" id="isClear" name="isClear">
                 <input type='hidden' value="3" id="step"  name="step">
-        
+        <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+            <div class="section">Vuelo</div>
+            <div class="row"  style="margin-top:5px;">
+                <div class="col-sm-12 form-inline text-end">
+                    <label class="text-danger font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Vuelo:</label>
+                    <select class="form-select" style="width:67%;" name="vuelo" id="vuelo" value="{{$vje_vuelo}}">
+                        <option value="0" <?php if($vje_vuelo==0){echo "selected";}?>>Si</option>
+                        <option value="1" <?php if($vje_vuelo==1){echo "selected";}?>>No</option>
+                    </select>
+                    <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                </div>
+            </div>
+            <div class="row"  style="margin-top:5px;">
+                <div class="col-sm-12 form-inline text-end">
+                    <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Tipo:</label>
+                    <select class="form-select" style="width:67%;" name="tipo" id="tipo" value="{{$vje_vuelo_tipo}}" >
+                        <option value="0" <?php if($vje_vuelo_tipo==0){echo "selected";}?>>Ida y Vuelta</option>
+                        <option value="1" <?php if($vje_vuelo_tipo==1){echo "selected";}?>>Ida</option>
+                        <option value="2" <?php if($vje_vuelo_tipo==20){echo "selected";}?>>Vuelta</option>
+                    </select>
+                    <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                </div>
+            </div>
+            <div class="row"  style="margin-top:5px;">
+                <div class="col-sm-12 form-inline text-end">
+                    <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Precio:</label>
+                    <input type="text" class="form-control" style="width:67%;" name="price" id="price" value="{{$vje_vuelo_precio}}"/>
+                    <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                </div>
+            </div>
+            <div class="row"  style="margin-top:5px;">
+                <div class="col-sm-12 form-inline text-end">
+                    <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Costo:</label>
+                    <input type="text" class="form-control" style="width:67%;" name="costo" id="costo" value="{{$vje_vuelo_coste}}"/>
+                    <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+                </div>
+            </div>
+        </div>
         <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
             <div class="section">Transferencia</div>
             <div class="row"  style="margin-top:5px;">
@@ -66,7 +103,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6" style="padding:10px 20px 0px 20px;"></div>
         <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
             <div class="section">Vuelta</div>
             <div class="row"  style="margin-top:5px;">
@@ -194,7 +230,13 @@
             </div>
         </form>
     <div class="col-sm-6 d-flex justify-content-end" style="padding:10px 25px 0px 20px;">
-        
+        <form action='{{route("operacion.edit")}}' method="POST"   style="margin: 0px;">
+                    @method("POST")
+                    @csrf
+                    <input type="hidden" value="prev" id="action" name="action"/>
+                    <input type="hidden" value="2" id="page" name="page"/>
+            <button type="submit" class="btn btn-success">Anterior</button>
+        </form>
         <button onclick="Finally(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
 
         <button type="button" class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
@@ -204,5 +246,5 @@
 </div>
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
-<script src="{{ URL::asset('js/operaciones/transfer.js'); }}"></script>     
+<script src="{{ URL::asset('js/operaciones/edit.js'); }}"></script>     
 @stop

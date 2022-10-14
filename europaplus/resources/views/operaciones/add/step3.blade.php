@@ -98,7 +98,7 @@
             <div class="row"  style="margin-top:5px;">
                 <div class="col-sm-12 form-inline text-end">
                     <label class="text- font-weight-bold" style="width:15%;justify-contentt: end; margin-right: 5px;">Costo:</label>
-                    <input type="text" class="form-control" style="width:67%;" name="costo" id="costot" />
+                    <input type="text" class="form-control" style="width:67%;" name="costot" id="costot" />
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">N&uacutemero vuelo /v&iacutea:</label>
                     <input type="text" class="form-control" style="width:30%;" name="numerov2" id="numerov2" />
                     <label class="text- font-weight-bold" style="width:20%;justify-content: end; margin-right: 5px;">L&iacutenea:</label>
-                    <input type="text" class="form-control" style="width:16%;" name="numerov" id="numerov" />
+                    <input type="text" class="form-control" style="width:16%;" name="linea2" id="linea2" />
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;"></label>
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Loc:</label>
                     <input type="text" class="form-control" style="width:20%;" name="locv2" id="locv2" />
@@ -193,9 +193,9 @@
             <div class="row"  style="margin-top:5px;">
                 <div class="col-sm-12 form-inline text-end">
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">N&uacutemero vuelo /v&iacutea:</label>
-                    <input type="text" class="form-control" style="width:30%;" name="numerov" id="numerov" />
+                    <input type="text" class="form-control" style="width:30%;" name="numerov3" id="numerov3" />
                     <label class="text- font-weight-bold" style="width:20%;justify-content: end; margin-right: 5px;">L&iacutenea:</label>
-                    <input type="text" class="form-control" style="width:16%;" name="numerov" id="numerov" />
+                    <input type="text" class="form-control" style="width:16%;" name="linea" id="linea" />
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;"></label>
                     <label class="text- font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Loc:</label>
                     <input type="text" class="form-control" style="width:20%;" name="locv" id="locv" />
@@ -245,6 +245,7 @@
     
 </div>
 <?php $route2 = route("operacion.index");?>
+
 <input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/operaciones/add.js'); }}"></script>     
 @stop

@@ -116,8 +116,28 @@
                         ?>
                         <td class="" >
                             <div class="row" style="font-size:18px;">
-                                <div class="col-sm-12 mouse-event" data-toggle="collapse" data-target="#collapseExample<?php echo $key;?>" aria-expanded="false" aria-controls="collapseExample">
-                                    {{$formated_DATETIME}} <strong>{{$o->alu_nombre." ".$o->alu_apellidos}}</strong>
+                                <div class="col-sm-12 " >
+                                    <div class="row">
+                                        <div class="col-sm-10 mouse-event" data-toggle="collapse" data-target="#collapseExample<?php echo $key;?>" aria-expanded="false" aria-controls="collapseExample">
+                                            {{$formated_DATETIME}} <strong>{{$o->alu_nombre." ".$o->alu_apellidos}}</strong>
+                                        </div>
+                                        <div class="col-sm-2 d-flex justify-content-center"> 
+                                            <form action='{{route("operacion.edits", [$o])}}' method="post" >
+                                                @method("get")
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning text-white" style="margin-left:5px;">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            <form action='{{route("operacion.destroy", [$o])}}' method="post" onsubmit="return validate(event,this,{{$o->opr_id}})">
+                                                @method("delete")
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger" style="margin-left:5px;">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div> 
                             </div>
                             <div class="collapse" id="collapseExample<?php echo $key;?>">

@@ -9,7 +9,7 @@
         <div class="" style="padding-left:5px;">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href='{{route("operacion.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Operaciones</h5></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Agregar Operaci&oacuten</li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Operaci&oacuten</li>
             </ol>
         </div>
     </div>
@@ -19,9 +19,9 @@
     
 
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">NUEVA OPERACIÓN - PASO 2 - DATOS DE VIAJE</div>
+        <div class="section">EDITAR OPERACIÓN - PASO 2 - DATOS DE VIAJE</div>
     </div>
-    <form action='{{route("operacion.create")}}' method="POST" id="form"  class="row" style="margin: 0px;" onsubmit="return validateStep2()">
+    <form action='{{route("operacion.edit")}}' method="POST" id="form"  class="row" style="margin: 0px;" onsubmit="return validateStep2()">
                 @method("POST")
                 @csrf
                 <input type='hidden' value="<?php echo $isClear;?>" id="isClear" name="isClear">
@@ -44,14 +44,14 @@
             <div class="row"  style="margin-top:5px;">
                 <div class="col-sm-12 form-inline text-center">
                     <label class="text-danger font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Fecha Inicio:</label>
-                    <input type="date" class="form-control" style="width:67%;" name="fechaInit" id="fechaInit" value="{{$fechaInit}}" onchange="setSemanas()"/>
+                    <input type="date" class="form-control" style="width:67%;" name="fechaInit" id="fechaInit" value="<?php echo date_format(date_create($fechaInit),'Y-m-d'); ?>" onchange="setSemanas()"/>
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
             <div class="row"  style="margin-top:5px;">
                 <div class="col-sm-12 form-inline text-center">
                     <label class="text-danger font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Fecha Fin:</label>
-                    <input type="date" class="form-control" style="width:31%;" name="fechaEnd" id="fechaEnd" value="{{$fechaEnd}}" onchange="setSemanas()"/>
+                    <input type="date" class="form-control" style="width:31%;" name="fechaEnd" id="fechaEnd" value="<?php echo date_format(date_create($fechaEnd),'Y-m-d'); ?>" onchange="setSemanas()"/>
                     <label class="text-danger font-weight-bold" style="width:25%;justify-content: end; margin-right: 5px;">Nro. semanas:</label>
                     <input type="text" class="form-control" style="width:10%;font-size:12px;" name="num" id="num"  value="{{$numSemanas}}"  disabled/>
                     <input type="hidden" class="form-control" style="width:10%;font-size:12px;" name="numSemanas" id="numSemanas"  value="{{$numSemanas}}" />
@@ -161,14 +161,14 @@
                 <div class="row"  style="margin-top:5px;">
                     <div class="col-sm-12 form-inline text-center">
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Fecha Inicio:</label>
-                        <input type="date" class="form-control" style="width:67%;" name="fechaInit2" id="fechaInit2" value="{{$fechaInit2}}"/>
+                        <input type="date" class="form-control" style="width:67%;" name="fechaInit2" id="fechaInit2" value="<?php echo date_format(date_create($fechaInit2),'Y-m-d'); ?>"/>
                         <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                     </div>
                 </div>
                 <div class="row"  style="margin-top:5px;">
                     <div class="col-sm-12 form-inline text-center">
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Fecha Fin:</label>
-                        <input type="date" class="form-control" style="width:67%;" name="fechaEnd2" id="fechaEnd2" value="{{$fechaEnd2}}"/>
+                        <input type="date" class="form-control" style="width:67%;" name="fechaEnd2" id="fechaEnd2" value="<?php echo date_format(date_create($fechaEnd2),'Y-m-d'); ?>"/>
                         <span class="text-danger" id="spanfechaEnd" style="width:100%;margin-right:25%;font-size:11px;"></span>
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="ci">
-                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;"  name="tci" id="tci"></textarea>
+                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;"  name="tci" id="tci">{!! $opr_comentarios !!}</textarea>
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -251,7 +251,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="ce">
-                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tce" id="tce"></textarea>
+                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tce" id="tce">{!! $opr_comentarios_esc !!}</textarea>
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -263,7 +263,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="ic">
-                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tic" id="tic"></textarea>
+                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tic" id="tic">{!! $opr_cmntsalu !!}</textarea>
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
@@ -275,20 +275,28 @@
                     </div>
                 </div>
                 <div class="collapse" id="ia">
-                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tia"  id="tia"></textarea>
+                    <textarea type="text" class="form-control" style="width:80%;margin-left: 5%;margin-top:25px;" name="tia"  id="tia">{!! $opr_cmntsalj !!}</textarea>
                     <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
         </form>
     <div class="col-sm-6 d-flex justify-content-end" style="padding:10px 25px 0px 20px;">
-        <form action='{{route("operacion.create")}}' method="POST"   style="margin: 0px;">
+       
+        <form action='{{route("operacion.edit")}}' method="POST"   style="margin: 0px;">
                     @method("POST")
                     @csrf
                     <input type="hidden" value="prev" id="action" name="action"/>
                     <input type="hidden" value="1" id="page" name="page"/>
             <button type="submit" class="btn btn-success">Anterior</button>
         </form>
-        <button onclick="next(3)" class="btn btn-success" style="margin-left:5px">Siguiente</button>
+        @if($isFinaly!=1)
+            <button onclick="Finally(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
+        @endif
+        @if($isFinaly==1)
+            <button onclick="next(3)" class="btn btn-success" style="margin-left:5px">Siguiente</button>
+        @endif
+        
+       
 
         <button type="button" class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
         <button type="button" class="btn btn-primary" style="margin-left:5px" onclick="clearStep2()">Limpiar</button>
@@ -297,5 +305,5 @@
 </div>
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
-<script src="{{ URL::asset('js/operaciones/add.js'); }}"></script>     
+<script src="{{ URL::asset('js/operaciones/edit.js'); }}"></script>     
 @stop

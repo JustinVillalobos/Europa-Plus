@@ -3,8 +3,8 @@
                                        <div class="row">
                                             <div class="col-sm-8 border-right info">
                                                 <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <strong>Europa Plus {{$o->esc_nombre}} {{$o->opr_id}} </strong> ({{$o->cur_nombre}})
+                                                    <div class="col-sm-10 ">
+                                                        <label class="mouse-event2" onClick="goToCurso(<?php echo $o->opr_id?>)"><strong>Europa Plus {{$o->esc_nombre}} {{$o->opr_id}} </strong> ({{$o->cur_nombre}})</label>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <div class="semaforo">
