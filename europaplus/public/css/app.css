@@ -167,7 +167,31 @@ select,.select2,.select2 .selection, .select2-selection{
     fill: #554d73;
     animation-delay: 0.2s;
   }
-  
+  .modal{
+    background: rgba(0,0,0,0.6);
+  }
+  .mouse-event{
+    cursor:pointer;
+   
+    font-weight: 500;
+  }
+  .mouse-event label{
+    border-bottom:1px solid #000;
+    cursor:pointer;
+  }
+  .line-break-orange{
+    border-left: 1px solid #ff9d0d;
+    height: 150px;
+  }
+  .line-p{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .line-break-orange2{
+    border-bottom: 1px solid #ff9d0d;
+    width:100%;
+    margin-top:25px;
+  }
   @keyframes bounce {
     0%, 100% {
       transform: translateY(0);

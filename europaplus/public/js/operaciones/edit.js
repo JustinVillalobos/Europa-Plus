@@ -268,12 +268,7 @@ $( document ).ready(function() {
     }else{
         $('#spanescu').text("");
     }
-    if(vuelo==null){
-        $('#spanvu').text("**Campo Requerido");
-        cantidadErrores++;
-    }else{
-        $('#spanvu').text("");
-    }
+    
     if(cantidadErrores==0){
         return true;
     }
@@ -414,6 +409,163 @@ $( document ).ready(function() {
     });
     
   }
+  function FinallyStep2(value) {
+    /* $step2= [
+        'cursos'=>$dataInput['cursos'],
+        'fechaInit'=>$dataInput['fechaInit'],
+        'fechaEnd'=>$dataInput['fechaEnd'],
+        'price'=>$dataInput['price'],
+        'price2'=>$dataInput['price2'],
+        'fechaInit'=>$dataInput['fechaInit'],
+        'fechaEnd'=>$dataInput['fechaEnd'],
+        'fechaInit2'=>$dataInput['fechaInit2'],
+        'fechaEnd2'=>$dataInput['fechaEnd2'],
+        'precios1'=>$dataInput['precios1'],
+        'precios2'=>$dataInput['precios2'],
+        'precios3'=>$dataInput['precios3'],
+        'precios4'=>$dataInput['precios4'],
+        'precios5'=>$dataInput['precios5'],
+        'precios6'=>$dataInput['precios6'],
+        'desc'=>$dataInput['desc'],
+        'apagar'=>$dataInput['apagar'],
+        'numSemanas'=>$dataInput['numSemanas'],
+        'pagado'=>$dataInput['pagado'],
+        'fechaPagado'=>$dataInput['fechaPagado']
+    ];*/
+    /*if(!empty($dataInput['scursos'])){
+    $step2['scursos']=$dataInput['scursos'];
+   }else{
+    $step2['scursos']="";
+   }
+   if(!empty($dataInput['scursos2'])){
+    $step2['scursos2']=$dataInput['scursos2'];
+   }else{
+    $step2['scursos2']="-1";
+   }
+   if(!empty($dataInput['sscursos3cursos'])){
+    $step2['scursos3']=$dataInput['scursos3'];
+   }else{
+    $step2['scursos3']="-1";
+   }
+   if(!empty($dataInput['salojamientos'])){
+    $step2['salojamientos']=$dataInput['salojamientos'];
+   }else{
+    $step2['salojamientos']="-1";
+   }
+   if(!empty($dataInput['salojamientos2'])){
+    $step2['salojamientos2']=$dataInput['salojamientos2'];
+   }else{
+    $step2['salojamientos2']="-1";
+   }
+   if(!empty($dataInput['salojamientos3'])){
+    $step2['salojamientos3']=$dataInput['salojamientos3'];
+   }else{
+    $step2['salojamientos3']="-1";
+   }
+   if(!empty($dataInput['alojamientos'])){
+    $step2['alojamientos']=$dataInput['alojamientos'];
+   }else{
+    $step2['alojamientos']="-1";
+   }*/
+   if(!validateStep2()){
+    return;
+   }
+    let form = {
+        cursos: $("#cursos").val(),
+        fechaInit: $("#fechaInit").val(),
+        fechaEnd: $("#fechaEnd").val(),
+        price: $("#price").val(),
+        price2: $("#price2").val(),
+        fechaInit: $("#fechaInit").val(),
+        fechaEnd: $("#fechaEnd").val(),
+        fechaInit2: $("#fechaInit2").val(),
+        fechaEnd2: $("#fechaEnd2").val(),
+        precios1: $("#precios1").val(),
+        precios2: $("#precios2").val(),
+        precios3: $("#precios3").val(),
+        precios4: $("#precios4").val(),
+        precios5: $("#precios5").val(),
+        precios6: $("#precios6").val(),
+        desc: $("#desc").val(),
+        apagar: $("#apagar").val(),
+        numSemanas: $("#numSemanas").val(),
+        pagado: $("#pagado").val(),
+        fechaPagado: $("#fechaPagado").val(),
+        comentarios_internos: localStorage.getItem("comentarios_internos"),
+        comentarios_esc: localStorage.getItem("comentarios_escuelas"),
+        informacion_curso: localStorage.getItem("info_adicional"),
+        informacion_alojamiento: localStorage.getItem("info_curso"),
+    };
+    if ($("#scursos").val() != null) {
+        form.scursos = $("#scursos").val();
+    } else {
+        form.scursos = "";
+    }
+    if ($("#scursos2").val() != null) {
+        form.scursos2 = $("#scursos2").val();
+    } else {
+        form.scursos2 = "-1";
+    }
+    if ($("#scursos3").val() != null) {
+        form.scursos3 = $("#scursos3").val();
+    } else {
+        form.scursos3 = "-1";
+    }
+    if ($("#salojamientos").val() != null) {
+        form.salojamientos = $("#salojamientos").val();
+    } else {
+        form.salojamientos= "-1";
+    }
+    if ($("#salojamientos2").val() != null) {
+        form.salojamientos2 = $("#salojamientos2").val();
+    } else {
+        form.salojamientos2= "-1";
+    }
+    if ($("#salojamientos3").val() != null) {
+        form.salojamientos3 = $("#salojamientos3").val();
+    } else {
+        form.salojamientos3= "-1";
+    }
+    if ($("#alojamientos").val() != null) {
+        form.alojamientos = $("#alojamientos").val();
+    } else {
+        form.alojamientos= "-1";
+    }
+    console.log(form);
+    $("#spinDiv").css("display", "flex");
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    $.ajax({
+        type: "POST",
+        url: $("#route").val() + "/cursoSave",
+        data: form,
+        success: function (data) {
+            console.log(data);
+            $("#spinDiv").css("display", "none");
+            let json = JSON.parse(data);
+            if (data != "false") {
+                let rsp = alertTimeCorrect(
+                    "Operación actualizada exitosamente",
+                    function (response) {
+                        window.location =
+                            $("#route").val() + "/edits/" + json.opr_id;
+                    }
+                );
+            } else {
+                console.log(json);
+                alertError(json);
+            }
+        },
+        error: function (data) {
+            $("#spinDiv").css("display", "none");
+            console.log(data);
+            alertError("Error inesperado en el servidor");
+        },
+    });
+}
   function Finally(value){
     
     let form = {

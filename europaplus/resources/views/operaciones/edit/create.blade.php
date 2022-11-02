@@ -63,11 +63,11 @@
                     <span class="text-danger" id="spanescu" style="width:100%;margin-right:25%;font-size:11px;"></span>
                 </div>
             </div>
-            <div class="row"  style="margin-top:5px;">
+            <div class="row"  style="margin-top:5px;display:none">
                 <div class="col-sm-12 form-inline text-end ">
                     <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Vuelo/Transfer:</label>
                     <select id="vuelo" name="vuelo" style="width:67%;">
-                        <option value="1" <?php if($vuelo=="1"){echo "selected";}?>>Si</option>
+                        <option value="1" <?php if($vuelo=="1"){echo "selected";}?> selected>Si</option>
                         <option value="2" <?php if($vuelo=="2"){echo "selected";}?>>No</option>
                     </select>
                    

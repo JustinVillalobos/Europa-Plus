@@ -5,6 +5,9 @@ $( document ).ready(function() {
   function goToVuelo(id){
     window.location="./vuelo/"+id;
   }
+  function goToCurso(id){
+    window.location="./curso_operacion/"+id;
+  }
   
   function goToTransfer(id){
     window.location="./transfer/"+id;

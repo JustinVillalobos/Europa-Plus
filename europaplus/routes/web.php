@@ -25,6 +25,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OperacionController;
+use App\Http\Controllers\ConfirmacionesController;
 use App\Http\Controllers\TipoController;
 
 Route::resource('operacion',OperacionController::class);
@@ -33,14 +34,16 @@ Route::post('create',[OperacionController::class, 'create'])->name('operacion.cr
 Route::post('operacion/edit',[OperacionController::class, 'edit'])->name('operacion.edit');
 Route::get('operacion/edits/{opr_id}',[OperacionController::class, 'edits'])->name('operacion.edits');
 Route::get('vuelo/{opr_id}',[OperacionController::class, 'vuelo'])->name('operacion.vuelo');
+Route::get('curso_operacion/{opr_id}',[OperacionController::class, 'curso_operacion'])->name('operacion.curso_operacion');
+
 Route::get('transfer/{opr_id}',[OperacionController::class, 'transfer'])->name('operacion.transfer');
 Route::post('operacion/store',[OperacionController::class, 'store'])->name('operacion.store');
 Route::post('operacion/update',[OperacionController::class, 'update'])->name('operacion.update');
 Route::post('operacion/destroy',[OperacionController::class, 'destroy'])->name('operacion.destroy');
-Route::post('operacion/update',[OperacionController::class, 'update'])->name('operacion.update');
+Route::post('operacion/cursoSave',[OperacionController::class, 'cursoSave'])->name('operacion.cursoSave');
 Route::post('operacion/vueloSave',[OperacionController::class, 'vueloSave'])->name('operacion.vueloSave');
 Route::post('operacion/transferSave',[OperacionController::class, 'transferSave'])->name('operacion.transferSave');
-
+Route::post('operacion/cursoUpdate',[OperacionController::class, 'cursoUpdate'])->name('operacion.cursoUpdate');
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');
@@ -123,3 +126,24 @@ Route::get('/',[LoginController::class, 'index'])->name('login.index');
 Route::get('logout',[LoginController::class, 'logout'])->name('login.logout');
 
 Route::post('loginValidator',[LoginController::class, 'loginValidator'])->name('login.loginValidator');
+
+
+/*Confirmaciones */
+
+
+Route::get('confirmaciones',[ConfirmacionesController::class, 'index'])->name('confirmaciones.index');
+Route::post('confirmaciones/solicitud_curso_modal',[ConfirmacionesController::class, 'solicitud_curso_modal'])->name('confirmaciones.solicitud_curso_modal');
+Route::post('confirmaciones/solicitud_curso_email',[ConfirmacionesController::class, 'solicitud_curso_email'])->name('confirmaciones.solicitud_curso_email');
+Route::post('confirmaciones/confirmacion_curso_email',[ConfirmacionesController::class, 'confirmacion_curso_email'])->name('confirmaciones.confirmacion_curso_email');
+Route::post('confirmaciones/confirmacion_vuelo_email',[ConfirmacionesController::class, 'confirmacion_vuelo_email'])->name('confirmaciones.confirmacion_vuelo_email');
+Route::post('confirmaciones/confirmacion_seguro',[ConfirmacionesController::class, 'confirmacion_seguro'])->name('confirmaciones.confirmacion_seguro');
+Route::post('confirmaciones/solicitud_transfer_modal',[ConfirmacionesController::class, 'solicitud_transfer_modal'])->name('confirmaciones.solicitud_transfer_modal');
+Route::post('confirmaciones/solicitud_transfer_email',[ConfirmacionesController::class, 'solicitud_transfer_email'])->name('confirmaciones.solicitud_transfer_email');
+Route::post('confirmaciones/confirmacion_transfer_email',[ConfirmacionesController::class, 'confirmacion_transfer_email'])->name('confirmaciones.confirmacion_transfer_email');
+Route::post('confirmaciones/descripcion_modal',[ConfirmacionesController::class, 'descripcion_modal'])->name('confirmaciones.descripcion_modal');
+
+
+
+
+
+

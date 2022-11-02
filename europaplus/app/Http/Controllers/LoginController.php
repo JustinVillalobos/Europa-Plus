@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use  App\Models\EuropaPlu;
 session_start();
 class LoginController extends Controller
 {
@@ -29,8 +30,9 @@ class LoginController extends Controller
             $_SESSION["errorBD"] = "**Usuario no encontrado.";
             return view('login.index');
         }else{
-            var_dump("PSS");
+            $empresa=EuropaPlu::where("idEmpresa",'=','1')->first();
             $_SESSION["errorBD"] = "";
+            $_SESSION["empresa"]=$empresa;
             $_SESSION['id'] = $usuario->id;
             return redirect()->to('./alumno');
         }

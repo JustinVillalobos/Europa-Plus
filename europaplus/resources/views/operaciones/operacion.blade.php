@@ -49,7 +49,7 @@
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-9">
-                                                                <label class="mouse-event2"><span class="text-success"><i class="fa fa-file-o" aria-hidden="true"></i></span> Descripci&oacuten</label>
+                                                                <label class="mouse-event2" onclick="loadModalSolicitud(<?php echo $o->opr_id; ?>)"><span class="text-success"><i class="fa fa-file-o" aria-hidden="true"></i></span> Descripci&oacuten</label>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="semaforo">

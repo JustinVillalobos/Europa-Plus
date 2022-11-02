@@ -1,4 +1,4 @@
-@extends('../layouts.admin_empty')
+@extends('../layouts.admin_operacion')
 @section('content')  
 <link rel="stylesheet" href="{{ URL::asset('plugins/sceditor/minified/themes/default.min.css'); }}" />
 
@@ -205,4 +205,9 @@
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/operaciones/transfer.js'); }}"></script>     
+<script src="{{ URL::asset('js/operaciones/modales/solicitud_curso.js'); }}"></script>  
+
+<?php $route_modal = route("confirmaciones.index");?>
+<input type="hidden" value="{{$route_modal}}" id="route_modal" />
+<input type="hidden" value="{{$id}}" id="id" />
 @stop

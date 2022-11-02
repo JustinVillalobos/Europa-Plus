@@ -289,12 +289,12 @@
             <button type="submit" class="btn btn-success">Anterior</button>
         </form>
         @if($isFinaly!=1)
-            <button onclick="Finally(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
+            <button onclick="FinallyStep2(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
         @endif
         @if($isFinaly==1)
             <button onclick="next(3)" class="btn btn-success" style="margin-left:5px">Siguiente</button>
         @endif
-
+  
         <button type="button" class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
         <button type="button" class="btn btn-primary" style="margin-left:5px" onclick="clearStep2()">Limpiar</button>
     </div>

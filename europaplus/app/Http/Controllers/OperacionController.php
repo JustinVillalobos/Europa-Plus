@@ -11,6 +11,7 @@ use App\Models\Curso;
 use App\Models\Suplemento;
 use App\Models\Viaje;
 use  App\Models\SuplementosOperacione;
+use  App\Models\EuropaPlu;
 session_start();
 class OperacionController extends Controller
 {
@@ -138,7 +139,7 @@ class OperacionController extends Controller
                         'alumno'=>$_SESSION['step1']['alumno'],
                         'fecha'=>$_SESSION['step1']['fecha'],
                         'escuela'=>$_SESSION['step1']['escuela'],
-                        'vuelo'=>$_SESSION['step1']['vuelo'],
+                        'vuelo'=>1,
                         "isClear"=>false
                     ];
                     $_SESSION['step2']="";
@@ -146,10 +147,10 @@ class OperacionController extends Controller
                 }else if($page=="2"){
                     $dataInput['escuelas'] =$_SESSION['step1']['escuela'];
                     $data=$this->step2($dataInput);
-                    if($_SESSION['step1']['vuelo']==0){
-                        $data['isFinaly']=0;
-                    }else{
+                    if($_SESSION['step1']['vuelo']==1){
                         $data['isFinaly']=1;
+                    }else{
+                        $data['isFinaly']=2;
                     }
                     return view('operaciones/add.step2',$data);
                 }
@@ -161,16 +162,16 @@ class OperacionController extends Controller
                         'fecha'=>$dataInput['fecha'],
                         'alumno'=>$dataInput['alumnos'],
                         'escuela'=>$dataInput['escuelas'],
-                        'vuelo'=>$dataInput['vuelo']
+                        'vuelo'=>1
                     ];
                    
                     $_SESSION['step1']=$step1;
                     $data=$this->step2($dataInput);
                     
-                    if($_SESSION['step1']['vuelo']==0){
-                        $data['isFinaly']=0;
-                    }else{
+                    if($_SESSION['step1']['vuelo']==1){
                         $data['isFinaly']=1;
+                    }else{
+                        $data['isFinaly']=2;
                     }
                     return view('operaciones/add.step2',$data);
                     break;
@@ -238,7 +239,7 @@ class OperacionController extends Controller
                     $_SESSION['step2']=$step2;
 
                     $data=$this->step2($dataInput);
-                    var_dump($_SESSION['step1']['vuelo']);
+                    
                     return view('operaciones/add.step3',$data);
                     break;
             }
@@ -255,7 +256,7 @@ class OperacionController extends Controller
                 'alumno'=>"",
                 'fecha'=>"",
                 'escuela'=>"",
-                'vuelo'=>"",
+                'vuelo'=>1,
                 "isClear"=>true
             ];
            
@@ -271,7 +272,7 @@ class OperacionController extends Controller
                     'alumno'=>$_SESSION['step1']['alumno'],
                     'fecha'=>$_SESSION['step1']['fecha'],
                     'escuela'=>$_SESSION['step1']['escuela'],
-                    'vuelo'=>$_SESSION['step1']['vuelo'],
+                    'vuelo'=>1,
                     "isClear"=>false
                 ];
                 return $data;
@@ -388,7 +389,7 @@ class OperacionController extends Controller
         }else{
             $page = $dataInput['page'];
             if($page=="1"){
-                var_dump($_SESSION);
+               
                 $alumnos =Alumno::select('alumnos.*')->get();
                 $escuelas=Escuela::select('escuelas.*')->get();
                 $data=[
@@ -397,7 +398,7 @@ class OperacionController extends Controller
                     'alumno'=>$_SESSION['step1']['alumno'],
                     'fecha'=>$_SESSION['step1']['fecha'],
                     'escuela'=>$_SESSION['step1']['escuela'],
-                    'vuelo'=>$_SESSION['step1']['vuelo'],
+                    'vuelo'=>1,
                     "isClear"=>false
                 ];
                 return $data;
@@ -461,8 +462,7 @@ class OperacionController extends Controller
         }else{
             
             $operacion = Operacione::where('opr_id','=',$opr_id)->first();
-            //$vuelo = Vuelo::where('opr_id','=',$opr_id)->first();
-            var_dump($opr_id);
+            
             $suplementos_cursos=SuplementosOperacione::where('opr_id','=',$opr_id)
                                                     ->where('sup_tipo','=','0')->get();
             $suplementos_alojamiento=SuplementosOperacione::where('opr_id','=',$opr_id)
@@ -587,15 +587,130 @@ class OperacionController extends Controller
         
         return $data;
     }
+    public function curso_operacion($id){
+        try {
+            //code...
+            $_SESSION['opr_id']=$id;
+            $_SESSION["idOperacion"]=$id;
+            $_SESSION["operacion"]="1";
+            $operacion = Operacione::where('opr_id','=',$id)->first();
+            $_SESSION["status_curso"]= $operacion->opr_cur_state;
+            $opr_id=$id;
+            $operacion = Operacione::where('opr_id','=',$opr_id)->first();
+            $cursos=Curso::select('cursos.*')
+                            ->join('cursos_escuelas','cursos_escuelas.cur_id','cursos.cur_id')
+                            ->where('cursos_escuelas.esc_id','=',$operacion->esc_id)->get();
+            $alojamientos=Alojamiento::select('alojamientos.*')
+                                ->join('alojamientos_escuelas','alojamientos_escuelas.alj_id','alojamientos.alj_id')
+                                ->where('alojamientos_escuelas.esc_id','=',$operacion->esc_id)->get();
+            $Suplementos_cursos_list=Suplemento::select('suplementos.*')
+                                    ->join('suplementos_escuelas','suplementos.sup_id','suplementos_escuelas.sup_id')
+                                    ->where('suplementos_escuelas.esc_id','=',$operacion->esc_id)
+                                    ->where('suplementos.sup_tipo','=','0')->get();
+            $Suplementos_alojamientos_list=Suplemento::select('suplementos.*')
+                                ->join('suplementos_escuelas','suplementos.sup_id','suplementos_escuelas.sup_id')
+                                ->where('suplementos_escuelas.esc_id','=',$operacion->esc_id)
+                                ->where('suplementos.sup_tipo','=','1')->get();
+           
+            $suplementos_cursos=SuplementosOperacione::where('opr_id','=',$opr_id)
+                                                    ->where('sup_tipo','=','0')->get();
+            $suplementos_alojamiento=SuplementosOperacione::where('opr_id','=',$opr_id)
+                                                    ->where('sup_tipo','=','1')->get();
+
+            $sc=[];
+            
+            if(count($suplementos_cursos)>0){
+                $sc[]=array("sup_id"=>$suplementos_cursos[0]->sup_id,"precio"=>$suplementos_cursos[0]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            if(count($suplementos_cursos)>1){
+                $sc[]=array("sup_id"=>$suplementos_cursos[1]->sup_id,"precio"=>$suplementos_cursos[1]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            if(count($suplementos_cursos)>2){
+                $sc[]=array("sup_id"=>$suplementos_cursos[2]->sup_id,"precio"=>$suplementos_cursos[2]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            if(count($suplementos_alojamiento)>0){
+                $sc[]=array("sup_id"=>$suplementos_alojamiento[0]->sup_id,"precio"=>$suplementos_alojamiento[0]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            if(count($suplementos_alojamiento)>1){
+                $sc[]=array("sup_id"=>$suplementos_alojamiento[1]->sup_id,"precio"=>$suplementos_alojamiento[1]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            if(count($suplementos_alojamiento)>2){
+                $sc[]=array("sup_id"=>$suplementos_alojamiento[2]->sup_id,"precio"=>$suplementos_alojamiento[2]->precio_unidad);
+            }else{
+                $sc[]=array("sup_id"=>0,"precio"=>0);
+            }
+            
+            $data=[
+                'cursos'=>$cursos,
+                'suplementos_cursos'=>$Suplementos_cursos_list,
+                'suplementos_alojamientos'=>$Suplementos_alojamientos_list,
+                'alojamientos'=>$alojamientos,
+                "isClear"=>false,
+                'cur'=> $operacion->cur_id,
+                'fechaInit'=> $operacion->cur_fecha_inicio,
+                'fechaEnd'=>$operacion->cur_fecha_fin,
+                'price'=>$operacion->cur_precio,
+                'price2'=>$operacion->alj_precio,
+                'fechaInit'=> $operacion->cur_fecha_inicio,
+                'fechaEnd'=>$operacion->cur_fecha_fin,
+                'fechaInit2'=>$operacion->alj_fecha_inicio,
+                'fechaEnd2'=>$operacion->alj_fecha_fin,
+                'precios1'=>$sc[0]['precio'],
+                'precios2'=>$sc[1]['precio'],
+                'precios3'=>$sc[2]['precio'],
+                'precios4'=>$sc[3]['precio'],
+                'precios5'=>$sc[4]['precio'],
+                 'precios6'=>$sc[5]['precio'],
+                'desc'=>$operacion->opr_descuento,
+                'apagar'=>$operacion->opr_apagar,
+                'scursos'=>$sc[0]['sup_id'],
+                'scursos2'=>$sc[1]['sup_id'],
+                'scursos3'=>$sc[2]['sup_id'],
+                'salojamientos'=>$sc[3]['sup_id'],
+                'salojamientos2'=>$sc[4]['sup_id'],
+                'salojamientos3'=>$sc[5]['sup_id'],
+                'alojamiento'=>$operacion->alj_id,
+                'numSemanas'=>$operacion->cur_semanas,
+                'pagado'=>$operacion->opr_ttl_coste,
+                'fechaPagado'=>$operacion->cur_fecha_pagprov,
+                'opr_comentarios'=>$operacion->opr_comentarios,
+                'opr_comentarios_esc'=>$operacion->opr_comentarios_esc,
+                'opr_cmntsalu'=>$operacion->opr_cmntsalu,
+                'opr_cmntsalj'=>$operacion->opr_cmntsalj,
+                'id'=>$id
+                
+            ];
+            return view("operaciones.curso",$data);
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->to('./operacion');
+        }
+    }
     public function vuelo($id){
         try {
             $_SESSION['opr_id']=$id;
+            $_SESSION["idOperacion"]=$id;
+            $_SESSION["operacion"]="2";
+
+            $operacion=Operacione::where("opr_id","=",$id)->first();
+            $_SESSION["opr_tfr_state"]=$operacion->opr_tfr_state;
+           
             $viaje = Viaje::where('opr_id','=',$id)->first();
             if(empty($viaje)){
 
                 return redirect()->to('./operacion');
             }
             $data = $this->step3Edit("",$id);
+            $data['id']=$id;
             return view("operaciones.vuelo",$data);
         } catch (\Illuminate\Database\QueryException $th) {
             return redirect()->to('./operacion');
@@ -606,12 +721,17 @@ class OperacionController extends Controller
     public function transfer($id){
         try {
             $_SESSION['opr_id']=$id;
+            $_SESSION["idOperacion"]=$id;
+            $operacion=Operacione::where("opr_id","=",$id)->first();
+            $_SESSION["opr_tfr_state"]=$operacion->opr_tfr_state;
+            $_SESSION["operacion"]="3";
             $viaje = Viaje::where('opr_id','=',$id)->first();
             if(empty($viaje)){
 
                 return redirect()->to('./operacion');
             }
             $data = $this->step3Edit("",$id);
+            $data['id']=$id;
             return view("operaciones.transfer",$data);
         } catch (\Illuminate\Database\QueryException $th) {
             return redirect()->to('./operacion');
@@ -754,7 +874,7 @@ class OperacionController extends Controller
         $operacion= new Operacione([
             'alu_id'=>$step1['alumno'],
             'esc_id'=>$step1['escuela'],
-            'vje_id'=>$step1['vuelo'],
+            'vje_id'=>1,
             'cur_id'=>$step2['cursos'],
             'cur_precio'=>$step2['price'],
             'cur_coste'=>0,
@@ -904,7 +1024,7 @@ class OperacionController extends Controller
             $_SESSION['opr_id'] = $id;
             $opr_id =  $id;
         }
-        var_dump($opr_id);
+       
         if(empty($dataInput['step']) && empty($dataInput['page'])){
            $data = $this->step1Edit($dataInput,$opr_id); 
           
@@ -913,7 +1033,7 @@ class OperacionController extends Controller
             if(!empty($dataInput['action'])){
                 $page = $dataInput['page'];
                 if($page=="1"){
-                    var_dump($page);
+                   
                     $alumnos =Alumno::select('alumnos.*')->get();
                     $escuelas=Escuela::select('escuelas.*')->get();
                     $data=[
@@ -922,7 +1042,7 @@ class OperacionController extends Controller
                         'alumno'=>$_SESSION['step1']['alumno'],
                         'fecha'=>$_SESSION['step1']['fecha'],
                         'escuela'=>$_SESSION['step1']['escuela'],
-                        'vuelo'=>$_SESSION['step1']['vuelo'],
+                        'vuelo'=>1,
                         "isClear"=>false
                     ];
                     $_SESSION['step2']="";
@@ -931,10 +1051,10 @@ class OperacionController extends Controller
                     $dataInput['escuelas'] =$_SESSION['step1']['escuela'];
                     $operacion = Operacione::where('opr_id','=',$opr_id)->first();
                     $data=$this->step2Edit($dataInput,$opr_id);
-                    if($_SESSION['step1']['vuelo']==0){
-                        $data['isFinaly']=0;
-                    }else{
+                    if($_SESSION['step1']['vuelo']==1){
                         $data['isFinaly']=1;
+                    }else{
+                        $data['isFinaly']=2;
                     }
                    
                     return view('operaciones/edit.step2',$data);
@@ -947,17 +1067,17 @@ class OperacionController extends Controller
                         'fecha'=>$dataInput['fecha'],
                         'alumno'=>$dataInput['alumnos'],
                         'escuela'=>$dataInput['escuelas'],
-                        'vuelo'=>$dataInput['vuelo']
+                        'vuelo'=>1
                     ];
                    
                     $_SESSION['step1']=$step1;
                     $opr_id = $_SESSION['opr_id'];
                     $operacion = Operacione::where('opr_id','=',$opr_id)->first();
                     $data=$this->step2Edit($dataInput,$opr_id);
-                    if($_SESSION['step1']['vuelo']==0){
-                        $data['isFinaly']=0;
-                    }else{
+                    if($_SESSION['step1']['vuelo']==1){
                         $data['isFinaly']=1;
+                    }else{
+                        $data['isFinaly']=2;
                     }
                     return view('operaciones/edit.step2',$data);
                     break;
@@ -1029,11 +1149,11 @@ class OperacionController extends Controller
 
                     if(!empty($viaje)){
                         $data=$this->step3Edit($dataInput,$opr_id);
-                        var_dump($_SESSION);
+                       
                         return view('operaciones/edit.step3',$data);
                         break;
                     }else{
-                        var_dump($opr_id);
+                        
                         echo "No deberia estar aca";
                     }
                     
@@ -1041,6 +1161,384 @@ class OperacionController extends Controller
         }
     }
 
+    public function cursoSave(Request $request)
+    {
+        //
+        $input = $request->all();
+        $step1=$_SESSION['step1'];
+        $step2=$input;
+        
+        
+        /*Cursos suplementarios */
+
+        $suplementos=[];
+        $opr_pendiente=0;
+        $opr_ttl_coste_h=0;
+        if(!empty($step2['precios1'])){
+            if(!empty($step2['scursos'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios1'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios1'];
+                
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios2'])){
+            if(!empty($step2['scursos2'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos2'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios2'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios2'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios3'])){
+            if(!empty($step2['scursos3'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos3'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios3'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios3'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        /* Alojamientos suplementarios */
+        if(!empty($step2['precios4'])){
+            if(!empty($step2['salojamientos'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios4'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios4'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios5'])){
+            if(!empty($step2['salojamientos2'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos2'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios5'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios5'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios6'])){
+            if(!empty($step2['salojamientos3'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos3'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios6'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios6'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        $opr_pendiente= $opr_pendiente+$step2['price'];
+        if(!empty($step2['price2'])){
+            $opr_pendiente= $opr_pendiente+$step2['price2'];
+        }
+        $opr_ttl_coste_h=$opr_pendiente;
+        if(!empty($input['price'])){
+            $opr_pendiente= $opr_pendiente+$input['price'];
+        }
+        if(!empty($input['pricet'])){
+            $opr_pendiente= $opr_pendiente+$input['pricet'];
+        }
+        if(empty($step2['pagado'])){
+            $step2['pagado']=0;
+        }
+        if(empty($step2['apagar'])){
+            $step2['apagar']=0;
+        }
+        if(empty($input['tipot'])){
+            $input['tipot']=0;
+        }
+        if(empty($input['costo'])){
+            $input['costo']=0;
+        }
+        if($step2['alojamientos']=="-1"){
+            $step2['alojamientos']=null;
+        }
+        
+        $opr_pendiente= $opr_pendiente-$step2['desc'];
+        $operacion= new Operacione([
+            'alu_id'=>$step1['alumno'],
+            'esc_id'=>$step1['escuela'],
+            'vje_id'=>1,
+            'cur_id'=>$step2['cursos'],
+            'cur_precio'=>$step2['price'],
+            'cur_coste'=>0,
+            'cur_fecha_inicio'=>$step2['fechaInit'],
+            'cur_fecha_fin'=>$step2['fechaEnd'],
+            'cur_semanas'=>$step2['numSemanas'],
+            'alj_id'=>$step2['alojamientos'],
+            'alj_fecha_inicio'=>$step2['fechaInit2'],
+            'alj_fecha_fin'=>$step2['fechaEnd2'],
+            'alj_precio'=>$step2['price2'],
+            'alj_coste'=>0,
+            'opr_fecha'=>$step1['fecha'],
+            'opr_cur_state'=>0,
+            'opr_vje_state'=>0,
+            'opr_tfr_state'=>0,
+            'opr_descr_state'=>0,
+            'opr_confirm_state'=>0,
+            'opr_entrega_state'=>0,
+            'opr_pago_previo'=>0,
+            'opr_pendiente'=>$opr_pendiente,
+            'opr_seguro'=>0,
+            'opr_comentarios'=>$input['comentarios_internos'],
+            'opr_comentarios_esc'=>$input['comentarios_esc'],
+            'opr_cmntsalu'=>$input['informacion_curso'],
+            'opr_cmntsalj'=>$input['informacion_alojamiento'],
+            'opr_state'=>0,
+            'opr_descuento'=>$step2['desc'],
+            'opr_ttl_coste'=>$step2['pagado'],
+            'opr_empresa'=>"0",
+            'opr_agencia'=>"0",
+            'opr_modificada'=>"0",
+            'opr_ttl_coste_h'=>$opr_ttl_coste_h,
+            'opr_modificada_tfr'=>"0",
+            'opr_cancelada'=>0,
+            'opr_alutoint'=>"0",
+            'opr_year'=>date('Y'),
+            'opr_apagar'=>$step2['apagar'],
+            'cur_fecha_pagprov'=>$step2['fechaPagado']
+        ]);
+       
+        $curso = Curso::where('cur_id','=',$step2['cursos'])->first();
+        $estudiante = Alumno::where('alu_id','=',$step1['alumno'])->first();
+        $escuela = Escuela::where('esc_id','=',$step1['escuela'])->first();
+        
+        $operacion->save();
+        $nueva_operacion=Operacione::where('alu_id','=',$operacion->alu_id)
+                                    ->where('esc_id','=',$operacion->esc_id)
+                                    ->where('cur_id','=',$operacion->cur_id)
+                                    ->where('opr_fecha','=',$operacion->opr_fecha)
+                                    ->where('opr_pendiente','=',$operacion->opr_pendiente)->first();
+       
+                                    
+        foreach ($suplementos as $key => $s) {
+            $s->opr_id = $nueva_operacion->opr_id;
+            if($s->sup_id!="-1"){
+                $s->save();
+            }
+           
+        }
+        $data = [
+            'res'=>true,
+            'opr_id'=>$nueva_operacion->opr_id
+        ];
+        echo (json_encode($data));
+        return ;
+    }
+    public function cursoUpdate(Request $request)
+    {
+        $input = $request->all();
+       
+        $step2=$input;
+        
+        
+        /*Cursos suplementarios */
+
+        $suplementos=[];
+        $opr_pendiente=0;
+        $opr_ttl_coste_h=0;
+        if(!empty($step2['precios1'])){
+            if(!empty($step2['scursos'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios1'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios1'];
+                
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios2'])){
+            if(!empty($step2['scursos2'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos2'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios2'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios2'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios3'])){
+            if(!empty($step2['scursos3'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['scursos3'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios3'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>0
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios3'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        /* Alojamientos suplementarios */
+        if(!empty($step2['precios4'])){
+            if(!empty($step2['salojamientos'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios4'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios4'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios5'])){
+            if(!empty($step2['salojamientos2'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos2'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios5'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios5'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        if(!empty($step2['precios6'])){
+            if(!empty($step2['salojamientos3'])){
+                $suplemento = new SuplementosOperacione([
+                    'sup_id'=>$step2['salojamientos3'],
+                    'opr_id'=>0,
+                    'precio_unidad'=>$step2['precios6'],
+                    'num_dias'=>0,
+                    'num_semanas'=>0,
+                    'sup_tipo'=>1
+                ]);
+                $opr_pendiente=$opr_pendiente+$step2['precios6'];
+                $suplementos[]=$suplemento;
+            }
+        }
+        $opr_pendiente= $opr_pendiente+$step2['price'];
+        if(!empty($step2['price2'])){
+            $opr_pendiente= $opr_pendiente+$step2['price2'];
+        }
+        $opr_ttl_coste_h=$opr_pendiente;
+        if(!empty($input['price'])){
+            $opr_pendiente= $opr_pendiente+$input['price'];
+        }
+        if(!empty($input['pricet'])){
+            $opr_pendiente= $opr_pendiente+$input['pricet'];
+        }
+        if(empty($step2['pagado'])){
+            $step2['pagado']=0;
+        }
+        if(empty($step2['apagar'])){
+            $step2['apagar']=0;
+        }
+        if(empty($input['tipot'])){
+            $input['tipot']=0;
+        }
+        if(empty($input['costo'])){
+            $input['costo']=0;
+        }
+        if($step2['alojamientos']=="-1"){
+            $step2['alojamientos']=null;
+        }
+        $opr_pendiente= $opr_pendiente-$step2['desc'];
+        $operacion= Operacione::where('opr_id','=',$_SESSION['opr_id'])->first();
+        
+
+        $operacion->cur_id = $step2['cursos'];
+        $operacion->cur_precio = $step2['price'];
+        $operacion->cur_fecha_inicio = $step2['fechaInit'];
+        $operacion->cur_fecha_fin = $step2['fechaEnd'];
+
+        $operacion->cur_semanas = $step2['numSemanas'];
+        $operacion->alj_id = $step2['alojamientos'];
+        $operacion->alj_fecha_inicio = $step2['fechaInit2'];
+        $operacion->alj_fecha_fin = $step2['fechaEnd2'];
+        $operacion->alj_precio = $step2['price2'];
+      
+      $operacion->opr_pendiente = $opr_pendiente;
+      $operacion->opr_comentarios = $input['comentarios_internos'];
+      $operacion->opr_comentarios_esc = $input['comentarios_esc'];
+      $operacion->opr_cmntsalu = $input['informacion_curso'];
+      $operacion->opr_cmntsalj = $input['informacion_alojamiento'];
+      $operacion->opr_descuento = $step2['desc'];
+      $operacion->opr_ttl_coste = $step2['pagado'];
+      $operacion->opr_modificada = 1;
+      $operacion->opr_ttl_coste_h = $opr_ttl_coste_h;
+
+      $operacion->opr_apagar = $step2['apagar'];
+      $operacion->cur_fecha_pagprov = $step2['fechaPagado'];
+      
+       
+       
+       
+        
+        try {
+            $operacion->save();
+            $nueva_operacion=Operacione::where('opr_id','=',$_SESSION['opr_id'])->first();
+            
+            $suplementosViejos = SuplementosOperacione::where('opr_id','=',$_SESSION['opr_id'])->get();
+            foreach ($suplementosViejos as $key => $s) {
+                $s->delete();
+            }                          
+            foreach ($suplementos as $key => $s) {
+                $s->opr_id = $nueva_operacion->opr_id;
+                if($s->sup_id!="-1"){
+                    $s->save();
+                }
+                
+            }
+            $data = [
+                'res'=>true,
+                'opr_id'=>$nueva_operacion->opr_id
+            ];
+            echo (json_encode($data));
+        } catch (\Illuminate\Database\QueryException $th) {
+            echo (json_encode(false));
+        }
+        return ;
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -1176,7 +1674,7 @@ class OperacionController extends Controller
         $operacion= Operacione::where('opr_id','=',$_SESSION['opr_id'])->first();
         $operacion->alu_id = $step1['alumno'];
         $operacion->esc_id = $step1['escuela'];
-        $operacion->vje_id = $step1['vuelo'];
+        $operacion->vje_id =1;
 
         $operacion->cur_id = $step2['cursos'];
         $operacion->cur_precio = $step2['price'];
@@ -1217,40 +1715,78 @@ class OperacionController extends Controller
                 if(empty($input['pricet'])){
                     $input['pricet']=0;
                 }
-               
                 $viaje= Viaje::where('opr_id','=',$_SESSION['opr_id'])->first();
-                $viaje->vje_vuelo = $input['vuelo'];
-                $viaje->vje_transfer = $input['Transfer'];
-                $viaje->vje_descr = "Datos viaje:".$curso->cur_descr." en ".$escuela->esc_nombre_corto."  para ".$estudiante->alu_nombre." ".$estudiante->alu_apellidos;
-                $viaje->vje_ida_salida = $input['fsalidav'];
-                $viaje->vje_ida_hsalida = $input['hsalidav'];
-                $viaje->vje_ida_llegada = $input['fllegadav'];
-                $viaje->vje_ida_hllegada = $input['hllegadav'];
-                $viaje->vje_ida_linea = $input['linea'];
-                $viaje->vje_ida_aeropuerto = $input['estacionv'];
-                $viaje->vje_ida_aeropuerto1 = $input['estacionv'];
-                $viaje->vje_ida_num_vuelo = $input['numerov3'];
-                $viaje->vje_ida_num_vuelo1 = $input['numerov3'];
-                $viaje->vje_vta_linea = $input['linea2'];
-                $viaje->vje_vta_salida = $input['fsalidav2'];
-                $viaje->vje_vta_hsalida = $input['hsalidav2'];
-                $viaje->vje_vta_llegada = $input['fllegadav2'];
-                $viaje->vje_vta_aeropuerto = $input['estacionv2'];
-                $viaje->vje_vta_aeropuerto1 = $input['estacionv2'];
-                $viaje->vje_vta_num_vuelo = $input['numerov2'];
-                $viaje->vje_vta_num_vuelo1 = $input['numerov2'];
-                $viaje->vje_vuelo_precio = $input['price'];
-                $viaje->vje_transfer_precio = $input['pricet'];
-                $viaje->vje_info_salida = $input['informacionId'];
-                $viaje->vje_info_llegada = $input['informacionVuelta'];
-                $viaje->vje_vuelo_tipo = $input['tipo'];
-                $viaje->vje_vuelo_coste = $input['costo'];
-                $viaje->vje_transfer_tipo = $input['tipot'];
-                $viaje->vje_transfer_coste = $input['tipot'];
-                $viaje->vje_ida_localizador = $input['locv'];
-                $viaje->vje_vta_localizador = $input['locv2'];
-            
+               if(empty($viaje)){
+                    $viaje=new Viaje([
+                        'vje_vuelo'=>$input['vuelo'],
+                        'vje_transfer'=>$input['Transfer'],
+                        'vje_descr'=>"Datos viaje:".$curso->cur_descr." en ".$escuela->esc_nombre_corto."  para ".$estudiante->alu_nombre." ".$estudiante->alu_apellidos,
+                        'vje_ida_linea'=>$input['linea'],
+                        'vje_ida_salida'=>$input['fsalidav'],
+                        'vje_ida_hsalida'=>$input['hsalidav'],
+                        'vje_ida_llegada'=>$input['fllegadav'],
+                        'vje_ida_hllegada'=>$input['hllegadav'],
+                        'vje_ida_aeropuerto'=>$input['estacionv'],
+                        'vje_ida_aeropuerto1'=>$input['estacionv'],
+                        'vje_ida_num_vuelo'=>$input['numerov3'],
+                        'vje_ida_num_vuelo1'=>$input['numerov3'],
+                        'vje_vta_linea'=>$input['linea2'],
+                        'vje_vta_salida'=>$input['fsalidav2'],
+                        'vje_vta_hsalida'=>$input['hsalidav2'],
+                        'vje_vta_llegada'=>$input['fllegadav2'],
+                        'vje_vta_hllegada'=>$input['hllegadav2'],
+                        'vje_vta_aeropuerto'=>$input['estacionv2'],
+                        'vje_vta_aeropuerto1'=>$input['estacionv2'],
+                        'vje_vta_num_vuelo'=>$input['numerov2'],
+                        'vje_vta_num_vuelo1'=>$input['numerov2'],
+                        'vje_vuelo_precio'=>$input['price'],
+                        'vje_transfer_precio'=>$input['pricet'],
+                        'axp_id'=>"3",
+                        'vje_info_salida'=>$input['informacionId'],
+                        'vje_info_llegada'=>$input['informacionVuelta'],
+                        'vje_vuelo_tipo'=>$input['tipo'],
+                        'vje_vuelo_coste'=>$input['costo'],
+                        'vje_transfer_tipo'=>$input['tipot'],
+                        'vje_transfer_coste'=>$input['tipot'],
+                        'opr_id'=>0,
+                        'vje_ida_localizador'=>$input['locv'],
+                        'vje_vta_localizador'=>$input['locv2']
+                    ]);
+                $viaje->opr_id = $_SESSION['opr_id'];
                 $viaje->save();
+               }else{
+                    $viaje->vje_vuelo = $input['vuelo'];
+                    $viaje->vje_transfer = $input['Transfer'];
+                    $viaje->vje_descr = "Datos viaje:".$curso->cur_descr." en ".$escuela->esc_nombre_corto."  para ".$estudiante->alu_nombre." ".$estudiante->alu_apellidos;
+                    $viaje->vje_ida_salida = $input['fsalidav'];
+                    $viaje->vje_ida_hsalida = $input['hsalidav'];
+                    $viaje->vje_ida_llegada = $input['fllegadav'];
+                    $viaje->vje_ida_hllegada = $input['hllegadav'];
+                    $viaje->vje_ida_linea = $input['linea'];
+                    $viaje->vje_ida_aeropuerto = $input['estacionv'];
+                    $viaje->vje_ida_aeropuerto1 = $input['estacionv'];
+                    $viaje->vje_ida_num_vuelo = $input['numerov3'];
+                    $viaje->vje_ida_num_vuelo1 = $input['numerov3'];
+                    $viaje->vje_vta_linea = $input['linea2'];
+                    $viaje->vje_vta_salida = $input['fsalidav2'];
+                    $viaje->vje_vta_hsalida = $input['hsalidav2'];
+                    $viaje->vje_vta_llegada = $input['fllegadav2'];
+                    $viaje->vje_vta_aeropuerto = $input['estacionv2'];
+                    $viaje->vje_vta_aeropuerto1 = $input['estacionv2'];
+                    $viaje->vje_vta_num_vuelo = $input['numerov2'];
+                    $viaje->vje_vta_num_vuelo1 = $input['numerov2'];
+                    $viaje->vje_vuelo_precio = $input['price'];
+                    $viaje->vje_transfer_precio = $input['pricet'];
+                    $viaje->vje_info_salida = $input['informacionId'];
+                    $viaje->vje_info_llegada = $input['informacionVuelta'];
+                    $viaje->vje_vuelo_tipo = $input['tipo'];
+                    $viaje->vje_vuelo_coste = $input['costo'];
+                    $viaje->vje_transfer_tipo = $input['tipot'];
+                    $viaje->vje_transfer_coste = $input['tipot'];
+                    $viaje->vje_ida_localizador = $input['locv'];
+                    $viaje->vje_vta_localizador = $input['locv2'];
+                    $viaje->save();
+               }
             }
             $suplementosViejos = SuplementosOperacione::where('opr_id','=',$_SESSION['opr_id'])->get();
             foreach ($suplementosViejos as $key => $s) {

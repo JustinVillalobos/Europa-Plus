@@ -1,4 +1,4 @@
-@extends('../layouts.admin_empty')
+@extends('../layouts.admin_operacion')
 @section('content')  
 <link rel="stylesheet" href="{{ URL::asset('plugins/sceditor/minified/themes/default.min.css'); }}" />
 
@@ -9,7 +9,7 @@
         <div class="" style="padding-left:5px;">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href='{{route("operacion.index")}}' class="text-info"> <h5><i class="fa fa-book" aria-hidden="true"></i>Operaciones</h5></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Editar Operaci&oacuten</li>
+                <li class="breadcrumb-item active" aria-current="page">Curso</li>
             </ol>
         </div>
     </div>
@@ -19,7 +19,7 @@
     
 
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
-        <div class="section">EDITAR OPERACIÓN - PASO 2 - DATOS DE VIAJE</div>
+        <div class="section">DATOS DE VIAJE</div>
     </div>
     <form action='{{route("operacion.edit")}}' method="POST" id="form"  class="row" style="margin: 0px;" onsubmit="return validateStep2()">
                 @method("POST")
@@ -69,13 +69,13 @@
                 <div class="col-sm-12 form-inline text-end">
                 <?php $isAlojado5=false; ?>
                     <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[1]:</label>
-                    <select  class="form-select select"  style="width:47%;" id="scursos" name="scursos">
+                    <select  class="form-select select"  style="width:40%;" id="scursos" name="scursos">
                     @foreach($suplementos_cursos as $curso)
                         <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$scursos){echo "selected"; $isAlojado5=true;}?> >{{$curso->sup_nombre}}</option>
                     @endforeach
                     </select>
                     <input type="hidden" id="isAlojado5" value="{{$isAlojado5}}"/>
-                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;">Precio:</label>
                     <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios1" id="precios1" value="{{$precios1}}"/>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -86,13 +86,13 @@
                 <div class="col-sm-12 form-inline text-end">
                 <?php $isAlojado6=false; ?>
                 <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[2]:</label>
-                    <select  class="form-select select"  style="width:47%;" id="scursos2" name="scursos2">
+                    <select  class="form-select select"  style="width:40%;" id="scursos2" name="scursos2">
                     @foreach($suplementos_cursos as $curso)
                         <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$scursos2){echo "selected";$isAlojado6=true;}?>>{{$curso->sup_nombre}}</option>
                     @endforeach
                     </select>
                     <input type="hidden" id="isAlojado6" value="{{$isAlojado6}}"/>
-                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;">Precio:</label>
                     <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios2" id="precios2" value="{{$precios2}}"/>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -103,13 +103,13 @@
                 <div class="col-sm-12 form-inline text-end">
                 <?php $isAlojado7=false; ?>
                 <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[3]:</label>
-                    <select  class="form-select select"  style="width:47%;" id="scursos3" name="scursos3">
+                    <select  class="form-select select"  style="width:40%;" id="scursos3" name="scursos3">
                     @foreach($suplementos_cursos as $curso)
                         <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$scursos3){echo "selected";$isAlojado7=true;}?>>{{$curso->sup_nombre}}</option>
                     @endforeach
                     </select>
                     <input type="hidden" id="isAlojado7" value="{{$isAlojado7}}"/>
-                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                    <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;\;">Precio:</label>
                     <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios3" id="precios3" value="{{$precios3}}"/>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -161,7 +161,7 @@
                 <div class="row"  style="margin-top:5px;">
                     <div class="col-sm-12 form-inline text-center">
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Fecha Inicio:</label>
-                        <input type="date" class="form-control" style="width:67%;" name="fechaInit2" id="fechaInit2" value="<?php echo date_format(date_create($fechaInit2),'Y-m-d'); ?>"/>
+                        <input type="date" class="form-control" style="width:60%;" name="fechaInit2" id="fechaInit2" value="<?php echo date_format(date_create($fechaInit2),'Y-m-d'); ?>"/>
                         <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
                     </div>
                 </div>
@@ -183,13 +183,13 @@
                     <div class="col-sm-12 form-inline text-end">
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[1]:</label>
                         <?php $isAlojado2=false; ?>
-                        <select  class="form-select select"  style="width:47%;" id="salojamientos" name="salojamientos">
+                        <select  class="form-select select"  style="width:40%;" id="salojamientos" name="salojamientos">
                         @foreach($suplementos_alojamientos as $curso)
                             <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$salojamientos){echo "selected";$isAlojado2=true;}?>>{{$curso->sup_nombre}}</option>
                         @endforeach
                         </select>
                         <input type="hidden" id="isAlojado2" value="{{$isAlojado2}}"/>
-                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;">Precio:</label>
                         <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios4" id="precios4" value="{{$precios4}}"/>
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -200,13 +200,13 @@
                     <div class="col-sm-12 form-inline text-end">
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[2]:</label>
                         <?php $isAlojado3=false; ?>
-                        <select  class="form-select select"  style="width:47%;" id="salojamientos2" name="salojamientos2">
+                        <select  class="form-select select"  style="width:40%;" id="salojamientos2" name="salojamientos2">
                         @foreach($suplementos_alojamientos as $curso)
                             <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$salojamientos2){echo "selected";$isAlojado3=true;}?>>{{$curso->sup_nombre}}</option>
                         @endforeach
                         </select>
                         <input type="hidden" id="isAlojado3" value="{{$isAlojado3}}"/>
-                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;">Precio:</label>
                         <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios5" id="precios5" value="{{$precios5}}" />
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -217,13 +217,13 @@
                     <div class="col-sm-12 form-inline text-end">
                     <?php $isAlojado4=false; ?>
                         <label class=" font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Suplem.[3]:</label>
-                        <select  class="form-select select"  style="width:47%;" id="salojamientos3" name="salojamientos3">
+                        <select  class="form-select select"  style="width:40%;" id="salojamientos3" name="salojamientos3">
                         @foreach($suplementos_alojamientos as $curso)
                             <option value="{{$curso->sup_id}}" <?php if($curso->sup_id==$salojamientos3){echo "selected";$isAlojado4=true;}?>>{{$curso->sup_nombre}}</option>
                         @endforeach
                         </select>
                         <input type="hidden" id="isAlojado4" value="{{$isAlojado4}}"/>
-                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;">Precio:</label>
+                        <label class=" font-weight-bold" style="width:9%;justify-content: end; margin-right: 5px;margin-left: 15px;">Precio:</label>
                         <input type="number" class="form-control" style="width:10%;font-size:12px;" name="precios6" id="precios6"  value="{{$precios6}}"/>
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center text-center">
@@ -281,23 +281,7 @@
             </div>
         </form>
     <div class="col-sm-6 d-flex justify-content-end" style="padding:10px 25px 0px 20px;">
-       
-        <form action='{{route("operacion.edit")}}' method="POST"   style="margin: 0px;">
-                    @method("POST")
-                    @csrf
-                    <input type="hidden" value="prev" id="action" name="action"/>
-                    <input type="hidden" value="1" id="page" name="page"/>
-            <button type="submit" class="btn btn-success">Anterior</button>
-        </form>
-        @if($isFinaly!=1)
-            <button onclick="FinallyStep2(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
-        @endif
-        @if($isFinaly==1)
-            <button onclick="next(3)" class="btn btn-success" style="margin-left:5px">Siguiente</button>
-        @endif
-        
-       
-
+        <button onclick="FinallyStep2(3)" class="btn btn-success" style="margin-left:5px">Guardar</button>
         <button type="button" class="btn btn-warning text-white" style="margin-left:5px">Cancelar</button>
         <button type="button" class="btn btn-primary" style="margin-left:5px" onclick="clearStep2()">Limpiar</button>
     </div>
@@ -305,5 +289,5 @@
 </div>
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
-<script src="{{ URL::asset('js/operaciones/edit.js'); }}"></script>     
+<script src="{{ URL::asset('js/operaciones/curso.js'); }}"></script>     
 @stop

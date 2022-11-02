@@ -7,6 +7,14 @@ function alertError(mensaje) {
         confirmButtonColor: '#3085d6'
     });
 }
+function alertError2(mensaje) {
+  Swal.fire({
+      icon: 'error',
+      title: 'Lo sentimos...',
+      html: mensaje,
+      confirmButtonColor: '#3085d6'
+  });
+}
 function confirmacionEliminar(mensaje, callback) {
 
   Swal.fire({

@@ -161,7 +161,7 @@
     </div>
     @endif
 </div>
-
+@include("../operaciones/confirmaciones/descripcion")
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/operaciones/list.js'); }}"></script>     
