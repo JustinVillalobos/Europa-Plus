@@ -1,5 +1,5 @@
 <link href="{{ URL::asset('css/factura.css'); }}" rel="stylesheet">
-<div class="modal fade show " id="modal" style="display:block">
+<div class="modal fade  " id="modal" style="">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
 

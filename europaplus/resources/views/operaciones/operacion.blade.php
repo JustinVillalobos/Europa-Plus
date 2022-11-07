@@ -54,7 +54,7 @@
                                                             <div class="col-sm-3">
                                                                 <div class="semaforo">
                                                                     <span class="<?php if($o->opr_descr_state==0){echo "text-danger";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                                    <span class="<?php if($o->opr_descr_state==1){echo "text-warning";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                                                    <span class="<?php if($o->opr_descr_state==1){echo "text-success";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                                                     
                                                                 </div>
                                                             </div>
@@ -64,7 +64,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-9">
                                                                 <label><span class="text-success"><i class="fa fa-check-square" aria-hidden="true"></i></span> 
-                                                                <label class="mouse-event2">Confirmaci&oacuten</label> > <label class="mouse-event2">[condicionada]</label></label>
+                                                                <label class="mouse-event2" onclick="loadModalCondicionada(<?php echo $o->opr_id; ?>)">Condicionada</label> > <label class="mouse-event2" onclick="loadModalConfirmacion(<?php echo $o->opr_id; ?>)">Confirmaci&oacuten</label></label>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="semaforo">
@@ -78,12 +78,12 @@
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-9">
-                                                                <label class="mouse-event2"><span class="text-success"><i class="fa fa-handshake-o" aria-hidden="true"></i></span> Entrega</label>
+                                                                <label class="mouse-event2" onclick="entrega_state(<?php echo $o->opr_id; ?>)"><span class="text-success"><i class="fa fa-handshake-o" aria-hidden="true"></i></span> Entrega</label>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="semaforo">
                                                                     <span class="<?php if($o->opr_entrega_state==0){echo "text-danger";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                                    <span class="<?php if($o->opr_entrega_state==1){echo "text-warning";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                                                    <span class="<?php if($o->opr_entrega_state==1){echo "text-success";}?>"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                                                 </div>
                                                             </div>
                                                         </div>

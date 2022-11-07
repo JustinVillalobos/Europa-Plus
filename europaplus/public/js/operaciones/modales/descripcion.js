@@ -21,6 +21,12 @@ function loadModal(id) {
             let d=JSON.parse(data);
             let datos = JSON.parse(data)['operacion'][0];
             operacion = datos;
+            if(operacion.vje_transfer_precio==null){
+                operacion.vje_transfer_precio=0;
+            }
+            if(operacion.vje_vuelo_precio==null){
+                operacion.vje_vuelo_precio=0;
+            }
             let transfer=(operacion.vje_transfer==1)?'Si':'No';
             let precioTotal=operacion.cur_precio+operacion.alj_precio;
             let total=(precioTotal+d.suplementos.precio+operacion.vje_vuelo_precio+operacion.vje_transfer_precio)-operacion.opr_descuento;
@@ -43,6 +49,8 @@ function loadModal(id) {
             if(operacion.cur_nombre==null){
                 operacion.cur_nombre="";
             }
+            
+            
            
             $("#alumno").html(operacion.alu_nombre+" "+operacion.alu_apellidos);
             $("#idioma").html(d.idioma.opc_descr);
@@ -54,13 +62,21 @@ function loadModal(id) {
             $("#transfer").html(transfer_tipo);
             $("#sups").html(d.suplementos.nombres);
           
-            $("#precioca").html(precioTotal+'&euro;');
-            $("#des").html(operacion.opr_descuento+'&euro;');
-            $("#sups2").html(d.suplementos.precio+'&euro;');
-            $("#trans").html(operacion.vje_transfer_precio+'&euro;');
-            $("#others").html(operacion.vje_vuelo_precio+'&euro;');
-            console.log("TOTAL",d.suplementos.precio+'&euro;');
-            $("#total").html(total+'&euro;');
+            $("#precioca").html(precioTotal.toFixed(2)+'€');
+            $("#des").html(operacion.opr_descuento.toFixed(2)+'€');
+            $("#sups2").html(d.suplementos.precio.toFixed(2)+'€');
+            $("#trans").html(operacion.vje_transfer_precio.toFixed(2)+'€');
+            $("#others").html(operacion.vje_vuelo_precio.toFixed(2)+'€');
+            console.log("TOTAL",d.suplementos.precio.toFixed(2)+'€');
+            $("#total").html(total.toFixed(2)+'€');
+            pdf=[];
+            pdf.push(d.suplementos.nombres);
+            pdf.push(precioTotal+'&euro;');
+            pdf.push(operacion.opr_descuento+'&euro;');
+            pdf.push(d.suplementos.precio+'&euro;');
+            pdf.push(operacion.vje_transfer_precio+'&euro;');
+            pdf.push(operacion.vje_vuelo_precio+'&euro;');
+            pdf.push(total+'&euro;');
             $("#spinDiv").css("display", "none");
 
             $("#modal").modal("show");
@@ -167,54 +183,76 @@ function print() {
         doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     var pageWidth =
         doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-
+        let maxLineWidth = pageWidth - 20 ;
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    let text = " Solicitud de curso";
+    let text = "Descripción de la solicitud de inscripción";
     let textPostion = this.center(doc, text);
-    if (operacion.opr_modificada == 0) {
-        text = "(Modificación) Solicitud de transferencia";
-        textPostion = this.center(doc, text);
-        doc.text(text, textPostion, 55);
-    } else {
-        text = "(Modificación) Solicitud de curso";
-        textPostion = this.center(doc, text);
-        text =
-            '<h3><strong><span style="color:#FF0000">(Modificación)</span> Solicitud de curso</strong></h3>';
-        doc.fromHTML(text, textPostion + 0, 55);
-    }
-
+    textPostion = this.center(doc, text);
+    doc.text(text, textPostion, 60);
     doc.setFont("times", "normal");
     doc.setFontSize(12);
     let campos = SOLICITUD();
 
     let indexY = 80;
     let indexX = 40;
-    console.log(campos, pdf);
-    campos.forEach((element, index) => {
-        doc.setFont("times", "bold");
-        doc.text(element + ":", indexX, indexY);
-        doc.setFont("times", "normal");
-        indexX = 80;
-        if (pdf[index] == undefined) {
-            pdf[index] = "";
-        } else if (pdf[index] == null) {
-            pdf[index] = "";
+    let html=$("#info .pp1");
+    let count=0;
+    //html=""+html+"";
+    html.each(function(index){
+        var item=$(this).html();
+        
+        if(html.length-1==index){
+            indexY=indexY+7;
+            let s=$("#sups").html();
+            s="Suplementos:"+s+"";
+            console.log($(this),s);
+            var textLines = doc.splitTextToSize(s, maxLineWidth-55);
+            console.log("Text lines",textLines);
+            textLines.forEach(element => {
+                doc.text(""+element, indexX, indexY);
+                indexY=indexY+7;
+            });
+             
+        }else{
+            doc.fromHTML(item + "", indexX, indexY);
+            indexY=indexY+7;
         }
-        console.log(pdf[index]);
-        pdf[index] = pdf[index] + "";
-        let temp = pdf[index];
-        if (temp.match(/<p>/g) != undefined || temp.match(/<p>/g) != null) {
-            console.log("Ingreso", temp.match(/<p>/g));
-            doc.fromHTML(pdf[index] + "", indexX, indexY);
-        } else {
-            console.log("Text ", pdf[index]);
-            doc.text(pdf[index], indexX, indexY);
+        
+       
+        count++;
+        if(count==2){
+            indexX = 55;
+            indexY=indexY+5;
         }
-
-        indexX = 40;
-        indexY = indexY + 7;
+        console.log(item);
     });
+    html=$("#info .pp2");
+    let html2=$("#info .pp3");
+    indexX = 60;
+    indexY=indexY+7;
+    doc.setDrawColor(255, 157, 13);
+    doc.line(indexX, indexY, indexX, indexY+45);
+    doc.setDrawColor(0, 0, 0);
+    html.each(function(index){
+        var item=$(this).html();
+        doc.fromHTML(item + "", indexX, indexY);
+        item=$(html2[index]).text();
+        doc.text(item + "", indexX+55, indexY+6);
+        indexY=indexY+7;
+        
+        console.log(item);
+    });
+    indexY=indexY+20;
+    indexX = -10;
+    html=$("#info .pp4");
+    html.each(function(index){
+        let item=$(this).html();
+        console.log(item);
+        doc.text(item + "", indexX, indexY);
+        indexY=indexY+20;
+    });
+    
     // Convert HTML to PDF in JavaScript
 
     doc.save("Descripción " +operacion.alu_nombre+" "+operacion.alu_apellidos+ " " + getTimeV2() + " ");
@@ -231,18 +269,21 @@ function confirmSinCorreo(){
     console.log($("#route_modal").val());
     $.ajax({
         type: "POST",
-        url: $("#route_modal").val() + "/solicitud_curso_email",
+        url: $("#route_modal").val() + "/descripcion_email",
         data: form,
         success: function (data) {
           console.log(data);
-          if(data=='true'){
+          let d =JSON.parse(data);
+          if(d.res==true){
             let rsp = alertTimeCorrect(
-                "Envío de solicitud éxitoso",
+                "Confirmación de Descripción éxitoso",
                 function (response) {
                     window.location =
-                        $("#route_modal").val() + "/../../curso_operacion/" + $("#id").val();
+                        $("#route_modal").val() + "/../../operacion" ;
                 }
             );
+          }else{
+            alertError2("No se confirmó la Descripción");
           }
         },
         error: function (data) {
@@ -263,18 +304,21 @@ function send() {
     console.log($("#route_modal").val());
     $.ajax({
         type: "POST",
-        url: $("#route_modal").val() + "/solicitud_curso_email",
+        url: $("#route_modal").val() + "/descripcion_email",
         data: form,
         success: function (data) {
           console.log(data);
-          if(data=='true'){
+          let d =JSON.parse(data);
+          if(data.res=='true'){
             let rsp = alertTimeCorrect(
-                "Envío de solicitud éxitoso",
+                "Confirmación de Descripción éxitoso",
                 function (response) {
                     window.location =
-                        $("#route_modal").val() + "/../../curso_operacion/" + $("#id").val();
+                        $("#route_modal").val() + "/../../operacion" ;
                 }
             );
+          }else{
+            alertError2("No se confirmó la Descripción");
           }
         },
         error: function (data) {

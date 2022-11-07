@@ -162,6 +162,8 @@
     @endif
 </div>
 @include("../operaciones/confirmaciones/descripcion")
+@include("../operaciones/confirmaciones/confirmacion")
+@include("../operaciones/confirmaciones/confirmacion_condicionada")
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
 <script src="{{ URL::asset('js/operaciones/list.js'); }}"></script>     

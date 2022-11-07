@@ -10,6 +10,7 @@ $( document ).ready(function() {
   }
   
   function goToTransfer(id){
+    console.log(id);
     window.location="./transfer/"+id;
   }
   function validate(e,form,id){
@@ -48,4 +49,34 @@ $( document ).ready(function() {
         }
       });
       e.preventDefault();
+}
+function entrega_state(id){
+  $("#spinDiv").css('display','flex');
+           $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+          $.ajax({
+            type:'POST',
+            url:$("#route").val()+'/../confirmaciones/entrega_email',
+            data:{id:id},
+            success:function(data){
+              $("#spinDiv").css('display','none');
+              if(data=='true'){
+                let rsp=alertTimeCorrect("Operación entregada exitosamente",function(response){
+                    window.location=$("#route").val();
+                  });
+              }else{
+                alertError("Error al entregar la operación");
+              }
+        
+            },
+            error:function(data){
+                console.log("ERROR",data);
+                alertError("Error inesperado en el servidor");
+            }
+        
+         });
+  
 }

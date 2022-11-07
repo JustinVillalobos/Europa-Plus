@@ -77,7 +77,7 @@
                                 <ul style="padding-left: 0px;">
                                     <li><a href='{{route("operacion.curso_operacion", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Curso</a></li>
                                     <li><a href='{{route("operacion.vuelo", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Vuelo</a></li>
-                                    <li><a href='{{route("operacion.curso_operacion", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Cobros</a></li>
+                                    <li><a href='{{route("cobros.cobros", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Cobros</a></li>
                                 </ul>
                             </div>
                         </div>

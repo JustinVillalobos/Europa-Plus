@@ -74,7 +74,7 @@ function loadModal(id) {
           $("#fecha2").html(datos.vje_vta_salida);
           $("#vuelo2").html(datos.vje_vta_num_vuelo+" "+datos.vje_vta_linea);
           $("#hora2").html(datos.vje_vta_hsalida);
-          
+          pdf=[];
             pdf.push(datos.esc_contacto_1 + " (" + datos.esc_cnt_mail_1 + ")");
             pdf.push("Administración Europa Plus");
             pdf.push(datos.cur_localidad);

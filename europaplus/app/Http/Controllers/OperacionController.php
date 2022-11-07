@@ -850,7 +850,10 @@ class OperacionController extends Controller
         $opr_ttl_coste_h=$opr_pendiente;
         if(!empty($input['price'])){
             $opr_pendiente= $opr_pendiente+$input['price'];
+        }else{
+            $input['price']=0;
         }
+       
         if(!empty($input['pricet'])){
             $opr_pendiente= $opr_pendiente+$input['pricet'];
         }
@@ -866,11 +869,21 @@ class OperacionController extends Controller
         if(empty($input['costo'])){
             $input['costo']=0;
         }
+        if(empty($input['costot'])){
+            $input['costot']=0;
+        }
         if($step2['alojamientos']=="-1"){
             $step2['alojamientos']=null;
         }
-        
-        $opr_pendiente= $opr_pendiente-$step2['desc'];
+        if(empty($input['price'])){
+            $input['price']=0;
+        }
+        if(empty($input['pricet'])){
+            $input['pricet']=0;
+        }
+      
+        $opr_ttl_coste_h=$opr_ttl_coste_h+$input['price']+$input['pricet']-$input['costo']-$input['costot'];
+        $opr_pendiente= $opr_pendiente-$step2['desc']-  $step2['pagado']-$input['costo']-$input['costot'];
         $operacion= new Operacione([
             'alu_id'=>$step1['alumno'],
             'esc_id'=>$step1['escuela'],
@@ -926,12 +939,7 @@ class OperacionController extends Controller
                                     ->where('opr_fecha','=',$operacion->opr_fecha)
                                     ->where('opr_pendiente','=',$operacion->opr_pendiente)->first();
        if($step1['vuelo']==1){
-        if(empty($input['price'])){
-            $input['price']=0;
-        }
-        if(empty($input['pricet'])){
-            $input['pricet']=0;
-        }
+        
             $viaje=new Viaje([
                 'vje_vuelo'=>$input['vuelo'],
                 'vje_transfer'=>$input['Transfer'],
@@ -962,7 +970,7 @@ class OperacionController extends Controller
                 'vje_vuelo_tipo'=>$input['tipo'],
                 'vje_vuelo_coste'=>$input['costo'],
                 'vje_transfer_tipo'=>$input['tipot'],
-                'vje_transfer_coste'=>$input['tipot'],
+                'vje_transfer_coste'=>$input['costot'],
                 'opr_id'=>0,
                 'vje_ida_localizador'=>$input['locv'],
                 'vje_vta_localizador'=>$input['locv2']
@@ -1670,7 +1678,16 @@ class OperacionController extends Controller
         if($step2['alojamientos']=="-1"){
             $step2['alojamientos']=null;
         }
-        $opr_pendiente= $opr_pendiente-$step2['desc'];
+        if(empty($input['price'])){
+            $input['price']=0;
+        }
+        if(empty($input['pricet'])){
+            $input['pricet']=0;
+        }
+      
+        $opr_ttl_coste_h=$opr_ttl_coste_h+$input['price']+$input['pricet']-$input['costo']-$input['costot'];
+        $opr_pendiente= $opr_pendiente-$step2['desc']-  $step2['pagado']-$input['costo']-$input['costot'];
+     
         $operacion= Operacione::where('opr_id','=',$_SESSION['opr_id'])->first();
         $operacion->alu_id = $step1['alumno'];
         $operacion->esc_id = $step1['escuela'];
@@ -1717,43 +1734,7 @@ class OperacionController extends Controller
                 }
                 $viaje= Viaje::where('opr_id','=',$_SESSION['opr_id'])->first();
                if(empty($viaje)){
-                    $viaje=new Viaje([
-                        'vje_vuelo'=>$input['vuelo'],
-                        'vje_transfer'=>$input['Transfer'],
-                        'vje_descr'=>"Datos viaje:".$curso->cur_descr." en ".$escuela->esc_nombre_corto."  para ".$estudiante->alu_nombre." ".$estudiante->alu_apellidos,
-                        'vje_ida_linea'=>$input['linea'],
-                        'vje_ida_salida'=>$input['fsalidav'],
-                        'vje_ida_hsalida'=>$input['hsalidav'],
-                        'vje_ida_llegada'=>$input['fllegadav'],
-                        'vje_ida_hllegada'=>$input['hllegadav'],
-                        'vje_ida_aeropuerto'=>$input['estacionv'],
-                        'vje_ida_aeropuerto1'=>$input['estacionv'],
-                        'vje_ida_num_vuelo'=>$input['numerov3'],
-                        'vje_ida_num_vuelo1'=>$input['numerov3'],
-                        'vje_vta_linea'=>$input['linea2'],
-                        'vje_vta_salida'=>$input['fsalidav2'],
-                        'vje_vta_hsalida'=>$input['hsalidav2'],
-                        'vje_vta_llegada'=>$input['fllegadav2'],
-                        'vje_vta_hllegada'=>$input['hllegadav2'],
-                        'vje_vta_aeropuerto'=>$input['estacionv2'],
-                        'vje_vta_aeropuerto1'=>$input['estacionv2'],
-                        'vje_vta_num_vuelo'=>$input['numerov2'],
-                        'vje_vta_num_vuelo1'=>$input['numerov2'],
-                        'vje_vuelo_precio'=>$input['price'],
-                        'vje_transfer_precio'=>$input['pricet'],
-                        'axp_id'=>"3",
-                        'vje_info_salida'=>$input['informacionId'],
-                        'vje_info_llegada'=>$input['informacionVuelta'],
-                        'vje_vuelo_tipo'=>$input['tipo'],
-                        'vje_vuelo_coste'=>$input['costo'],
-                        'vje_transfer_tipo'=>$input['tipot'],
-                        'vje_transfer_coste'=>$input['tipot'],
-                        'opr_id'=>0,
-                        'vje_ida_localizador'=>$input['locv'],
-                        'vje_vta_localizador'=>$input['locv2']
-                    ]);
-                $viaje->opr_id = $_SESSION['opr_id'];
-                $viaje->save();
+                  
                }else{
                     $viaje->vje_vuelo = $input['vuelo'];
                     $viaje->vje_transfer = $input['Transfer'];
@@ -1782,7 +1763,7 @@ class OperacionController extends Controller
                     $viaje->vje_vuelo_tipo = $input['tipo'];
                     $viaje->vje_vuelo_coste = $input['costo'];
                     $viaje->vje_transfer_tipo = $input['tipot'];
-                    $viaje->vje_transfer_coste = $input['tipot'];
+                    $viaje->vje_transfer_coste = $input['costot'];
                     $viaje->vje_ida_localizador = $input['locv'];
                     $viaje->vje_vta_localizador = $input['locv2'];
                     $viaje->save();

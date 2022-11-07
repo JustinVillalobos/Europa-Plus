@@ -82,6 +82,7 @@ function loadModal(id) {
             $("#mascotas").html(tol_anim);
             $("#dieta").html(dieta);
             $("#comentarios").html(datos.opr_comentarios_esc);
+            pdf=[];
             pdf.push(datos.esc_contacto_1 + " (" + datos.esc_cnt_mail_1 + ")");
             pdf.push("Administración Europa Plus");
             pdf.push(datos.cur_localidad);
@@ -372,7 +373,7 @@ function seguro(){
         success: function (data) {
           console.log(data);
           let d =JSON.parse(data);
-          if(data.res=='true'){
+          if(d.res==true){
             let rsp = alertTimeCorrect(
                 "Confirmación de seguro éxitoso",
                 function (response) {

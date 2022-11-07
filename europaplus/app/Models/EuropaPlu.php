@@ -18,6 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $telefono
  * @property string $whatsapp
  * @property string $codigo_postal
+ * @property string $banco
+ * @property string $direccion_banco
+ * @property string $IBAN
+ * @property string $SWIFT/BIC
  *
  * @package App\Models
  */
@@ -33,6 +37,10 @@ class EuropaPlu extends Model
 		'sitio_web',
 		'telefono',
 		'whatsapp',
-		'codigo_postal'
+		'codigo_postal',
+		'banco',
+		'direccion_banco',
+		'IBAN',
+		'SWIFT/BIC'
 	];
 }

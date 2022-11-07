@@ -27,6 +27,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OperacionController;
 use App\Http\Controllers\ConfirmacionesController;
 use App\Http\Controllers\TipoController;
+use App\Http\Controllers\CobrosController;
 
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
@@ -44,6 +45,8 @@ Route::post('operacion/cursoSave',[OperacionController::class, 'cursoSave'])->na
 Route::post('operacion/vueloSave',[OperacionController::class, 'vueloSave'])->name('operacion.vueloSave');
 Route::post('operacion/transferSave',[OperacionController::class, 'transferSave'])->name('operacion.transferSave');
 Route::post('operacion/cursoUpdate',[OperacionController::class, 'cursoUpdate'])->name('operacion.cursoUpdate');
+
+
 
 Route::resource('alumno',AlumnoController::class);
 Route::get('formulario',[AlumnoController::class, 'formulario'])->name('alumno.formulario');
@@ -141,9 +144,19 @@ Route::post('confirmaciones/solicitud_transfer_modal',[ConfirmacionesController:
 Route::post('confirmaciones/solicitud_transfer_email',[ConfirmacionesController::class, 'solicitud_transfer_email'])->name('confirmaciones.solicitud_transfer_email');
 Route::post('confirmaciones/confirmacion_transfer_email',[ConfirmacionesController::class, 'confirmacion_transfer_email'])->name('confirmaciones.confirmacion_transfer_email');
 Route::post('confirmaciones/descripcion_modal',[ConfirmacionesController::class, 'descripcion_modal'])->name('confirmaciones.descripcion_modal');
+Route::post('confirmaciones/descripcion_email',[ConfirmacionesController::class, 'descripcion_email'])->name('confirmaciones.descripcion_email');
+
+Route::post('confirmaciones/confirmacion_condicionada',[ConfirmacionesController::class, 'confirmacion_condicionada'])->name('confirmaciones.confirmacion_condicionada');
+Route::post('confirmaciones/confirmar_condicionada_email',[ConfirmacionesController::class, 'confirmar_condicionada_email'])->name('confirmaciones.confirmar_condicionada_email');
+
+Route::post('confirmaciones/confirmar_email',[ConfirmacionesController::class, 'confirmar_email'])->name('confirmaciones.confirmar_email');
+
+
+Route::post('confirmaciones/entrega_email',[ConfirmacionesController::class, 'entrega_email'])->name('confirmaciones.entrega_email');
+Route::get('test',[ConfirmacionesController::class, 'test'])->name('confirmaciones.test');
 
 
 
 
-
-
+Route::get('operacion/cobros/{opr_id}',[CobrosController::class, 'cobros'])->name('cobros.cobros');
+Route::post('operacion/resto_curso',[CobrosController::class, 'resto_curso'])->name('cobros.resto_curso');
