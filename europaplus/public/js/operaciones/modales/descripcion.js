@@ -29,7 +29,6 @@ function loadModal(id) {
             }
             let transfer=(operacion.vje_transfer==1)?'Si':'No';
             let precioTotal=operacion.cur_precio+operacion.alj_precio;
-            let total=(precioTotal+d.suplementos.precio+operacion.vje_vuelo_precio+operacion.vje_transfer_precio)-operacion.opr_descuento;
             let transfer_tipo="";
             if (operacion.vje_transfer==1){
                 transfer_tipo=(operacion.vje_transfer_tipo==1)?'Ida':((operacion.vje_transfer_tipo==2)?'Vuelta':'Ida y vuelta');
@@ -62,12 +61,50 @@ function loadModal(id) {
             $("#transfer").html(transfer_tipo);
             $("#sups").html(d.suplementos.nombres);
           
-            $("#precioca").html(precioTotal.toFixed(2)+'€');
-            $("#des").html(operacion.opr_descuento.toFixed(2)+'€');
-            $("#sups2").html(d.suplementos.precio.toFixed(2)+'€');
-            $("#trans").html(operacion.vje_transfer_precio.toFixed(2)+'€');
-            $("#others").html(operacion.vje_vuelo_precio.toFixed(2)+'€');
-            console.log("TOTAL",d.suplementos.precio.toFixed(2)+'€');
+          
+
+            if(precioTotal!=null && precioTotal!=0){
+                $("#precioca").html(precioTotal.toFixed(2)+'€');
+                $(".pca").css('display','block');
+            }else{
+                $(".pca").css('display','none');
+                precioTotal=0;
+            }
+            console.log("SUPLEMENTOS ",d.suplementos.precio,operacion.vje_transfer_precio);
+            if(operacion.opr_descuento!=null && operacion.opr_descuento!=0){
+                $("#des").html(operacion.opr_descuento.toFixed(2)+'€');
+                $(".pd").css('display','block');
+            }else{
+                $(".pd").css('display','none');
+                operacion.opr_descuento=0;
+            }
+            if(d.suplementos.precio!=null && d.suplementos.precio!=0){
+                $("#sups2").html(d.suplementos.precio.toFixed(2)+'€');
+                $(".ps").css('display','block');
+            }else{
+                $(".ps").css('display','none');
+                d.suplementos.precio=0;
+            }
+            
+            if(operacion.vje_transfer_precio!=null && operacion.vje_transfer_precio!=0){
+                $("#trans").html(operacion.vje_transfer_precio.toFixed(2)+'€');
+                $(".pt").css('display','block');
+            }else{
+                $(".pt").css('display','none');
+                operacion.vje_transfer_precio=0;
+            }
+            
+            if(operacion.vje_vuelo_precio!=null && operacion.vje_vuelo_precio!=0){
+                $("#others").html(operacion.vje_vuelo_precio.toFixed(2)+'€');
+                $(".po").css('display','block');
+            }else{
+                $(".po").css('display','none');
+                operacion.vje_vuelo_precio=0;
+            }
+           
+           
+            let total=(precioTotal+d.suplementos.precio+operacion.vje_vuelo_precio+operacion.vje_transfer_precio)-operacion.opr_descuento;
+            console.log("Total "+total);
             $("#total").html(total.toFixed(2)+'€');
             pdf=[];
             pdf.push(d.suplementos.nombres);
@@ -231,18 +268,27 @@ function print() {
     let html2=$("#info .pp3");
     indexX = 60;
     indexY=indexY+7;
-    doc.setDrawColor(255, 157, 13);
-    doc.line(indexX, indexY, indexX, indexY+45);
-    doc.setDrawColor(0, 0, 0);
+    let pivot=indexY;
+    let pivotMax=0;
     html.each(function(index){
         var item=$(this).html();
-        doc.fromHTML(item + "", indexX, indexY);
-        item=$(html2[index]).text();
-        doc.text(item + "", indexX+55, indexY+6);
-        indexY=indexY+7;
+        let itemTemp=$(html2[index]);
+        if(itemTemp.css('display')=='block'){
+            doc.fromHTML(item + "", indexX, indexY);
+            item=$(html2[index]).text();
+            console.log("ITEM COBROS ",itemTemp.css('display'));
+            doc.text(item + "", indexX+55, indexY+7);
+            indexY=indexY+7;
+        }
+        
         
         console.log(item);
     });
+
+    pivotMax=indexY+5;
+    doc.setDrawColor(255, 157, 13);
+    doc.line(indexX, pivot, indexX, pivotMax);
+    doc.setDrawColor(0, 0, 0);
     indexY=indexY+20;
     indexX = -10;
     html=$("#info .pp4");

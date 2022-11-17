@@ -8,7 +8,9 @@ $( document ).ready(function() {
   function goToCurso(id){
     window.location="./curso_operacion/"+id;
   }
-  
+  function goToCobros(id){
+    window.location="./operacion/cobros/"+id;
+  }
   function goToTransfer(id){
     console.log(id);
     window.location="./transfer/"+id;

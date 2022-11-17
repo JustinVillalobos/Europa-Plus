@@ -28,19 +28,19 @@
                                                 <p style='padding-left:45px'  class="pp1">Suplementos: <span id="sups"></span></p>
                                                 <div id="table-calcs" class="row" style='padding-left:60px;margin-top:50px;width:360px'>
                                                     <div class="col-sm-10" style='border-left:1px solid #ff9d0d;'>
-                                                        <p style='margin:0' class="pp2">Precio del curso + alojamiento:</p>
-                                                        <p style='margin:0'  class="pp2">Descuento: </p>
-                                                        <p style='margin:0'  class="pp2">Suplementos: </p>
-                                                        <p style='margin:0'  class="pp2">Transfer: </p>
-                                                        <p style='margin:0'  class="pp2">Otros Servicios: </p>
-                                                        <p style='margin:0'  class="pp2"><strong>Precio Total</strong> </p>
+                                                        <p style='margin:0' class="pp2 pca">Precio del curso + alojamiento:</p>
+                                                        <p style='margin:0'  class="pp2 pd">Descuento: </p>
+                                                        <p style='margin:0'  class="pp2 ps">Suplementos: </p>
+                                                        <p style='margin:0'  class="pp2 pt">Transfer: </p>
+                                                        <p style='margin:0'  class="pp2 po">Otros Servicios: </p>
+                                                        <p style='margin:0'  class="pp2 ptt"><strong>Precio Total</strong> </p>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        <p style='margin:0' id="precioca"  class="pp3"></p>
-                                                        <p style='margin:0' id="des" class="pp3"> </p>
-                                                        <p style='margin:0' id="sups2" class="pp3"> </p>
-                                                        <p style='margin:0' id="trans" class="pp3"> </p>
-                                                        <p style='margin:0' id="others" class="pp3"></p>
+                                                        <p style='margin:0' id="precioca"  class="pp3 pca"></p>
+                                                        <p style='margin:0' id="des" class="pp3 pd"> </p>
+                                                        <p style='margin:0' id="sups2" class="pp3 ps"> </p>
+                                                        <p style='margin:0' id="trans" class="pp3 pt"> </p>
+                                                        <p style='margin:0' id="others" class="pp3 po"></p>
                                                         <p style='margin:0' class="pp3"><strong id="total"></strong> </p>
                                                     </div>
                                                 </div>

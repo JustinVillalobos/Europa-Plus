@@ -1,4 +1,4 @@
-@extends('../layouts.admin_empty')
+@extends('../layouts.admin_operacion')
 @section('content')  
 <div class="row" style="margin-top:25px;">
     <div class="col-sm-12">

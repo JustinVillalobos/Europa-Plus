@@ -1,4 +1,4 @@
-@extends('../layouts.admin_empty')
+@extends('../layouts.admin_operacion')
 @section('content')  
 <link rel="stylesheet" href="{{ URL::asset('plugins/sceditor/minified/themes/default.min.css'); }}" />
 

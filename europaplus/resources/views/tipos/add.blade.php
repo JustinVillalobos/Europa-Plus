@@ -40,7 +40,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 form-inline text-end">
-                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Porcentaje:</label>
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Reserva:</label>
                  <input type="text" class="form-control" style="width:67%;" id="prc" />
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>

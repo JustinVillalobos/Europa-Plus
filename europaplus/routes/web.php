@@ -160,3 +160,4 @@ Route::get('test',[ConfirmacionesController::class, 'test'])->name('confirmacion
 
 Route::get('operacion/cobros/{opr_id}',[CobrosController::class, 'cobros'])->name('cobros.cobros');
 Route::post('operacion/resto_curso',[CobrosController::class, 'resto_curso'])->name('cobros.resto_curso');
+Route::post('operacion/devolucion',[CobrosController::class, 'devolucion'])->name('cobros.devolucion');

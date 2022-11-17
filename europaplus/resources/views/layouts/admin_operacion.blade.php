@@ -75,6 +75,7 @@
                             <div class="card-header"><i class="fa fa-bookmark" aria-hidden="true"></i>Navegaci&oacuten</div>
                             <div class="card-body" style="padding-top: 5px;">
                                 <ul style="padding-left: 0px;">
+                                    <li><a href='{{route("operacion.edits", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Editar Operación</a></li>
                                     <li><a href='{{route("operacion.curso_operacion", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Curso</a></li>
                                     <li><a href='{{route("operacion.vuelo", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Vuelo</a></li>
                                     <li><a href='{{route("cobros.cobros", [$_SESSION["idOperacion"]])}}'><i class="i i-database"></i> Cobros</a></li>

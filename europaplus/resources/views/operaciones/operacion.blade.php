@@ -98,19 +98,19 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2"><span class="text-success"><i class="fa fa-usd" aria-hidden="true"></i></span> Señal</label></div>
+                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2" onclick="goToCobros(<?php echo $o->opr_id;?>)"><span class="text-success"><i class="fa fa-usd" aria-hidden="true"></i></span> Señal</label></div>
                                                     <div class="col-sm-6 text-end" style="padding-right:15px;"><strong>{{number_format($o->opr_pago_previo, 2, ',', '.')}}</strong></div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="row">
-                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2"><span class="text-success"><i class="fa fa-usd" aria-hidden="true"></i></span> Pendiente</label></div>
+                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2" onclick="goToCobros(<?php echo $o->opr_id;?>)"><span class="text-success"><i class="fa fa-usd" aria-hidden="true"></i></span> Pendiente</label></div>
                                                     <div class="col-sm-6 text-end" style="padding-right:15px;"><strong>{{number_format($o->opr_pendiente, 2, ',', '.')}}</strong></div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 ">
                                                 <div class="row">
-                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2"><span class="text-warning"><i class="fa fa-certificate" aria-hidden="true"></i></span> Seguro</label></div>
+                                                    <div class="col-sm-6 pr-0 "><label class="mouse-event2" onclick="goToCobros(<?php echo $o->opr_id;?>)"><span class="text-warning"><i class="fa fa-certificate" aria-hidden="true"></i></span> Seguro</label></div>
                                                     @if($o->opr_seguro==0)
                                                     <div class="col-sm-6 text-end text-danger" style="padding-right:15px;"><Strong>NO</Strong></div>
                                                     @endif

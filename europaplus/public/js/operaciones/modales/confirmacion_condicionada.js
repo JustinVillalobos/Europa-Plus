@@ -53,7 +53,7 @@ function loadModalCondicionada(id) {
               let transfer=(operacionCondicionada.vje_transfer==1)?'Si':'No';
               let vuelo =(operacionCondicionada.vje_vuelo==1)?'Si':'No';
             let precioTotal=operacionCondicionada.cur_precio+operacionCondicionada.alj_precio;
-            let total=(precioTotal+d.suplementos.precio+operacionCondicionada.vje_vuelo_precio+operacionCondicionada.vje_transfer_precio)-operacionCondicionada.opr_descuento;
+            
             let transfer_tipo="";
             let vueloTipo="";
             if (operacionCondicionada.vje_transfer==1){
@@ -93,19 +93,59 @@ function loadModalCondicionada(id) {
             $("#vueloC").html(vueloTipo);
             $("#vueloDataC").html("<p style='margin:0;'>Ida:"+datos.vje_ida_salida+" - "+datos.vje_ida_hsalida+" - "+datos.vje_ida_aeropuerto+"</p><p style='margin:0;'>Vuelta:"+datos.vje_vta_salida+" - "+datos.vje_vta_hsalida+" - "+datos.vje_vta_aeropuerto+"</p>");
             $("#supsC").html(d.suplementos.nombres);
-            $("#preciocaC").html(precioTotal.toFixed(2)+'€');
-            $("#desC").html(operacionCondicionada.opr_descuento.toFixed(2)+'€');
-            $("#sups2C").html(d.suplementos.precio.toFixed(2)+'€');
-            $("#transC").html(operacionCondicionada.vje_transfer_precio.toFixed(2)+'€');
-            $("#othersC").html(operacionCondicionada.vje_vuelo_precio.toFixed(2)+'€');
-            console.log("TOTAL",d.suplementos.precio.toFixed(2)+'€');
-            $("#totalC").html(total.toFixed(2)+'€');
+           
+            if(precioTotal!=null && precioTotal!=0){
+                $("#preciocaCc").html(precioTotal.toFixed(2)+'€');
+                $(".pcac").css('display','block');
+            }else{
+                $(".pcac").css('display','none');
+                precioTotal=0;
+            }
+
+            if(operacionCondicionada.opr_descuento!=null && operacionCondicionada.opr_descuento!=0){
+                console.log("ingreso descuento");
+                $("#desCc").html(operacionCondicionada.opr_descuento.toFixed(2)+'€');
+                $(".pdc").css('display','block');
+            }else{
+                $(".pdc").css('display','none');
+                operacionCondicionada.opr_descuento=0;
+            }
+            if(d.suplementos.precio!=null && d.suplementos.precio!=0){
+                $("#sups2Cc").html(d.suplementos.precio.toFixed(2)+'€');
+                $(".psc").css('display','block');
+            }else{
+                $(".psc").css('display','none');
+                d.suplementos.precio=0;
+            }
+            
+            if(operacionCondicionada.vje_transfer_precio!=null && operacionCondicionada.vje_transfer_precio!=0){
+                $("#transCc").html(operacionCondicionada.vje_transfer_precio.toFixed(2)+'€');
+                $(".ptc").css('display','block');
+            }else{
+                $(".ptc").css('display','none');
+                operacionCondicionada.vje_transfer_precio=0;
+            }
+            
+            if(operacionCondicionada.vje_vuelo_precio!=null && operacionCondicionada.vje_vuelo_precio!=0){
+                $("#othersCc").html(operacionCondicionada.vje_vuelo_precio.toFixed(2)+'€');
+                $(".poc").css('display','block');
+            }else{
+                $(".poc").css('display','none');
+                operacionCondicionada.vje_vuelo_precio=0;
+            }
+           
+           
+            let total=(precioTotal+d.suplementos.precio+operacionCondicionada.vje_vuelo_precio+operacionCondicionada.vje_transfer_precio)-operacionCondicionada.opr_descuento;
+            console.log("Total "+total);
+            $("#totalCC").html(total.toFixed(2)+'€');
 
             $("#banco").html(empresaCondicionada.banco);
             $("#direccion_banco").html(empresaCondicionada.direccion);
             $("#IBAN").html("IBAN:"+empresaCondicionada.IBAN);
             $("#codigo_postal").html("SWIFT/BIC:"+empresaCondicionada.codigo_postal);
-            let porcenta= (total*d.prc)/100;
+
+
+            let porcenta=d.prc;
             $("#price").html(porcenta.toFixed(2));
             empresaCondicionada.porcenta=porcenta;
             empresaCondicionada.suplementos=d.suplementos;
@@ -305,20 +345,27 @@ function printCondicionada() {
     let html2=$("#table-calcs2 .pp3");
     indexX = 45;
     indexY=indexY-10;
-    doc.setDrawColor(255, 157, 13);
-    doc.line(indexX, indexY, indexX, indexY+45);
-    doc.setDrawColor(0, 0, 0);
+    let pivot=indexY;
+    let pivotMax=0;
     html.each(function(index){
         var item=$(this).html();
-        doc.fromHTML(item + "", indexX, indexY);
-        item=$(html2[index]).text();
-        doc.text(item + "", indexX+55, indexY+7);
-        indexY=indexY+7;
+        let itemTemp=$(html2[index]);
+        if(itemTemp.css('display')=='block'){
+            doc.fromHTML(item + "", indexX, indexY);
+            item=$(html2[index]).text();
+            console.log("ITEM COBROS ",itemTemp.css('display'));
+            doc.text(item + "", indexX+55, indexY+7);
+            indexY=indexY+7;
+        }
+        
         
         console.log(item);
     });
     html=$("#data_info_c .pp4");
-    
+    pivotMax=indexY+5;
+    doc.setDrawColor(255, 157, 13);
+    doc.line(indexX, pivot, indexX, pivotMax);
+    doc.setDrawColor(0, 0, 0);
     indexX = 40;
 
     doc.setDrawColor(0, 0, 0);

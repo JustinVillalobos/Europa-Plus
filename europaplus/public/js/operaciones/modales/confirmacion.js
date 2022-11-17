@@ -53,7 +53,6 @@ function loadModalConfirmacion(id) {
               let transfer=(operacionConfirmar.vje_transfer==1)?'Si':'No';
               let vuelo =(operacionConfirmar.vje_vuelo==1)?'Si':'No';
             let precioTotal=operacionConfirmar.cur_precio+operacionConfirmar.alj_precio;
-            let total=(precioTotal+d.suplementos.precio+operacionConfirmar.vje_vuelo_precio+operacionConfirmar.vje_transfer_precio)-operacionConfirmar.opr_descuento;
             let transfer_tipo="";
             let vueloTipo="";
             if (operacionConfirmar.vje_transfer==1){
@@ -93,16 +92,54 @@ function loadModalConfirmacion(id) {
             $("#vueloCc").html(vueloTipo);
             $("#vueloDataCc").html("<p style='margin:0;'>Ida:"+datos.vje_ida_salida+" - "+datos.vje_ida_hsalida+" - "+datos.vje_ida_aeropuerto+"</p><p style='margin:0;'>Vuelta:"+datos.vje_vta_salida+" - "+datos.vje_vta_hsalida+" - "+datos.vje_vta_aeropuerto+"</p>");
             $("#supsCc").html(d.suplementos.nombres);
-            $("#preciocaCc").html(precioTotal.toFixed(2)+'€');
-            $("#desCc").html(operacionConfirmar.opr_descuento.toFixed(2)+'€');
-            $("#sups2Cc").html(d.suplementos.precio.toFixed(2)+'€');
-            $("#transCc").html(operacionConfirmar.vje_transfer_precio.toFixed(2)+'€');
-            $("#othersCc").html(operacionConfirmar.vje_vuelo_precio.toFixed(2)+'€');
-            console.log("TOTAL",d.suplementos.precio.toFixed(2)+'€');
-            $("#totalCc").html(total.toFixed(2)+'€');
-
             
-            let porcenta= (total*d.prc)/100;
+
+            if(precioTotal!=null && precioTotal!=0){
+                $("#preciocaCcc").html(precioTotal.toFixed(2)+'€');
+                $(".pcacc").css('display','block');
+            }else{
+                $(".").css('display','none');
+                precioTotal=0;
+            }
+
+            if(operacionConfirmar.opr_descuento!=null && operacionConfirmar.opr_descuento!=0){
+                $("#desCf").html(operacionConfirmar.opr_descuento.toFixed(2)+'€');
+                $(".pdcc").css('display','block');
+            }else{
+                $(".pdcc").css('display','none');
+                operacionConfirmar.opr_descuento=0;
+            }
+            console.log("SUPLEMENTOS ",d.suplementos.precio,operacionConfirmar.vje_transfer_precio);
+            if(d.suplementos.precio!=null && d.suplementos.precio!=0){
+                $("#sups2Cf").html(d.suplementos.precio.toFixed(2)+'€');
+                $(".pscc").css('display','block');
+            }else{
+                $(".pscc").css('display','none');
+                d.suplementos.precio=0;
+            }
+            
+            if(operacionConfirmar.vje_transfer_precio!=null && operacionConfirmar.vje_transfer_precio!=0){
+                $("#transCf").html(operacionConfirmar.vje_transfer_precio.toFixed(2)+'€');
+                $(".ptcc").css('display','block');
+            }else{
+                $(".ptcc").css('display','none');
+                operacionConfirmar.vje_transfer_precio=0;
+            }
+            
+            if(operacionConfirmar.vje_vuelo_precio!=null && operacionConfirmar.vje_vuelo_precio!=0){
+                $("#othersCf").html(operacionConfirmar.vje_vuelo_precio.toFixed(2)+'€');
+                $(".pocc").css('display','block');
+            }else{
+                $(".pocc").css('display','none');
+                operacionConfirmar.vje_vuelo_precio=0;
+            }
+           
+           
+            let total=(precioTotal+d.suplementos.precio+operacionConfirmar.vje_vuelo_precio+operacionConfirmar.vje_transfer_precio)-operacionConfirmar.opr_descuento;
+            console.log("Total "+total);
+            $("#totalCCc").html(total.toFixed(2)+'€');
+            
+            let porcenta= (d.prc);
           
             console.log("Transfer tipo ",porcenta);
             
@@ -299,20 +336,27 @@ function printconfirmar() {
     let html2=$("#table-calcs2c .pp3");
     indexX = 45;
     indexY=indexY-10;
-    doc.setDrawColor(255, 157, 13);
-    doc.line(indexX, indexY, indexX, indexY+45);
-    doc.setDrawColor(0, 0, 0);
+    let pivot=indexY;
+    let pivotMax=0;
     html.each(function(index){
         var item=$(this).html();
-        doc.fromHTML(item + "", indexX, indexY);
-        item=$(html2[index]).text();
-        doc.text(item + "", indexX+55, indexY+7);
-        indexY=indexY+7;
+        let itemTemp=$(html2[index]);
+        if(itemTemp.css('display')=='block'){
+            doc.fromHTML(item + "", indexX, indexY);
+            item=$(html2[index]).text();
+            console.log("ITEM COBROS ",itemTemp.css('display'));
+            doc.text(item + "", indexX+55, indexY+7);
+            indexY=indexY+7;
+        }
+        
         
         console.log(item);
     });
     html=$("#data_info_cc .pp4");
-    
+    pivotMax=indexY+5;
+    doc.setDrawColor(255, 157, 13);
+    doc.line(indexX, pivot, indexX, pivotMax);
+    doc.setDrawColor(0, 0, 0);
     indexX = 40;
 
     doc.setDrawColor(0, 0, 0);

@@ -1014,6 +1014,8 @@ class OperacionController extends Controller
      */
     public function edits(Request $request,$id){
        $d =$this->edit($request,$id);
+       $_SESSION['idOperacion']=$id;
+       $_SESSION['operacion']=5;
        return view('operaciones/edit.create',$d);
     }
     public function edit(Request $request,$id=null)

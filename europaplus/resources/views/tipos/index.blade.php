@@ -48,7 +48,7 @@
                 <tr>
                     <th>Provincia</th>
                     <th>Subtipo</th>
-                    <th>%</th>
+                    <th>Reserva</th>
                     <th style="width:75px;">Acciones</th>
                 </tr>
             </thead>

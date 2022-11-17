@@ -46,11 +46,11 @@ function save(){
     }
 
     if(!valid){  
-        if(parseInt(prc)<100){
+        if(parseInt(prc)<100000000){
             $('#prc + span').text("");
         }else{
             cantidadErrores++;
-            $('#prc + span').text("Porcentaje debe ser menor a 100");
+            $('#prc + span').text("Porcentaje debe ser menor a 10000000");
         }
         
     }
