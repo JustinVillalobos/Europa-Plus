@@ -1,5 +1,9 @@
 @extends('../layouts.admin_operacion')
 @section('content')  
+<link rel="stylesheet" href="{{ URL::asset('plugins/sceditor/minified/themes/default.min.css'); }}" />
+
+<script src="{{ URL::asset('plugins/sceditor/minified/sceditor.min.js'); }}"></script>
+<script src="{{ URL::asset('plugins/sceditor/minified/icons/monocons.js'); }}"></script>
 <div class="row" style="margin-top:25px;">
     <div class="col-sm-12">
         <div class="" style="padding-left:5px;">
@@ -131,7 +135,7 @@
         </div>
     @endif
     @foreach($facturas as $factura)
-        <?php echo '<b>'. $factura->fac_fecha .'</b>&nbsp;'. $factura->fac_numero .'&nbsp;<a class="slink" href="javascript: openfacwnd(\'factura.php?proforma=1&opr_id='.$opr_id.'&fac_id='.$factura->fac_id.'\');">Ver</a>';?> 
+        <?php echo '<b>'. $factura->fac_fecha .'</b>&nbsp;'. $factura->fac_numero .'&nbsp;<a class="slink" href="#"onclick="loadModal('.$factura->fac_id.','.$factura->fac_proforma.')">Ver</a>';?> 
         <br>
     @endforeach
     
@@ -143,7 +147,7 @@
             <div class="row">
                 
                 <div class="w-100">
-                    <button  class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Nueva devolución </button>
+                    <button  class="btn btn-info" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Nueva devolución </button>
                     <div class="collapse row" id="collapseExample" style="margin-top:15px">
                             
                             <div class="" style="width:100px">
@@ -180,7 +184,7 @@
                                 <b>Nota de Abono: </b>{{$dev->factura->fac_fecha."  ".$dev->factura->fac_numero}}
                             </div>
                             <div class="col-sm-2">
-                             <a class="slink" href="javascript: openfacwnd(\'abono.php?opr_id='.<?php echo $opr_id;?>.'&fac_id='<?php $dev->fac_id?>'\');">Ver</a>
+                             <a class="slink" href="#" onclick="loadModal(<?php echo $dev->factura->fac_id?>,<?php echo $dev->factura->fac_proforma?>)">Ver</a>
                             </div>
                         @endforeach
                     </div>
@@ -274,6 +278,7 @@
                             <tr>
                                 <th>Fecha</th>
                                 <th>Monto</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -281,13 +286,15 @@
                         @foreach($rspag_resto as $f)
                             <?php $totalCobrado=$totalCobrado+$f->pag_importe;?>
                             <tr>
-                                <td>{{$f->fac_fecha}}</td>
+                                <td>{{$f->fac_fecha." ".$f->fac_id}}</td>
                                 <td>{{$f->pag_importe}}</td>
+                                <td><a href="#" onclick="loadModal(<?php echo $f->fac_id?>,<?php echo $f->fac_proforma?>)">Ver</a></td>
                             </tr>
                         @endforeach
                             <tr>
                                 <td><strong>Total</strong></td>
                                 <td><strong>{{$totalCobrado}}</strong></td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -301,7 +308,10 @@
     </div>
     
 </div>
+@include('../operaciones/confirmaciones/ver_factura')
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
+<input type="hidden" value="{{$operacion->opr_id}}" id="fac_id" />
 <script src="{{ URL::asset('js/operaciones/cobros.js'); }}"></script>   
+<script src="{{ URL::asset('js/operaciones/facturas.js'); }}"></script>  
 @stop

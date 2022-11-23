@@ -92,7 +92,7 @@ class CobrosController extends Controller
         $pais=Paise::where('pais_id','=',$operacion->alupais)->first();
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=1 AND opr_id=".$id;
         $pag_importe = DB::select($qpagos);
-        $qpagos = "SELECT * FROM pagos INNER JOIN facturas ON pagos.fac_id=facturas.fac_id WHERE pag_tipo=2 AND pagos.opr_id=".$id;
+        $qpagos = "SELECT * FROM pagos INNER JOIN facturas ON pagos.fac_id=facturas.fac_id WHERE pag_tipo=2 AND pagos.opr_id=".$id.' order by pagos.pag_id DESC';
         $rspag_resto = DB::select($qpagos);
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=2 AND opr_id=".$id;
         $pag_importe2 = DB::select($qpagos);
@@ -103,7 +103,7 @@ class CobrosController extends Controller
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=4 AND opr_id=".$id;
         
         $pag_importe4 = DB::select($qpagos);
-        $qpro = "SELECT f.fac_id, f.fac_numero, f.fac_fecha FROM facturas f WHERE f.opr_id=".$id." AND f.fac_proforma=1";
+        $qpro = "SELECT f.fac_id, f.fac_numero, f.fac_fecha,f.fac_proforma FROM facturas f WHERE f.opr_id=".$id." AND f.fac_proforma=1";
        
         $facturas = DB::select($qpro);
         $qsups = "SELECT * FROM suplementos_operaciones WHERE  opr_id=".$id;
@@ -306,9 +306,9 @@ class CobrosController extends Controller
             $serie="PF";
 			$numProforma=1;
         }
-        $qfacnum = "SELECT MAX(IF(fac_num IS NULL, 1, fac_num)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
+        $qfacnum = "SELECT MAX(IF(fac_id IS NULL, 1, fac_id)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
         $maximo= DB::select($qfacnum);
-        $fac_numero=$serie.($maximo[0]->max_facnum+1).'/'.substr(date('Y'),2,2);
+       
         $pag_signo=1;
         $fac_descuento=$operacion[0]->opr_descuento;
         $fac_alumno=$operacion[0]->alu_nombre." ".$operacion[0]->alu_apellidos;
@@ -340,6 +340,8 @@ class CobrosController extends Controller
         }
 		$qfacnum = "SELECT MAX(IF(fac_num IS NULL, 1, fac_num)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
 		$rsfnum =DB::select($qfacnum);
+		$fac_numero=$serie.($rsfnum[0]->max_facnum+1).'/'.substr(date('Y'),2,2);
+		
 		$operacion_tipo=$input['operacion_tipo'];
         if($operacion_tipo==2){
 			$pag_descr='<b>Resto del curso</b>';
@@ -390,8 +392,9 @@ foreach($Suplementos_cursos as $s){
   	$fac_concepto .= "<br><br><b>Billete de Avion: </b>".$operacion[0]->vje_vuelo_precio." EUR<br><br>";  
 }
 $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
+$fac_id=$maximo[0]->max_facnum+1;
 		$factura=new Factura([
-			'fac_id'=>$maximo[0]->max_facnum+1, 
+			'fac_id'=>$fac_id, 
 			'opr_id'=>$id,
 			'fac_num'=>$rsfnum[0]->max_facnum+1,
 			'fac_numero'=>$fac_numero,
@@ -438,15 +441,19 @@ $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
 				 'pag_importe'=>$resto,
 				 'pag_tipo'=>$operacion_tipo,
 				 'pag_signo'=>$pag_signo,
-				 'fac_id'=>$maximo[0]->max_facnum+1
+				 'fac_id'=>$fac_id
 				]);
 				$pago->save();
 				$opr->save();
 			 }
-			 echo json_encode(true);
+			 echo json_encode($fac_id);
 		}catch (\Illuminate\Database\QueryException $th) {
             //throw $th;
-            echo json_encode($th);
+			$data=[
+				'err'=>$th,
+				'fac_id'=>$fac_id
+			];
+            echo json_encode($data);
         }
 
        
@@ -597,7 +604,7 @@ $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
         $resto=$input['resto'];
         $serie="";
 		$serie="AB";
-        $qfacnum = "SELECT MAX(IF(fac_num IS NULL, 1, fac_num)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
+        $qfacnum = "SELECT MAX(IF(fac_id IS NULL, 1, fac_id)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
         $maximo= DB::select($qfacnum);
         $fac_numero=$serie.($maximo[0]->max_facnum+1).'/'.substr(date('Y'),2,2);
         $pag_signo=1;
@@ -632,7 +639,7 @@ $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
         }
 		$qfacnum = "SELECT MAX(IF(fac_num IS NULL, 1, fac_num)) max_facnum FROM facturas WHERE fac_serie='".$serie."'";
 		$rsfnum =DB::select($qfacnum);
-	
+		$fac_numero=$serie.($rsfnum[0]->max_facnum+1).'/'.substr(date('Y'),2,2);
         	
   $pag_descr='<b>Devolución</b>';
 

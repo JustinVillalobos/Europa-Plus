@@ -13,14 +13,17 @@ use App\Models\Viaje;
 use  App\Models\SuplementosOperacione;
 use App\Models\Opcione;
 use App\Models\Tipo;
+use App\Models\Archivo;
 use Illuminate\Support\Facades\DB;
 use Mail;
 use App\Mail\SolicitudCurso;
+use App\Mail\DescripcionOperacion;
 session_start();
 
 class ConfirmacionesController extends Controller
 {
     //
+    public $isProduction=false;
     public function index(){
         
     }
@@ -432,13 +435,45 @@ public function solicitud_transfer_modal(Request $request){
             $operacion = Operacione::where('opr_id','=',$id)->first();
             $operacion->opr_cur_state=1;
 
-            $operacion->save();
+            
+            $file=base64_decode($_POST['file']);
+                $o = json_decode($input['operacion']);
+                $path='files/'.$o->alu_nombre."_".$o->alu_apellidos;
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                $date=date("d-m-Y");
+                file_put_contents($path.'/'.'Solicitud_curso_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',$file);
+               $d=[
+                "path"=>$path.'/'.'Solicitud_curso_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                "operacion"=>$o,
+                "name"=>'Solicitud Curso '.$o->alu_nombre." ".$o->alu_apellidos.' '.$date.'.pdf',
+                "title"=>"Solicitud Curso",
+                "subject"=>"Se le adjunta la  solicitud del curso Europa Plus"
+               ];
             if($tipo==1){
+               
+                if($this->isProduction){
+                    :Mail:to($o->alu_correo)->send(new DescripcionOperacion($d));
+                }else{
+                    Mail::to("jusymey@gmail.com")->send(new DescripcionOperacion($d));
+                }
+                
+                
+                
                 //send
-
-                //ogls xtgz ujyy vodg
-                Mail::to("justinvillaespinoza68@gmail.com")->send(new SolicitudCurso(""));
+            }else{
+                $operacion->opr_cur_state=2; 
             }
+            $operacion->save();
+            $archivo=new Archivo([
+                'idOperacion'=>$o->opr_id,
+                'path'=>$path.'/'.'Solicitud_curso_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                'tipo_archivo'=>1,
+                'status'=>0,
+                'fechaGenerado'=>date("i:h d/m/Y").""
+            ]);
+            $archivo->save();
             echo json_encode(true);
         } catch (\Illuminate\Database\QueryException $th) {
             //throw $th;
@@ -519,10 +554,46 @@ public function solicitud_transfer_modal(Request $request){
             $operacion = Operacione::where('opr_id','=',$id)->first();
             $operacion->opr_tfr_state=1;
 
-            $operacion->save();
+            
+            $file=base64_decode($_POST['file']);
+                $o = json_decode($input['operacion']);
+                $path='files/'.$o->alu_nombre."_".$o->alu_apellidos;
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                $date=date("d-m-Y");
+                file_put_contents($path.'/'.'Solicitud_transferencia_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',$file);
+               $d=[
+                "path"=>$path.'/'.'Solicitud_transferencia_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                "operacion"=>$o,
+                "name"=>'Solicitud de transferencia '.$o->alu_nombre." ".$o->alu_apellidos.' '.$date.'.pdf',
+                "title"=>"Solicitud de transferencia",
+                "subject"=>"Se le adjunta la solicitud de transferencia Europa Plus"
+               ];
             if($tipo==1){
+               
+                if($this->isProduction){
+                    Mail::to($o->alu_correo)->send(new DescripcionOperacion($d));
+                }else{
+                    Mail::to("jusymey@gmail.com")->send(new DescripcionOperacion($d));
+                }
+                
+                
+                
                 //send
+            }else{
+                $operacion->opr_tfr_state=1;
             }
+            $operacion->save();
+           
+            $archivo=new Archivo([
+                'idOperacion'=>$o->opr_id,
+                'path'=>$path.'/'.'Solicitud_transferencia_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                'tipo_archivo'=>0,
+                'status'=>0,
+                'fechaGenerado'=>date("i:h d/m/Y").""
+            ]);
+            $archivo->save();
             echo json_encode(true);
         } catch (\Illuminate\Database\QueryException $th) {
             //throw $th;
@@ -534,7 +605,8 @@ public function solicitud_transfer_modal(Request $request){
         
         $id=$_SESSION["idOperacion"];
         $input=$request->all();
-        $tipo=$input["tipo"];
+       
+        $tipo=$_POST["tipo"];
         try {
             
             $operacion = Operacione::where('opr_id','=',$id)->first();
@@ -557,9 +629,41 @@ public function solicitud_transfer_modal(Request $request){
            
 
             $operacion->save();
+            $file=base64_decode($_POST['file']);
+                $o = json_decode($input['operacion']);
+                $path='files/'.$o->alu_nombre."_".$o->alu_apellidos;
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                $date=date("d-m-Y");
+                file_put_contents($path.'/'.'Descripcion_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',$file);
+               $d=[
+                "path"=>$path.'/'.'Descripcion_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                "operacion"=>$o,
+                "name"=>'Descripción '.$o->alu_nombre." ".$o->alu_apellidos.' '.$date.'.pdf',
+                "title"=>"Descripción",
+                "subject"=>"Se le adjunta la descripción Europa Plus"
+               ];
             if($tipo==1){
+               
+                if($this->isProduction){
+                    Mail::to($o->alu_correo)->send(new DescripcionOperacion($d));
+                }else{
+                    Mail::to("jusymey@gmail.com")->send(new DescripcionOperacion($d));
+                }
+                
+                
+                
                 //send
             }
+            $archivo=new Archivo([
+                'idOperacion'=>$o->opr_id,
+                'path'=>$path.'/'.'Descripcion_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
+                'tipo_archivo'=>0,
+                'status'=>0,
+                'fechaGenerado'=>date("i:h d/m/Y").""
+            ]);
+            $archivo->save();
             $data=[
                 'operacion'=>json_encode(""),
                 'res'=>true,
@@ -568,7 +672,7 @@ public function solicitud_transfer_modal(Request $request){
             echo json_encode($data);
         } catch (\Illuminate\Database\QueryException $th) {
             //throw $th;
-            echo json_encode(false);
+            echo json_encode($th);
         }
         
     }

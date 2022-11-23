@@ -120,12 +120,11 @@ function isNumber(n){
               $("#spinDiv").css("display", "none");
               let json = JSON.parse(data);
               console.log(json);
-              if (data != "false" && json.opr_id!=undefined) {
+              if (data != "false" && json!=false) {
                   let rsp = alertTimeCorrect(
                       "Resto de curso actualizado",
                       function (response) {
-                        //  window.location =
-                        //      $("#route").val() + "/operacion/costos/" + json.opr_id;
+                        window.location =$("#route").val() + "/../operacion/cobros/" + $("#fac_id").val();
                       }
                   );
               } else {
@@ -158,12 +157,11 @@ function isNumber(n){
               $("#spinDiv").css("display", "none");
               let json = JSON.parse(data);
               console.log(json);
-              if (data != "false" && json.opr_id!=undefined) {
+              if (data != "false" ) {
                   let rsp = alertTimeCorrect(
                       "Resto de curso actualizado",
                       function (response) {
-                        //  window.location =
-                        //      $("#route").val() + "/operacion/costos/" + json.opr_id;
+                        window.location =$("#route").val() + "/../operacion/cobros/" +$("#fac_id").val();
                       }
                   );
               } else {
@@ -196,12 +194,12 @@ function isNumber(n){
               $("#spinDiv").css("display", "none");
               let json = JSON.parse(data);
               console.log(json);
-              if (data != "false" && json.opr_id!=undefined) {
+              if (data != "false" && json!=false) {
                   let rsp = alertTimeCorrect(
                       "Resto de curso actualizado",
                       function (response) {
-                        //  window.location =
-                        //      $("#route").val() + "/operacion/costos/" + json.opr_id;
+                          window.location =
+                              $("#route").val() + "/../operacion/cobros/" + $("#fac_id").val();
                       }
                   );
               } else {

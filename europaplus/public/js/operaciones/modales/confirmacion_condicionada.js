@@ -20,7 +20,7 @@ function loadModalCondicionada(id) {
             console.log(JSON.parse(data));
             let datos = JSON.parse(data)['operacion'][0];
             let d=JSON.parse(data);
-            console.log(datos);
+            console.log("Operacion",datos);
             operacionCondicionada = datos;
             empresaCondicionada=JSON.parse(data)['empresa'];
             console.log(empresa);

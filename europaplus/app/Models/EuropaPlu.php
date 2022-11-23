@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class EuropaPlu
  * 
  * @property int $idEmpresa
+ * @property string $nombre
  * @property string $direccion
  * @property string $correo
  * @property string $sitio_web
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $banco
  * @property string $direccion_banco
  * @property string $IBAN
- * @property string $SWIFT/BIC
+ * @property string $SWIFT
  *
  * @package App\Models
  */
@@ -32,6 +33,7 @@ class EuropaPlu extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
+		'nombre',
 		'direccion',
 		'correo',
 		'sitio_web',
@@ -41,6 +43,6 @@ class EuropaPlu extends Model
 		'banco',
 		'direccion_banco',
 		'IBAN',
-		'SWIFT/BIC'
+		'SWIFT'
 	];
 }

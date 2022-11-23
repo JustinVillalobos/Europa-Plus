@@ -29,7 +29,7 @@
     text-align: end;
 }
 .bordered-data3{
-    margin-top: 25px;
+    margin-top: 15px;
     border: 1px solid rgb(228, 221, 221);
     height: 400px;
     font-size: 12px;
@@ -50,7 +50,7 @@
     background-color: rgb(169, 171, 172);
 }
 .bordered-data5{
-    margin-top: 25px;
+    margin-top: 15px;
     border: 1px solid rgb(228, 221, 221);
     height: 100px;
     font-size: 12px;

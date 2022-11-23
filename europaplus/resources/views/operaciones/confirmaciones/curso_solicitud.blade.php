@@ -20,7 +20,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="print()"><i class="fa fa-save"></i> Imprimir</button>
+        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="print(true)"><i class="fa fa-save"></i> Imprimir</button>
         <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;" onclick="confirmSinCorreo()"><i class="fa fa-user"></i> Confirmar</button>
         <button type="button" class="btn btn-success btn-modal" data-dismiss="modal" style="margin-left:5px;" onclick="send()"><i class="fa fa-send"></i> Envíar correo</button>
         <button type="button" class="btn btn-danger btn-modal" data-dismiss="modal">x</button>

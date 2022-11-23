@@ -209,9 +209,9 @@ function SOLICITUD() {
 
     return campos;
 }
+let docDescription;
 
-
-function print() {
+function print(isPrint) {
     let date = new Date();
 
     var doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
@@ -300,11 +300,21 @@ function print() {
     });
     
     // Convert HTML to PDF in JavaScript
-
+if(isPrint){
     doc.save("Descripción " +operacion.alu_nombre+" "+operacion.alu_apellidos+ " " + getTimeV2() + " ");
+}else{
+    docDescription=doc;
+}
+    
 }
 function confirmSinCorreo(){
-    let form = {"tipo":0};
+    $("#spinDiv").css("display", "flex");
+    let form = new FormData();
+    form.append("tipo",0);
+    print(false);
+    let data =btoa(docDescription.output());
+    form.append('file',data);
+    form.append('operacion',JSON.stringify(operacion));
     
 
     $.ajaxSetup({
@@ -315,9 +325,58 @@ function confirmSinCorreo(){
     console.log($("#route_modal").val());
     $.ajax({
         type: "POST",
+        contentType:false,
+        processData:false,
+        cache:false,
         url: $("#route_modal").val() + "/descripcion_email",
         data: form,
         success: function (data) {
+          console.log(data);
+          let d =JSON.parse(data);
+          $("#spinDiv").css("display", "none");
+          if(d.res==true){
+
+            let rsp = alertTimeCorrect(
+                "Confirmación de Descripción éxitoso",
+                function (response) {
+                    window.location =
+                        $("#route_modal").val() + "/../../operacion" ;
+                }
+            );
+          }else{
+            alertError2("No se confirmó la Descripción");
+          }
+        },
+        error: function (data) {
+            console.log(data);
+            $("#spinDiv").css("display", "none");
+            alertError("Error inesperado en el servidor");
+        },
+    });
+}
+function send() {
+    $("#spinDiv").css("display", "flex");
+    let form = new FormData();
+    form.append("tipo",1);
+    print(false);
+    let data =btoa(docDescription.output());
+    form.append('file',data);
+    form.append('operacion',JSON.stringify(operacion));
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    console.log($("#route_modal").val());
+    $.ajax({
+        type: "POST",
+        contentType:false,
+        processData:false,
+        cache:false,
+        url: $("#route_modal").val() + "/descripcion_email",
+        data: form,
+        success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           let d =JSON.parse(data);
           if(d.res==true){
@@ -333,41 +392,7 @@ function confirmSinCorreo(){
           }
         },
         error: function (data) {
-            console.log(data);
-            alertError("Error inesperado en el servidor");
-        },
-    });
-}
-function send() {
-    let form = {"tipo":1};
-    
-
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-    console.log($("#route_modal").val());
-    $.ajax({
-        type: "POST",
-        url: $("#route_modal").val() + "/descripcion_email",
-        data: form,
-        success: function (data) {
-          console.log(data);
-          let d =JSON.parse(data);
-          if(data.res=='true'){
-            let rsp = alertTimeCorrect(
-                "Confirmación de Descripción éxitoso",
-                function (response) {
-                    window.location =
-                        $("#route_modal").val() + "/../../operacion" ;
-                }
-            );
-          }else{
-            alertError2("No se confirmó la Descripción");
-          }
-        },
-        error: function (data) {
+            $("#spinDiv").css("display", "none");
             console.log(data);
             alertError("Error inesperado en el servidor");
         },

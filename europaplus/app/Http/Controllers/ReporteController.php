@@ -45,7 +45,7 @@ class ReporteController extends Controller
         $where="";
         $count=0;
         if(!empty($input['num'])){
-            $where=$where."fac_id =".$input['num']." ";
+            $where=$where."fac_num =".$input['num']." ";
             $count++;
             $_SESSION['num']=$input['num'];
         }else{
@@ -120,7 +120,7 @@ class ReporteController extends Controller
         }else{
             $facturas=[];
         }
-
+var_dump($where);
         $data = [
             'facturas'=>$facturas,
             'end'=> $input['end'],

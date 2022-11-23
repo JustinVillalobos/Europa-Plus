@@ -28,6 +28,7 @@ use App\Http\Controllers\OperacionController;
 use App\Http\Controllers\ConfirmacionesController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CobrosController;
+use App\Http\Controllers\EuropaPlusController;
 
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
@@ -161,3 +162,7 @@ Route::get('test',[ConfirmacionesController::class, 'test'])->name('confirmacion
 Route::get('operacion/cobros/{opr_id}',[CobrosController::class, 'cobros'])->name('cobros.cobros');
 Route::post('operacion/resto_curso',[CobrosController::class, 'resto_curso'])->name('cobros.resto_curso');
 Route::post('operacion/devolucion',[CobrosController::class, 'devolucion'])->name('cobros.devolucion');
+
+Route::get('europa',[EuropaPlusController::class, 'index'])->name('europa.index');
+Route::get('europa/edit',[EuropaPlusController::class, 'edit'])->name('europa.edit');
+Route::post('europa/update',[EuropaPlusController::class, 'update'])->name('europa.update');

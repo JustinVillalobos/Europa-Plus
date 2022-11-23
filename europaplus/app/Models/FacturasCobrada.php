@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $facc_id
  * @property int $opr_id
  * @property Carbon $register_date
+ * @property string $monto
  *
  * @package App\Models
  */
@@ -34,6 +35,7 @@ class FacturasCobrada extends Model
 
 	protected $fillable = [
 		'opr_id',
-		'register_date'
+		'register_date',
+		'monto'
 	];
 }
