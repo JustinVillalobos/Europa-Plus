@@ -92,13 +92,7 @@ if(strlen($alumno->alu_dni_fexp)>0){
     </div>
     
     <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
-        <div class="row">
-            <div class="col-sm-12 form-inline text-end">
-                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Calle/Plaza:</label>
-                 <input type="text" class="form-control" style="width:67%;" id="plaza" value="{{$alumno->alu_direccion}}"/>
-                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
-             </div>
-        </div>
+       
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
                 <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">País:</label>
@@ -131,6 +125,16 @@ if(strlen($alumno->alu_dni_fexp)>0){
                          <option value="{{$localidad->loc_id}}" <?php if($alumno->loc_id ==$localidad->loc_id){echo "selected";}?>>{{$localidad->loc_descr}}</option>
                     @endforeach
                 </Select>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
+       
+    </div>
+    <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+        <div class="row">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Calle/Plaza:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="plaza" value="{{$alumno->alu_direccion}}"/>
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>

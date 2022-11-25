@@ -109,11 +109,11 @@
                                                
                                             </div>
                                             <div class="col-sm-11  margin-t-5 pl-0" id="data_info_cc">
-                                                <p style="margin-top:10px;margin-bottom:0px;font-size:13px" class="pp4"> Estas condiciones tendrán efecto contractual y permanecerán inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripción.
+                                                <p style="margin-top:10px;margin-bottom:0px;font-size:13px" class="pp4" id="txtt1"> Estas condiciones tendrán efecto contractual y permanecerán inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripción.
                                                 </p>
                                                 
-                                                <p class="pp4" style="font-size:13px;margin-bottom:0px;">21 días antes del comienzo de las clases deberá hacer efectiva la totalidad del importe de su viaje lingüístico y le entregaremos la documentación relativa a su reserva, así como el correspondiente material geográfico y turístico de la ciudad de su elección y su entorno.
-</p><p style="margin-top:0px;margin-bottom:0px;font-size:13px" class="pp4"> Gracias por elegirnos para la realización de su curso y esperamos que quede satisfecho con nuestros servicios.</p>
+                                                <p class="pp4" style="font-size:13px;margin-bottom:0px;" id="txtt3">21 días antes del comienzo de las clases deberá hacer efectiva la totalidad del importe de su viaje lingüístico y le entregaremos la documentación relativa a su reserva, así como el correspondiente material geográfico y turístico de la ciudad de su elección y su entorno.
+</p><p style="margin-top:0px;margin-bottom:0px;font-size:13px" class="pp4" id="txtt2"> Gracias por elegirnos para la realización de su curso y esperamos que quede satisfecho con nuestros servicios.</p>
                                             </div>
                                         </div>
                                     </div>

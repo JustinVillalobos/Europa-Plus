@@ -8,9 +8,15 @@ use App\Models\Provincia;
 use App\Models\Paise;
 use App\Models\Localidade;
 use App\Models\Opcione;
+use App\Models\Escuela;
+use App\Models\User;
+use Mail;
+
+use App\Mail\Mensaje;
 session_start();
 class AlumnoController extends Controller
 {
+    public $isProduction=false;
     public function __construct(){
         $uri = request()->route()->uri;
         if(empty($_SESSION['id']) ){
@@ -21,7 +27,7 @@ class AlumnoController extends Controller
                 
                 if($_SESSION['id']=="" ){
                    
-                    return redirect('/')->send();
+                    return redirect('/loginAdmin')->send();
                 }
             }
         }
@@ -37,11 +43,24 @@ class AlumnoController extends Controller
         $_SESSION['search'] = "";
         $_SESSION['limit']="";
         $_SESSION['type'] = "";
-        $alumnos =Alumno::select('alumnos.*','opciones.*','paises.pais_descr')
+        $alumnos =Alumno::select('alumnos.*','opciones.*','paises.pais_descr','paises.pais_descr as esc_nombre')
                             ->join('opciones','alumnos.idi_id','=','opciones.opc_id')
                             ->join('provincias','alumnos.prv_id','=','provincias.prv_id')
                             ->join('paises','provincias.pais_id','=','paises.pais_id')
                             ->paginate(10);
+                            foreach ($alumnos as $key => $value) {
+                                $escuela= Escuela::join('cursos_escuelas','escuelas.esc_id','cursos_escuelas.esc_id')
+                                                    ->join('cursos','cursos_escuelas.cur_id','cursos.cur_id')
+                                                    ->where('cursos.cur_id','=', $alumnos[$key]->cur_id)->first();
+                    
+                                if(!empty($escuela)){
+                                    $alumnos[$key]->esc_nombre=$escuela->esc_nombre;
+                                }else{
+                                    $alumnos[$key]->esc_nombre="".$alumnos[$key]->cur_id;
+                                }
+                              
+                            }
+        
         return view('alumnos.index', ["alumnos"=>$alumnos,'search'=>"",'limit'=>10,'type'=>'Nombre']);
     }
     
@@ -182,6 +201,30 @@ class AlumnoController extends Controller
             'alu_dni_fexp'=>$datos['caduca'],
             'alu_comentarios'=>$datos['comentarios']
         ]);
+        $name=$alumno->alu_nombre;
+        
+        $a=$alumno->alu_apellidos;
+       
+        $psw=$name[0]."".$a[0]."".round(microtime(true));
+        $body="Usuario:".$alumno->alu_email."<br>Contraseña:".$psw;
+        $d=[
+                
+            "name"=>'Credenciales de acceso '.$alumno->alu_nombre." ".$alumno->alu_apellidos,
+            "title"=>"Credenciales de acceso  Europa Plus",
+            "subject"=>"Se adjuntan las credenciales de accesso al sistema Europa Plus<br>". $body,
+            "alumno"=>$alumno
+           ];
+           if($this->isProduction){
+            Mail::to($alumno->alu_correo)->send(new Mensaje($d));
+        }else{
+            Mail::to("jusymey@gmail.com")->send(new Mensaje($d));
+        }
+        $user=new User([
+            'group_id'=>2,
+            'name'=>$alumno->alu_email,
+            'password'=>md5($psw)
+        ]);
+        $user->save();
         $alumno->save();
         echo json_encode(true);
     }
@@ -322,6 +365,8 @@ class AlumnoController extends Controller
             $alumno->delete();
             echo json_encode(true);
         }catch(\Illuminate\Database\QueryException $e){
+            $alumno->active=2;
+            $alumno->save();
             echo json_encode(false);
         }
         

@@ -20,7 +20,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="printCondicionada()"><i class="fa fa-save"></i> Imprimir</button>
+        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="printCondicionada(true)"><i class="fa fa-save"></i> Imprimir</button>
         <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;" onclick="confirmSinCorreoCondicionada()"><i class="fa fa-user"></i> Confirmar</button>
         <button type="button" class="btn btn-success btn-modal" data-dismiss="modal" style="margin-left:5px;" onclick="sendCondicionada()"><i class="fa fa-send"></i> Envíar correo</button>
         <button type="button" class="btn btn-danger btn-modal" data-dismiss="modal">x</button>

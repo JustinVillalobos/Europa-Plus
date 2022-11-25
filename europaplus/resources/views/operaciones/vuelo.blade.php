@@ -31,7 +31,7 @@
             <div class="row"  style="margin-top:5px;">
                 <div class="col-sm-12 form-inline text-end">
                     <label class="text-danger font-weight-bold" style="width:15%;justify-content: end; margin-right: 5px;">Vuelo:</label>
-                    <select class="form-select" style="width:67%;" name="vuelo" id="vuelo" value="{{$vje_vuelo}}">
+                    <select class="form-select" style="width:67%;" name="vuelot" id="vuelot" value="{{$vje_vuelo}}">
                         <option value="0" <?php if($vje_vuelo==0){echo "selected";}?>>Si</option>
                         <option value="1" <?php if($vje_vuelo==1){echo "selected";}?>>No</option>
                     </select>

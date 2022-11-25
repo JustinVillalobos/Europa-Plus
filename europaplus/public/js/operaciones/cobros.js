@@ -124,7 +124,7 @@ function isNumber(n){
                   let rsp = alertTimeCorrect(
                       "Resto de curso actualizado",
                       function (response) {
-                        window.location =$("#route").val() + "/../operacion/cobros/" + $("#fac_id").val();
+                        window.location =$("#route").val() + "/../operacion/cobros/" + $("#fac_id1").val();
                       }
                   );
               } else {
@@ -157,17 +157,17 @@ function isNumber(n){
               $("#spinDiv").css("display", "none");
               let json = JSON.parse(data);
               console.log(json);
-              if (data != "false" ) {
+              if (json.res != false ) {
                   let rsp = alertTimeCorrect(
-                      "Resto de curso actualizado",
+                      "Reserva de curso actualizado",
                       function (response) {
-                        window.location =$("#route").val() + "/../operacion/cobros/" +$("#fac_id").val();
+                        window.location =$("#route").val() + "/../operacion/cobros/" +$("#fac_id1").val();
                       }
                   );
               } else {
                   console.log(json);
                   console.log(JSON.parse(json.opr));
-                  alertError(json);
+                  alertError(json.error);
               }
           },
           error: function (data) {

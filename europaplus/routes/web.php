@@ -126,7 +126,7 @@ Route::get('success',[HomeController::class, 'mensaje'])->name('home.mensaje');
 
 
 /* Login */
-Route::get('/',[LoginController::class, 'index'])->name('login.index');
+Route::get('/loginAdmin',[LoginController::class, 'index'])->name('login.index');
 Route::get('logout',[LoginController::class, 'logout'])->name('login.logout');
 
 Route::post('loginValidator',[LoginController::class, 'loginValidator'])->name('login.loginValidator');
@@ -162,6 +162,10 @@ Route::get('test',[ConfirmacionesController::class, 'test'])->name('confirmacion
 Route::get('operacion/cobros/{opr_id}',[CobrosController::class, 'cobros'])->name('cobros.cobros');
 Route::post('operacion/resto_curso',[CobrosController::class, 'resto_curso'])->name('cobros.resto_curso');
 Route::post('operacion/devolucion',[CobrosController::class, 'devolucion'])->name('cobros.devolucion');
+Route::post('operacion/save_concepto',[CobrosController::class, 'save_concepto'])->name('cobros.save_concepto');
+Route::post('operacion/sendFactura',[ConfirmacionesController::class, 'sendFactura'])->name('cobros.sendFactura');
+
+
 
 Route::get('europa',[EuropaPlusController::class, 'index'])->name('europa.index');
 Route::get('europa/edit',[EuropaPlusController::class, 'edit'])->name('europa.edit');

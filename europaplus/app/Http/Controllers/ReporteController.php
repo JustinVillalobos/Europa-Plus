@@ -18,7 +18,7 @@ class ReporteController extends Controller
                 
                 if($_SESSION['id']=="" ){
                    
-                    return redirect('/')->send();
+                    return redirect('/loginAdmin')->send();
                 }
             }
         }
@@ -158,7 +158,11 @@ var_dump($where);
                WHERE f.fac_id=".$datos['fac_id'];
         } 
         $factura = DB::select($query);
-        echo json_encode($factura);
+        $data=[
+            'factura'=>$factura,
+            'empresa'=>$_SESSION['empresa']
+        ];
+        echo json_encode($data);
        // return view('reporte.factura');
     }
 }

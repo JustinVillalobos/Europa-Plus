@@ -83,13 +83,7 @@
     </div>
     
     <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
-        <div class="row">
-            <div class="col-sm-12 form-inline text-end">
-                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Calle/Plaza:</label>
-                 <input type="text" class="form-control" style="width:67%;" id="plaza"/>
-                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
-             </div>
-        </div>
+        
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
                 <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">País:</label>
@@ -125,6 +119,16 @@
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>
+       
+    </div>
+    <div class="col-sm-6" style="padding:10px 20px 0px 20px;">
+        <div class="row">
+            <div class="col-sm-12 form-inline text-end">
+                <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Calle/Plaza:</label>
+                 <input type="text" class="form-control" style="width:67%;" id="plaza"/>
+                 <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
+             </div>
+        </div>
         <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
                 <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">C. Postal:</label>
@@ -132,7 +136,7 @@
                  <span class="text-danger" style="width:100%;margin-right:25%;font-size:11px;"></span>
              </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:5px;">
             <div class="col-sm-12 form-inline text-end">
                 <label class="text-danger font-weight-bold" style="width:30%;justify-content: end; margin-right: 5px;">Teléfono:</label>
                  <input type="text" class="form-control" style="width:67%;" id="tel"/>

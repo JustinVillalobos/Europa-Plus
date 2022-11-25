@@ -18,7 +18,7 @@ class CursosController extends Controller
                 
                 if($_SESSION['id']=="" ){
                    
-                    return redirect('/')->send();
+                    return redirect('/loginAdmin')->send();
                 }
             }
         }
@@ -132,7 +132,8 @@ class CursosController extends Controller
             'cur_nombre'=>$datos['nombre'],
             'cur_descr_en'=>$datos['descr'],
             'tipo_id'=>$datos['tipos'],
-            'cur_descr'=>$datos['descr_es']
+            'cur_descr'=>$datos['descr_es'],
+            'cur_tipo_curso'=>$datos['tipos']
         ]);
 
         $curso->save();
@@ -185,6 +186,8 @@ class CursosController extends Controller
         $curso->cur_nombre = $datos['nombre'];
         $curso->tipo_id = $datos['tipos'];
         $curso->cur_descr=$datos['descr_es'];
+        $curso->cur_tipo_curso=$datos['tipos'];
+    
         try{
             $curso->save();
             echo json_encode(true);

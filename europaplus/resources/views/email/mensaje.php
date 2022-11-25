@@ -33,7 +33,7 @@
                   <?php $route2 = route("operacion.index");?>
                   <tr>
                       <td height="40" style="text-align:center; font-family: Arial, 'Trebuchet MS', Verdana, sans-serif; font-size:22px; font-weight:bold; line-height: 18px; color: #000000; border-top: 1px dotted #999;">
-                            <img src="<?php echo "http://aplicaciones.europaplus.net/gestion/admin/images/logo.jpg"; ?>" style="width:300px" />
+                            <img src="<?php echo "http://aplicaciones.europaplus.net/gestion/admin/images/logo.jpg";//https://lh5.googleusercontent.com/348Noz5cH0JLE0XMRjKjxzpAhyCQg3_vNGyeWmAsn2SU0BGsmPowK1i0RZefraojFNU=w2400;URL::asset('assets/log.jpg'); ?>" style="width:300px" />
                         </td>
                     </tr>
                     <tr>
@@ -41,14 +41,9 @@
                     </tr>
                     <tr>
                       <td style="text-align:justify; font-family: Arial, 'Trebuchet MS', Verdana, sans-serif; font-size:12px; line-height: 18px; color: #000000; border-top: 1px dotted #999; border-bottom: 1px dotted #999;">
-                        <p>Estimado(a) <?php echo $distressCall['operacion']->alu_nombre." ".$distressCall['operacion']->alu_apellidos?>: </p>
+                        <p>Estimado(a) <?php echo $distressCall['alumno']->alu_nombre." ".$distressCall['alumno']->alu_apellidos?>: </p>
                         <p><?php echo $distressCall['subject']?></p>
                     </tr> 
-                    <tr>
-                    <?php $route2 = route("operacion.index");?>
-                    
-                        <a id="link" href="<?php echo $route2."/../".$distressCall['path'];?>"><?php echo $distressCall['name'];?></a>
-                    </tr>
                     <tr>
                         <p style="font-size:9px;margin-top:15px">
                             EUROPA PLUS SPAIN - ESCUELAS DE IDIOMAS EN EL MUNDO <br> 
@@ -71,6 +66,9 @@
                                 o al teléfono <?php echo $_SESSION["empresa"]->telefono;?> 
                             </p>
                         </p>
+                    </tr>
+                    <tr>
+                   
                     </tr>
                   </table></td>
               </tr>

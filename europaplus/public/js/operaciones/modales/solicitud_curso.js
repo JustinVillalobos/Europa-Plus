@@ -109,6 +109,7 @@ function loadModal(id) {
         },
         error: function (data) {
             console.log(data);
+            $("#spinDiv").css("display", "none");
             alertError("Error inesperado en el servidor");
         },
     });
@@ -353,7 +354,7 @@ function send() {
 }
 function confirmar(){
   let form = {};
-    
+  $("#spinDiv").css("display", "flex");
 
     $.ajaxSetup({
         headers: {
@@ -366,6 +367,7 @@ function confirmar(){
         url: $("#route_modal").val() + "/confirmacion_curso_email",
         data: form,
         success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           if(data=='true'){
             let rsp = alertTimeCorrect(
@@ -379,13 +381,14 @@ function confirmar(){
         },
         error: function (data) {
             console.log(data);
+            $("#spinDiv").css("display", "none");
             alertError("Error inesperado en el servidor");
         },
     });
 }
 function seguro(){
     let form = {};
-    
+    $("#spinDiv").css("display", "flex");
 
     $.ajaxSetup({
         headers: {
@@ -399,6 +402,7 @@ function seguro(){
         data: form,
         success: function (data) {
           console.log(data);
+          $("#spinDiv").css("display", "none");
           let d =JSON.parse(data);
           if(d.res==true){
             let rsp = alertTimeCorrect(
@@ -414,6 +418,7 @@ function seguro(){
         },
         error: function (data) {
             console.log(data);
+            $("#spinDiv").css("display", "none");
             alertError("Error inesperado en el servidor");
         },
     }); 
@@ -421,7 +426,7 @@ function seguro(){
 function confirmarVuelo(){
   let form = {};
     
-
+  $("#spinDiv").css("display", "flex");
   $.ajaxSetup({
       headers: {
           "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -434,6 +439,7 @@ function confirmarVuelo(){
       data: form,
       success: function (data) {
         console.log(data);
+        $("#spinDiv").css("display", "none");
         if(data=='true'){
           let rsp = alertTimeCorrect(
               "Confirmación de vuelo éxitosa",
@@ -446,6 +452,7 @@ function confirmarVuelo(){
       },
       error: function (data) {
           console.log(data);
+          $("#spinDiv").css("display", "none");
           alertError("Error inesperado en el servidor");
       },
   });

@@ -100,6 +100,7 @@ function loadModal(id) {
             $("#modal").css("display", "block");
         },
         error: function (data) {
+            $("#spinDiv").css("display", "none");
             console.log(data);
             alertError("Error inesperado en el servidor");
         },
@@ -267,7 +268,7 @@ function printT(isPrint) {
 let docTransfer;
 function confirmarVuelo(){
     let form = {};
-      
+    $("#spinDiv").css("display", "flex");
   
     $.ajaxSetup({
         headers: {
@@ -280,6 +281,7 @@ function confirmarVuelo(){
         url: $("#route_modal").val() + "/confirmacion_vuelo_email",
         data: form,
         success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           if(data=='true'){
             let rsp = alertTimeCorrect(
@@ -292,6 +294,7 @@ function confirmarVuelo(){
           }
         },
         error: function (data) {
+            $("#spinDiv").css("display", "none");
             console.log(data);
             alertError("Error inesperado en el servidor");
         },
@@ -388,7 +391,7 @@ function sendT() {
 }
 function confirmar(){
   let form = {};
-    
+  $("#spinDiv").css("display", "flex");
 
     $.ajaxSetup({
         headers: {
@@ -401,6 +404,7 @@ function confirmar(){
         url: $("#route_modal").val() + "/confirmacion_transfer_email",
         data: form,
         success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           if(data=='true'){
             let rsp = alertTimeCorrect(
@@ -413,6 +417,7 @@ function confirmar(){
           }
         },
         error: function (data) {
+            $("#spinDiv").css("display", "none");
             console.log(data);
             alertError("Error inesperado en el servidor");
         },

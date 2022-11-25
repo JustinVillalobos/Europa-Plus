@@ -45,7 +45,7 @@ $( document ).ready(function() {
   function Finally(value){
     
     let form = {
-        vuelo:$("#vuelo").val(),
+        vuelo:$("#vuelot").val(),
         tipo:$("#tipo").val(),
         price:$("#price").val(),
         costo:$("#costo").val(),
@@ -86,6 +86,7 @@ $( document ).ready(function() {
             $("#spinDiv").css('display','none');
           let json = JSON.parse(data);
           if(data!='false'){
+            console.log(json);
             let rsp=alertTimeCorrect("Información de vuelo Actualizada exitosamente",function(response){
                 window.location=$("#route").val()+"/../vuelo/"+json.opr_id;
               });

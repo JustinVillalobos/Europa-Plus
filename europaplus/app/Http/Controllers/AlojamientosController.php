@@ -18,7 +18,7 @@ class AlojamientosController extends Controller
                 
                 if($_SESSION['id']=="" ){
                    
-                    return redirect('/')->send();
+                    return redirect('/loginAdmin')->send();
                 }
             }
         }

@@ -18,6 +18,21 @@ session_start();
 
 class CobrosController extends Controller
 {
+	public function __construct(){
+        $uri = request()->route()->uri;
+        if(empty($_SESSION['id']) ){
+            return redirect('/')->send();
+        }else{
+            
+            if(!empty($_SESSION['id'])){
+                
+                if($_SESSION['id']=="" ){
+                   
+                    return redirect('/loginAdmin')->send();
+                }
+            }
+        }
+    }
     public function index(){
         
     }
@@ -92,24 +107,26 @@ class CobrosController extends Controller
         $pais=Paise::where('pais_id','=',$operacion->alupais)->first();
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=1 AND opr_id=".$id;
         $pag_importe = DB::select($qpagos);
+		$qpagosReserva = "SELECT pagos.*,facturas.* FROM pagos INNER JOIN facturas ON pagos.fac_id=facturas.fac_id WHERE pag_tipo=1 AND pagos.opr_id=".$id.' order by pagos.pag_id DESC';
+        $rspag_reserva = DB::select($qpagosReserva);
         $qpagos = "SELECT * FROM pagos INNER JOIN facturas ON pagos.fac_id=facturas.fac_id WHERE pag_tipo=2 AND pagos.opr_id=".$id.' order by pagos.pag_id DESC';
         $rspag_resto = DB::select($qpagos);
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=2 AND opr_id=".$id;
         $pag_importe2 = DB::select($qpagos);
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=3 AND opr_id=".$id;
         $pag_importe3 = DB::select($qpagos);
-        $qpagos = "SELECT * FROM pagos WHERE pag_tipo=4 AND opr_id=".$id;
+        $qpagos = "SELECT * FROM pagos WHERE pag_tipo=4 AND opr_id=".$id."  order by pagos.pag_id DESC";
         $rspag_devs = DB::select($qpagos);
         $qpagos = "SELECT SUM(pag_importe) as ttl FROM pagos WHERE pag_tipo=4 AND opr_id=".$id;
         
         $pag_importe4 = DB::select($qpagos);
-        $qpro = "SELECT f.fac_id, f.fac_numero, f.fac_fecha,f.fac_proforma FROM facturas f WHERE f.opr_id=".$id." AND f.fac_proforma=1";
+        $qpro = "SELECT f.fac_id, f.fac_numero, f.fac_fecha,f.fac_proforma FROM facturas f WHERE f.opr_id=".$id." AND f.fac_proforma=1  order by f.fac_id DESC";
        
         $facturas = DB::select($qpro);
         $qsups = "SELECT * FROM suplementos_operaciones WHERE  opr_id=".$id;
         $suplementos= DB::select($qsups);
-        $query="SELECT * FROM facturas_cobradas WHERE  opr_id=".$id;
-        $facturasCobradas=DB::select($query);
+
+        $facturasCobradas=[];
         $precio=0;
         foreach ($suplementos as $key => $value) {
             # code...
@@ -125,11 +142,16 @@ class CobrosController extends Controller
             $rspag_devs=[];
         }else{
 			foreach ($rspag_devs as $key => $value) {
-				var_dump($value->fac_id);
+				
 				$devolucion=Factura::where('fac_id','=',$value->fac_id)->first();
 				$rspag_devs[$key]->factura=$devolucion;
 			}
 		}
+		if(empty($rspag_reserva)){
+			$rspag_reserva=[""];
+		}
+		//SELECT pagos.*,facturas.* FROM pagos INNER JOIN facturas ON pagos.fac_id=facturas.fac_id WHERE pag_tipo=1 AND pagos.opr_id=3538 order by pagos.pag_id DESC;
+		//select * from facturas order by opr_id DESC;
 		//var_dump($rspag_devs);	
         $data = [
             'operacion'=>$operacion,
@@ -142,7 +164,7 @@ class CobrosController extends Controller
             'rspag_devs'=>$rspag_devs,
             'facturas'=>$facturas,
             'opr_id'=>$id,
-           
+           'reserva'=>$rspag_reserva[0],
             "precio"=>$precio,
             'precioTotal'=>$precioTotal,
             'facturasCobradas'=>$facturasCobradas
@@ -352,7 +374,7 @@ class CobrosController extends Controller
 			if($resto<$senial || $resto>$senial){
 				$data=[
 					'res'=>false,
-					'error'=>"El importe a facturar como resto del curso no coincide con la cantidad almacenada en el sistema.",
+					'error'=>"El importe a facturar como  la Señal de Reserva no coincide con la cantidad almacenada en el sistema.",
 					'opr'=>json_encode($opr),
 					'senial'=>$senial." ".$resto
 				];
@@ -371,11 +393,11 @@ if ($tipo!=1)
 $Suplementos_cursos=SuplementosOperacione::select('suplementos.*','suplementos_operaciones.*')->join('suplementos','suplementos.sup_id','suplementos_operaciones.sup_id')->where('suplementos_operaciones.sup_tipo','=',1)
                                 ->where('opr_id','=',$id)->get();
 foreach($Suplementos_cursos as $s){
-	$fac_suplementos_curso.="-".$s->sup_descr." ".number_format($s->precio_unidad, 2, '.', '')." EUR<br>";
+	$fac_suplementos_curso.="-".$s->sup_descr." ".number_format($s->precio_unidad, 2, '.', '')." EUR<br/>";
 }
 
   if (trim($fac_suplementos_curso)!='')  {
-	$fac_concepto .= "<br><br><b>Suplementos:</b><br>".$fac_suplementos_curso;	
+	$fac_concepto .= "<br/><br/><b>Suplementos:</b><br/>".$fac_suplementos_curso;	
   }
     
   
@@ -385,11 +407,11 @@ foreach($Suplementos_cursos as $s){
   	  $transfer_tipo=($operacion[0]->vje_transfer_tipo==1)?'Ida':(($operacion[0]->vje_transfer_tipo==2)?'Vuelta':'Ida y vuelta');
   	else
   	  $transfer_tipo='No';  	
-    $fac_concepto .= "<br><br><b>Transfer al aeropuerto (".$transfer_tipo."): </b>".$operacion[0]->vje_transfer_precio." EUR"; 
+    $fac_concepto .= "<br/><br/><b>Transfer al aeropuerto (".$transfer_tipo."): </b>".$operacion[0]->vje_transfer_precio." EUR"; 
   }
   
   if (($operacion[0]->vje_vuelo==1) && ($operacion[0]->vje_vuelo_precio>0))
-  	$fac_concepto .= "<br><br><b>Billete de Avion: </b>".$operacion[0]->vje_vuelo_precio." EUR<br><br>";  
+  	$fac_concepto .= "<br/><br/><b>Billete de Avion: </b>".$operacion[0]->vje_vuelo_precio." EUR<br/><br/>";  
 }
 $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
 $fac_id=$maximo[0]->max_facnum+1;
@@ -435,18 +457,22 @@ $fac_id=$maximo[0]->max_facnum+1;
 			
 			$factura->save();
 			if ($tipo!=2){
-				
+				//'fac_num'=>$rsfnum[0]->max_facnum+1,
+			//'fac_numero'=>$fac_numero,
+			//'fac_serie'=>$serie,
+				$factura_new=Factura::where("opr_id","=",$id)->where("fac_num","=",$rsfnum[0]->max_facnum+1)->where('fac_numero',"=",$fac_numero)
+										->where("fac_serie","=",$serie)->first();
 				$pago= new Pago([
 				 'opr_id'=>$id,
 				 'pag_importe'=>$resto,
 				 'pag_tipo'=>$operacion_tipo,
 				 'pag_signo'=>$pag_signo,
-				 'fac_id'=>$fac_id
+				 'fac_id'=>$factura_new->fac_id
 				]);
 				$pago->save();
 				$opr->save();
 			 }
-			 echo json_encode($fac_id);
+			 echo json_encode(true);
 		}catch (\Illuminate\Database\QueryException $th) {
             //throw $th;
 			$data=[
@@ -645,7 +671,7 @@ $fac_id=$maximo[0]->max_facnum+1;
 
 		
 	
-  $fac_concepto = $pag_descr . " <br> " .$input['concepto'];
+  $fac_concepto = $pag_descr . " <br/> " .$input['concepto'];
 	
 
 
@@ -712,6 +738,19 @@ $provincia=Provincia::where('prv_id','=',$operacion[0]->esc_prv)->first();
 
        
     }
+	public function save_concepto(Request $request){
+		$input=$request->all();
+		try{
+			$factura=Factura::where("fac_id",'=',$input["factura"])->first();
+			$factura->fac_concepto=$input['concepto'];
+			$factura->save();
+			echo json_encode(true);
+		}catch (\Illuminate\Database\QueryException $th) {
+            //throw $th;
+            echo json_encode($th);
+        }
+		
+	}
 	
 }
 

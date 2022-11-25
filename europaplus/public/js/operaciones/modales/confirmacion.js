@@ -24,7 +24,40 @@ function loadModalConfirmacion(id) {
             operacionConfirmar = datos;
             empresaConfirmar=JSON.parse(data)['empresa'];
             console.log(empresa);
-          
+       
+            if(datos.cur_tipo_curso==1){
+                $("#txtt1").html('Confirmamos la recepción de la señal de reserva con la cantidad de <span id="price2"></span> euros en nuestra cuenta bancaria en concepto de Confirmación definitiva del curso descrito. 21 dias antes del comienzo de las clases debera hacer efectiva la totalidad del importe de su curso y nosotros le  entregaremos la documentacion relativa a su reserva, asi como el correspondiente material geografico y turistico de la ciudad de su eleccion y su entorno.');
+                $("#txtt3").html('Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.<br> ');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.');
+                
+            }else if(datos.cur_tipo_curso==2){
+                 $("#txtt1").html('Confirmamos la recepción de la señal de reserva con la cantidad de <span id="price2"></span> euros en nuestra cuenta bancaria en concepto de Confirmación definitiva del curso descrito. 21 dias antes del comienzo de las clases debera hacer efectiva la totalidad del importe de su curso y nosotros le  entregaremos la documentacion relativa a su reserva, asi como el correspondiente material geografico y turistico de la ciudad de su eleccion y su entorno.');
+                $("#txtt3").html('Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.');
+            }else if(datos.cur_tipo_curso==6){
+                $("#txtt1").html('Para que la reserva de plaza sea efectiva habra de ingresarse la cantidad de <span id="price2"></span> euros en la cuenta bancaria de Europa Plus s.l. antes del tercer da despues de recibir esta confirmacion. Esta cantidad sera descontada del precio final. Este documento solo sera valido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria:');
+                $("#txtt3").html('El resto del importe total del programa se hara en dos partes iguales: junio y en agosto.<br> Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.'); 
+            }else if(datos.cur_tipo_curso==7){
+                $("#txtt1").html('Para que la reserva de plaza sea efectiva habra de ingresarse la cantidad de <span id="price2"></span> euros en la cuenta bancaria de Europa Plus s.l. antes del tercer da despues de recibir esta confirmacion. Esta cantidad sera descontada del precio final. Este documento solo sera valido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria:');
+                $("#txtt3").html('El resto del importe total del programa se hara en dos partes iguales: junio y en agosto.<br> Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.'); 
+            }else if(datos.cur_tipo_curso==8){
+                $("#txtt1").html('Para que la reserva de plaza sea efectiva habra de ingresarse la cantidad de <span id="price2"></span> euros en la cuenta bancaria de Europa Plus s.l. antes del tercer da despues de recibir esta confirmacion. Esta cantidad sera descontada del precio final. Este documento solo sera valido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria:');
+                $("#txtt3").html('El resto del importe total del programa se hara en dos partes iguales: junio y en agosto.<br> Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.'); 
+            }else if(datos.cur_tipo_curso==9){
+                $("#txtt1").html('Para que la reserva de plaza sea efectiva habra de ingresarse la cantidad de <span id="price2"></span> euros en la cuenta bancaria de Europa Plus s.l. antes del tercer da despues de recibir esta confirmacion. Esta cantidad sera descontada del precio final. Este documento solo sera valido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria:');
+                $("#txtt3").html('El resto del importe total del programa se hara en dos partes iguales: junio y en agosto.<br> Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.'); 
+            }else{
+                $("#txtt1").html('Confirmamos la recepción de la señal de reserva con la cantidad de <span id="price2"></span> euros en nuestra cuenta bancaria en concepto de Confirmación definitiva del curso descrito. 21 dias antes del comienzo de las clases debera hacer efectiva la totalidad del importe de su curso y nosotros le  entregaremos la documentacion relativa a su reserva, asi como el correspondiente material geografico y turistico de la ciudad de su eleccion y su entorno.');
+                $("#txtt3").html('Estas condiciones tendran efecto contractual y permaneceran inamovibles una vez efectuado el pago total del curso que arriba se detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripcion.<br> ');
+                $("#txtt2").html('Gracias por elegirnos para la realizacion de su curso y esperamos que quede satisfecho con nuestros servicios.');
+                
+            }
+              let porcenta2=d.prc;
+              $("#price2").html(porcenta2.toFixed(2));
             let nivel = "";
             if(datos.vje_ida_salida==null){
                 datos.vje_ida_salida="";
@@ -249,7 +282,7 @@ function SOLICITUDC() {
 }
 
 
-function printconfirmar() {
+function printconfirmar(isPrint) {
     let date = new Date();
 
     var doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
@@ -375,7 +408,7 @@ function printconfirmar() {
                             doc.text(element + "", indexX, indexY);
                             indexY=indexY+5;
                         });
-                        indexY=indexY-3;
+                       // indexY=indexY-3;
                     }
                    
         
@@ -387,10 +420,22 @@ function printconfirmar() {
 
     // Convert HTML to PDF in JavaScript
 
+    if(isPrint){
     doc.save("Confirmación " +operacionConfirmar.alu_nombre+" "+operacionConfirmar.alu_apellidos+ " " + getTimeV2() + " ");
+}else{
+    docConfirmacion=doc;
 }
+
+}
+let docConfirmacion;
 function confirmSinCorreoconfirmar(){
-    let form = {"tipo":0};
+    $("#spinDiv").css("display", "flex");
+    let form = new FormData();
+    form.append("tipo",0);
+    printconfirmar(false);
+    let data =btoa(docConfirmacion.output());
+    form.append('file',data);
+    form.append('operacion',JSON.stringify(operacionConfirmar));
     
 
     $.ajaxSetup({
@@ -401,9 +446,13 @@ function confirmSinCorreoconfirmar(){
     console.log($("#route_modal").val());
     $.ajax({
         type: "POST",
+        contentType:false,
+        processData:false,
+        cache:false,
         url: $("#route_modal").val() + "/confirmar_email",
         data: form,
         success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           let d =JSON.parse(data);
           if(data=='true'){
@@ -418,12 +467,20 @@ function confirmSinCorreoconfirmar(){
         },
         error: function (data) {
             console.log(data);
+            $("#spinDiv").css("display", "none");
             alertError("Error inesperado en el servidor");
         },
     });
 }
 function sendconfirmar() {
-    let form = {"tipo":1};
+    $("#spinDiv").css("display", "flex");
+    let form = new FormData();
+    form.append("tipo",1);
+    printconfirmar(false);
+    let data =btoa(docConfirmacion.output());
+    form.append('file',data);
+    form.append('operacion',JSON.stringify(operacionConfirmar));
+    
     
 
     $.ajaxSetup({
@@ -434,9 +491,13 @@ function sendconfirmar() {
     console.log($("#route_modal").val());
     $.ajax({
         type: "POST",
+        contentType:false,
+        processData:false,
+        cache:false,
         url: $("#route_modal").val() + "/confirmar_email",
         data: form,
         success: function (data) {
+            $("#spinDiv").css("display", "none");
           console.log(data);
           if(data=='true'){
             let rsp = alertTimeCorrect(
@@ -449,6 +510,7 @@ function sendconfirmar() {
           }
         },
         error: function (data) {
+            $("#spinDiv").css("display", "none");
             console.log(data);
             alertError("Error inesperado en el servidor");
         },

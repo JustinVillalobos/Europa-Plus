@@ -105,7 +105,9 @@
         <div class="row">
                 <div class="col-sm-12">
                     <div class="paper">
-                         @include("../../operaciones/confirmaciones/mails/header")
+                    <div class="paper" id="paper">
+                     @include("../operaciones/confirmaciones/mails/header")
+   
                         <div class="row" style="margin-top:25px;">
                             <div class="col-sm-12" style="padding-left:25px;padding-right:15px">
                                 <div class="line"></div>
@@ -171,10 +173,10 @@
                                     <div class="col-sm-12 bordered-data2">
                                         <div class="row">
                                             <div class="col-sm-12 d-flex justify-content-end">
-                                               <label> Madrid, a <?php echo  date('d')?> de <span id='mes'></span> <?php echo date('Y');?></label>
+                                               <label class="date_"> Madrid, a <?php echo  date('d')?> de <span id='mes'></span> <?php echo date('Y');?></label>
                                             </div>
                                             <div class="col-sm-12">
-                                               <label><strong style="text-transform:uppercase;">Se solicita el pago de la siguiente factura Pro Forma No: </strong> <span id='numero'></span></label> 
+                                               <label class="fac_info"><strong style="text-transform:uppercase;">FACTURA No: </strong> <span id='numero'></span></label> 
                                             </div>
                                         </div>
                                     </div>
@@ -185,6 +187,9 @@
                                         </div>
                                         <div class="row body-border">
                                             <div class="col-sm-9 " id="text-body"></div>
+                                            <div class="col-sm-9 " id="text-body2" style="display:none">
+                                                    <textarea id="editable_textarea"></textarea>
+                                            </div>
                                             <div class="col-sm-3 text-center" id="importe"></div>
                                         </div>
                                     </div>
@@ -206,7 +211,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-12 text-center">
-                                                        IVA incluido, R&eacutegimen especial Agencias de viaje
+                                                        IVA incluido, R&eacutegimen especial Agencias de viaje CICMA 4280
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,26 +219,18 @@
                                     </div>
                                     <div class="col-sm-12 bordered-data5">
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <strong>Transferencia Bancaria: </strong> Europa Plus S.L.
-                                            </div>
-                                            <div class="col-sm-12">
-                                                BANCO DE SABADELL
-                                            </div>
-                                            <div class="col-sm-12">
-                                                Calle Edgar Neville 4, 28020 Madrid
-                                            </div>
-                                            <div class="col-sm-12">
-                                                 IBAN: ES61 0081 0189 8900 0107 5317
-                                            </div>
-                                            <div class="col-sm-12">
-                                                SWIFT/BIC: BSAB ESBB
-                                            </div>
+                                            <div class="col-sm-12"><strong>Transferencia Bancaria: </strong> <?php echo $_SESSION['empresa']->nombre;?></div>
+                                            <div class="col-sm-12"><?php echo $_SESSION['empresa']->banco;?></div>
+                                            <div class="col-sm-12"><?php echo $_SESSION['empresa']->direccion_banco;?></div>
+                                            <div class="col-sm-12">IBAN: <?php echo $_SESSION['empresa']->IBAN;?></div>
+                                            <div class="col-sm-12">SWIFT/BIC: <?php echo $_SESSION['empresa']->SWIFT;?></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <input type="hidden" id="fac_id" value="0"/>
                     </div>
                 </div>
         </div>
@@ -241,9 +238,8 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"><i class="fa fa-save"></i> Imprimir</button>
-        <button type="button" class="btn btn-success btn-modal" data-dismiss="modal" style="margin-left:5px;"><i class="fa fa-send"></i> Envíar correo</button>
-        <button type="button" class="btn btn-danger btn-modal" data-dismiss="modal">x</button>
+      <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="printFactura(true)"><i class="fa fa-save"></i> Imprimir</button>
+        <button type="button" class="btn btn-danger btn-modal" data-dismiss="modal" onclick="closeModal()">Cerrar</button>
       </div>
 
     </div>
@@ -251,5 +247,8 @@
 </div>
 <?php $route2 = route("reporte.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+  <script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
+  <script src="{{ URL::asset('js/operaciones/modales/header.js'); }}"></script>  
 <script src="{{ URL::asset('js/reporte/generate.js'); }}"></script>    
 @stop

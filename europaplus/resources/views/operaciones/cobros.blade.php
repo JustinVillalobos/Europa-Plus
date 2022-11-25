@@ -48,7 +48,10 @@
             </div>
             <div class="" style="padding:10px 20px 0px 20px;width:130px;">
                 {{number_format($pag_importe->ttl, 2, '.', '')}} EUR
+                
+               
             </div>
+            
             
         @endif
     @endif
@@ -61,6 +64,13 @@
                 <button class="btn btn-success" onclick="sinfacturarReserva()">Sin Facturar</button>
                 
             </div>
+    @endif
+    @if($pag_importe->ttl!=0)
+    <div class="" style="padding:10px 20px 0px 0px;width:150px;">
+        <?php echo '<b>'. $reserva->fac_fecha .'</b>&nbsp;'. $reserva->fac_numero .'&nbsp;'?>
+                <a href="#" onclick="sendFacturaData(<?php echo $reserva->fac_id;?>,<?php echo $reserva->fac_proforma;?>)">Envíar</a>
+                <a class="slink" href="#"onclick="loadModal(<?php echo $reserva->fac_id;?>,<?php echo $reserva->fac_proforma;?>)">Ver</a>
+    </div>
     @endif
     <div class="col-sm-12"></div>
     @if($operacion->opr_pendiente>0)
@@ -135,7 +145,9 @@
         </div>
     @endif
     @foreach($facturas as $factura)
-        <?php echo '<b>'. $factura->fac_fecha .'</b>&nbsp;'. $factura->fac_numero .'&nbsp;<a class="slink" href="#"onclick="loadModal('.$factura->fac_id.','.$factura->fac_proforma.')">Ver</a>';?> 
+    <?php echo '<b>'. $factura->fac_fecha .'</b>&nbsp;'. $factura->fac_numero .'&nbsp;'?>
+        <a href="#" onclick="sendFacturaData(<?php echo $factura->fac_id;?>,<?php echo $factura->fac_proforma;?>)">Envíar</a>
+        <a class="slink" href="#"onclick="loadModal(<?php echo $factura->fac_id;?>,<?php echo $factura->fac_proforma;?>)">Ver</a>
         <br>
     @endforeach
     
@@ -184,6 +196,7 @@
                                 <b>Nota de Abono: </b>{{$dev->factura->fac_fecha."  ".$dev->factura->fac_numero}}
                             </div>
                             <div class="col-sm-2">
+                            <a class="slink" href="#" onclick="sendFacturaData(<?php echo $dev->factura->fac_id?>,<?php echo $dev->factura->fac_proforma?>)">Envíar</a>
                              <a class="slink" href="#" onclick="loadModal(<?php echo $dev->factura->fac_id?>,<?php echo $dev->factura->fac_proforma?>)">Ver</a>
                             </div>
                         @endforeach
@@ -273,7 +286,7 @@
     <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
             <div class="row">
                @if(count($rspag_resto)>0)
-                <table class="table" style="width:200px;margin-left:20px;">
+                <table class="table" style="width:300px;margin-left:20px;">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -286,9 +299,11 @@
                         @foreach($rspag_resto as $f)
                             <?php $totalCobrado=$totalCobrado+$f->pag_importe;?>
                             <tr>
-                                <td>{{$f->fac_fecha." ".$f->fac_id}}</td>
+                                <td>{{$f->fac_fecha." "}}</td>
                                 <td>{{$f->pag_importe}}</td>
-                                <td><a href="#" onclick="loadModal(<?php echo $f->fac_id?>,<?php echo $f->fac_proforma?>)">Ver</a></td>
+                                <td>
+                                    <a href="#" onclick="sendFacturaData(<?php echo $f->fac_id?>,<?php echo $f->fac_proforma?>)">Envíar</a>
+                                    <a href="#" onclick="loadModal(<?php echo $f->fac_id?>,<?php echo $f->fac_proforma?>)">Ver</a></td>
                             </tr>
                         @endforeach
                             <tr>
@@ -312,6 +327,7 @@
 <?php $route2 = route("operacion.index");?>
 <input type="hidden" value="{{$route2}}" id="route" />
 <input type="hidden" value="{{$operacion->opr_id}}" id="fac_id" />
+<input type="hidden" value="{{$operacion->opr_id}}" id="fac_id1" />
 <script src="{{ URL::asset('js/operaciones/cobros.js'); }}"></script>   
 <script src="{{ URL::asset('js/operaciones/facturas.js'); }}"></script>  
 @stop

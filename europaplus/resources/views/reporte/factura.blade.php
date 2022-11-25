@@ -17,6 +17,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal" style="margin-left:5px;"  onclick="printFactura(true)"><i class="fa fa-save"></i> Imprimir</button>
         <button type="button" class="btn btn-danger btn-modal" data-dismiss="modal">Cerrar</button>
       </div>
 

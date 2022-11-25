@@ -44,26 +44,26 @@
             <i class="fa fa-refresh"></i>
         </a>
     </div>
-    <div class="col-sm-12" style="padding:10px 20px 0px 20px;">
+    <div class="col-sm-12 table-responsive" style="padding:10px 20px 0px 20px;">
         <table class="table table-bordered" style="margin-bottom:3px;">
             <thead>
                 <tr>
-                    <th>Apelldios</th>
                     <th>Nombre</th>
                     <th>Fecha Nacimiento</th>
                     <th>Idioma</th>
                     <th>País</th>
+                  
                     <th style="width:75px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($alumnos as $nivel)
                     <tr>
-                        <td>{{$nivel->alu_apellidos}}</td>
-                        <td>{{$nivel->alu_nombre}}</td>
+                        <td>{{$nivel->alu_nombre." ".$nivel->alu_apellidos}}</td>
                         <td>{{$nivel->alu_fecha_nacim}}</td>
                         <td>{{$nivel->opc_descr}}</td>
                         <td>{{$nivel->pais_descr}}</td>
+                     
                         <td style="width:125px;" class="d-flex justify-content-center">
                             <form action='{{route("alumno.show", [$nivel])}}' method="post" >
                                 @method("get")

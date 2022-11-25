@@ -109,15 +109,16 @@
                                                
                                             </div>
                                             <div class="col-sm-11  margin-t-5 pl-0" id="data_info_c">
-                                                <p style="margin-top:10px;margin-bottom:0px;font-size:13px" class="pp4">Para que la reserva de plaza sea efectiva habrá de ingresarse la cantidad de <span id="price"></span> euros en la cuenta bancaria  de Europa Plus s.l. antes del tercer día despúes de recibir esta confirmación. Esta cantidad sera descontada del precio final.Este documento solo sera válido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria: 
+                                                <p style="margin-top:10px;margin-bottom:0px;font-size:13px" class="pp4" id="txt1">Para que la reserva de plaza sea efectiva habrá de ingresarse la cantidad de <span id="price"></span> euros en la cuenta bancaria  de Europa Plus s.l. antes del tercer día despúes de recibir esta confirmación. Esta cantidad sera descontada del precio final.Este documento solo sera válido adjuntando la factura del pago mencionado. La transferencia se hara a la siguiente cuenta bancaria: 
                                                    
                                                 </p>
                                                 <p style="margin:0;font-size:13px" class="pp4" id="banco">Banco</p>
                                                 <p style="margin:0;font-size:13px" class="pp4" id="direccion_banco">Calle Edgar Neville 4, 28020 Madrid</p>
                                                 <p style="margin:0;font-size:13px" class="pp4" id="IBAN">IBAN</p>
                                                 <p style="margin:0;font-size:13px" class="pp4" id="codigo_postal"></p>
-                                                <p class="pp4" style="font-size:13px">Estas condiciones tendrán efecto contractual y permanecerán inamovibles una vez efectuado el pago total del curso que arriba se  detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripción. El resto del importe total de su viaje lingüístico se hará en dos partes iguales: junio y en agosto. Gracias por elegirnos para la realización de su curso y esperamos que quede satisfecho con nuestros servicios.
-                                                </p>
+                                                <p class="pp4" style="font-size:13px" id="txt3">Estas condiciones tendrán efecto contractual y permanecerán inamovibles una vez efectuado el pago total del curso que arriba se  detalla, mientras figuran a solo modo indicativo de la solicitud de la inscripción. El resto del importe total de su viaje lingüístico se hará en dos partes iguales: junio y en agosto. Gracias por elegirnos para la realización de su curso y esperamos que quede satisfecho con nuestros servicios.
+                                                </p><p style="margin-top:0px;margin-bottom:0px;font-size:13px" class="pp4" id="txt2"> Gracias por elegirnos para la realización de su curso y esperamos que quede satisfecho con nuestros servicios.</p>
+                                            
                                             </div>
                                         </div>
                                     </div>

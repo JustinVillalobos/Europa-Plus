@@ -23,6 +23,7 @@ class LoginController extends Controller
         $input = $request->all();
         $usuario = User::where('name','=',$input['user'])
                             ->where('password','=',md5($input['pass']))
+                            ->where('group_id','=',1)
                             ->first();
         
         if(empty($usuario)){
@@ -41,6 +42,6 @@ class LoginController extends Controller
     }
     public function logout(){
         $_SESSION['id'] = "";
-        return redirect()->to('/');
+        return redirect()->to('/loginAdmin');
     }
 }

@@ -18,8 +18,8 @@
         </a>
         </form>
     </div><div class="col-sm-6" style="padding-left:15px;"></div>
-        <div class="col-sm-6" style="padding:0px 20px 0px 20px;">
-            <form action='{{route("operacion.busquedaOperacion")}}' method="GET"   style="margin: 0px;">
+        <div class="col-sm- 12" style="padding:0px 20px 0px 20px;">
+            <form action='{{route("operacion.busquedaOperacion")}}' method="GET"    style="margin: 0px;">
                 @method("GET")
                 @csrf
                 <div class="row">
@@ -27,8 +27,10 @@
                         <span><i class="fa fa-filter" aria-hidden="true"></i></span> Filtros
                     </div>
                 </div>
-                <div class="row collapse" id="collapseExample">
-                    <div class="col-sm-2" style="margin-top: 15px;">
+                <div class="row collapse justify-content-center" id="collapseExample">
+                    <div class="col-sm-6">
+                        <div class="row">
+                        <div class="col-sm-3" style="margin-top: 15px;">
                         <select name="limit" class="form-select " >
                                 <option <?php if($limit == 10){ echo "selected";}?>>10</option>
                                 <option <?php if($limit == 15){ echo "selected";}?>>15</option>
@@ -37,44 +39,37 @@
                                 <option <?php if($limit == 100){ echo "selected";}?>>100</option>
                             </select>
                     </div>
-                    <div class="col-sm-10"  style="margin-top: 15px;">
+                    <div class="col-sm-9"  style="margin-top: 15px;">
                         <input type="text" name="search" value="<?php echo $search;?>" class="form-control"  placeholder="Buscar..." />
                     </div>
                     <div class="col-sm-12"  style="margin-top: 15px;">
                         <label>Operaciones</label>
-                        <select class="form-select">
-                            <option value="0">Activas</option>
-                            <option value="1">Pendientes Señal</option>
-                            <option value="2">Pendientes Resto</option>
-                            <option value="3">Terminadas</option>
-                            <option value="4">Pendientes Confirmar Escuela</option>
-                            <option value="5">Pendientes Confirmar Alumno</option>
-                            <option value="6">Canceladas</option>
+                        <select class="form-select" name="tipo">
+                            <option value="0" <?php if($tipo == 0){ echo "selected";}?>>Activas</option>
+                            <option value="1" <?php if($tipo == 1){ echo "selected";}?>>Pendientes Señal</option>
+                            <option value="2" <?php if($tipo == 2){ echo "selected";}?>>Pendientes Resto</option>
+                            <option value="3" <?php if($tipo == 3){ echo "selected";}?>>Terminadas</option>
+                            <option value="4" <?php if($tipo == 4){ echo "selected";}?>>Pendientes Confirmar Escuela</option>
+                            <option value="5" <?php if($tipo == 5){ echo "selected";}?>>Pendientes Confirmar Alumno</option>
+                            <option value="6" <?php if($tipo == 6){ echo "selected";}?>>Canceladas</option>
                         </select>
                     </div>
                     <div class="col-sm-12"  style="margin-top: 15px;">
                         <label>Ejercicio</label>
-                        <select class="form-select">
-                            <option value="<?php echo date('Y',strtotime('+1 year'));?>"><?php echo date('Y',strtotime('+1 year'));?></option>
-                            <option value="<?php echo date('Y');?>" selected><?php echo date('Y');?></option>
-                            <option value="<?php echo date('Y',strtotime('-1 year'));?>"><?php echo date('Y',strtotime('-1 year'));?></option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12"  style="margin-top: 15px;">
-                        <label>Originadas</label>
-                        <select class="form-select">
-                            <option value="0">Todas</option>
-                            <option value="1">España</option>
-                            <option value="2">Alemania</option>
+                        <select class="form-select" name="date">
+                            <option value="<?php echo date('Y',strtotime('+1 year'));?>"  <?php if($date == date('Y',strtotime('+1 year'))){ echo "selected";}?>><?php echo date('Y',strtotime('+1 year'));?> </option>
+                            <option value="<?php echo date('Y');?>"  <?php if($date == date('Y')){ echo "selected";}?>><?php echo date('Y');?></option>
+                            <option value="<?php echo date('Y',strtotime('-1 year'));?>"  <?php if($date == date('Y',strtotime('-1 year'))){ echo "selected";}?>><?php echo date('Y',strtotime('-1 year'));?></option>
                         </select>
                     </div>
                     <div class="col-sm-12"  style="margin-top: 15px;">
                         <label>Ordenadas</label>
-                        <select class="form-select">
-                            <option value="0">Fehas Cursos</option>
-                            <option value="1">Fecha Inscripción</option>
-                            <option value="2">Apellidos Alumno</option>
-                            <option value="3">Escuela</option>
+                        <select class="form-select" name="order">
+                            <option value="0" <?php if($order ==4 ){ echo "selected";}?>>Código Operación</option>
+                            <option value="1" <?php if($order == 0){ echo "selected";}?>>Fechas Cursos</option>
+                            <option value="2" <?php if($order == 1){ echo "selected";}?>>Fecha Inscripción</option>
+                            <option value="3" <?php if($order == 2){ echo "selected";}?>>Apellidos Alumno</option>
+                            <option value="4" <?php if($order ==3 ){ echo "selected";}?>>Escuela</option>
                         </select>
                     </div>
                     <div class="col-sm-12 d-flex justify-content-end" style="margin-top: 15px;">
@@ -84,6 +79,8 @@
                         <a href='{{route("operacion.index")}}' class="btn btn-primary" style="margin-left:5px">
                             <i class="fa fa-refresh"></i>
                         </a>
+                    </div>
+                        </div>
                     </div>
                 </div>
                            

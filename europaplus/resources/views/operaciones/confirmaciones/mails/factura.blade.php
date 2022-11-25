@@ -66,10 +66,10 @@
                                     <div class="col-sm-12 bordered-data2">
                                         <div class="row">
                                             <div class="col-sm-12 d-flex justify-content-end">
-                                               <label> Madrid, a <?php echo  date('d')?> de <span id='mes'></span> <?php echo date('Y');?></label>
+                                               <label class="date_"> Madrid, a <?php echo  date('d')?> de <span id='mes'></span> <?php echo date('Y');?></label>
                                             </div>
                                             <div class="col-sm-12">
-                                               <label><strong style="text-transform:uppercase;">FACTURA No: </strong> <span id='numero'></span></label> 
+                                               <label class="fac_info"><strong style="text-transform:uppercase;">FACTURA No: </strong> <span id='numero'></span></label> 
                                             </div>
                                         </div>
                                     </div>
@@ -112,24 +112,15 @@
                                     </div>
                                     <div class="col-sm-12 bordered-data5">
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <strong>Transferencia Bancaria: </strong> <?php echo $_SESSION['empresa']->nombre;?>
-                                            </div>
-                                            <div class="col-sm-12">
-                                            <?php echo $_SESSION['empresa']->banco;?>
-                                            </div>
-                                            <div class="col-sm-12">
-                                            <?php echo $_SESSION['empresa']->direccion_banco;?>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                 IBAN: <?php echo $_SESSION['empresa']->IBAN;?>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                SWIFT/BIC: <?php echo $_SESSION['empresa']->SWIFT;?>
-                                            </div>
+                                            <div class="col-sm-12"><strong>Transferencia Bancaria: </strong> <?php echo $_SESSION['empresa']->nombre;?></div>
+                                            <div class="col-sm-12"><?php echo $_SESSION['empresa']->banco;?></div>
+                                            <div class="col-sm-12"><?php echo $_SESSION['empresa']->direccion_banco;?></div>
+                                            <div class="col-sm-12">IBAN: <?php echo $_SESSION['empresa']->IBAN;?></div>
+                                            <div class="col-sm-12">SWIFT/BIC: <?php echo $_SESSION['empresa']->SWIFT;?></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="fac_id" value="0"/>
