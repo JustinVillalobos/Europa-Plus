@@ -85,6 +85,7 @@
                                     <li><a href="{{route('localidad.index')}}"><i class="i i-database"></i> Localidades</a></li>
                                     <li><a href="{{route('tipos.index')}}"><i class="i i-database"></i> Tipos</a></li>
                                     <li><a href="{{route('europa.index')}}"><i class="i i-database"></i> Europa Plus</a></li>
+                                     <li><a href="{{route('europa.links')}}"><i class="i i-database"></i> Enlaces</a></li>
                                 </ul>
                             </div>
                         </div>

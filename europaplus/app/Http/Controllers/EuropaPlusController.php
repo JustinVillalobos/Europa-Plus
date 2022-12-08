@@ -19,6 +19,9 @@ class EuropaPlusController extends Controller
         ];
         return view('europa_plus/index',$data);
     }
+    public function links(){
+        return view('europa_plus/links');
+    }
     public function edit(){
         $europa=EuropaPlu::where('idEmpresa','=',1)->first();
         $data=[

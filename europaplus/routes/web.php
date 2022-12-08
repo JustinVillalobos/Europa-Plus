@@ -24,11 +24,13 @@ use App\Http\Controllers\EscuelasController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginAlumnoController;
 use App\Http\Controllers\OperacionController;
 use App\Http\Controllers\ConfirmacionesController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CobrosController;
 use App\Http\Controllers\EuropaPlusController;
+use App\Http\Controllers\FormularioController;
 
 Route::resource('operacion',OperacionController::class);
 Route::get('busquedaOperacion',[OperacionController::class, 'busquedaOperacion'])->name('operacion.busquedaOperacion');
@@ -129,8 +131,11 @@ Route::get('success',[HomeController::class, 'mensaje'])->name('home.mensaje');
 Route::get('/loginAdmin',[LoginController::class, 'index'])->name('login.index');
 Route::get('logout',[LoginController::class, 'logout'])->name('login.logout');
 
-Route::post('loginValidator',[LoginController::class, 'loginValidator'])->name('login.loginValidator');
+Route::get('/',[LoginAlumnoController::class, 'index'])->name('loginAlumno.index');
+Route::get('logoutAlumno',[LoginAlumnoController::class, 'logout'])->name('loginAlumno.logout');
 
+Route::post('loginValidator',[LoginController::class, 'loginValidator'])->name('login.loginValidator');
+Route::post('loginAlumnoValidator',[LoginAlumnoController::class, 'loginValidator'])->name('loginAlumno.loginValidator');
 
 /*Confirmaciones */
 
@@ -168,5 +173,9 @@ Route::post('operacion/sendFactura',[ConfirmacionesController::class, 'sendFactu
 
 
 Route::get('europa',[EuropaPlusController::class, 'index'])->name('europa.index');
+Route::get('europa/links',[EuropaPlusController::class, 'links'])->name('europa.links');
 Route::get('europa/edit',[EuropaPlusController::class, 'edit'])->name('europa.edit');
 Route::post('europa/update',[EuropaPlusController::class, 'update'])->name('europa.update');
+
+Route::get('formularios',[FormularioController::class, 'index'])->name('formularios.index');
+Route::get('formularios/junior',[FormularioController::class, 'formulario1'])->name('formularios.formulario1');

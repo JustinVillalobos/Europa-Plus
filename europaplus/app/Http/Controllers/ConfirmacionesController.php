@@ -740,7 +740,7 @@ public function solicitud_transfer_modal(Request $request){
                 "path"=>$path.'/'.'Descripcion_'.$o->alu_nombre."_".$o->alu_apellidos.'_'.$date.'.pdf',
                 "operacion"=>$o,
                 "name"=>'Descripción '.$o->alu_nombre." ".$o->alu_apellidos.' '.$date.'.pdf',
-                "title"=>"Descripción",
+                "title"=>"Descripción de curso",
                 "subject"=>"Se le adjunta la descripción Europa Plus"
                ];
             if($tipo==1){
@@ -748,7 +748,7 @@ public function solicitud_transfer_modal(Request $request){
                 if($this->isProduction){
                     Mail::to($o->alu_correo)->send(new DescripcionOperacion($d));
                 }else{
-                    Mail::to("jusymey@gmail.com")->send(new DescripcionOperacion($d));
+                    Mail::to("justinvillaespinoza68@gmail.com")->send(new DescripcionOperacion($d));
                 }
                 
                 
@@ -819,7 +819,7 @@ public function solicitud_transfer_modal(Request $request){
                 
                 "name"=>'Confirmación de curso ',
                 "title"=>"Confirmación de curso  Europa Plus",
-                "subject"=>"Se confirma la participación del curso ".$curso->cur_nombre." Europa Plus<br>",
+                "subject"=>"Se confirma la inscripción del curso ".$curso->cur_nombre." Europa Plus<br>",
                 "alumno"=>$alumno
                ];
                if($this->isProduction){
